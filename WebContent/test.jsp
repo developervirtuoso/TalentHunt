@@ -5,13 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/style.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
 <div class="container">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" action="insertRegister.jsp" method="post" enctype="multipart/form-data" >
                 <h2>Music World</h2>
                 <div class="form-group">
                     <label for="firstName" class="col-sm-12 control-label">Name</label>
@@ -37,7 +41,6 @@
                     <label for="email" class="col-sm-12 control-label">DOB* </label>
                     <div class="col-sm-12">
                         <div class="input-group date dob" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-							<span class="input-group-text"> <i class="fa fa-birthday-cake"></i> </span>
 							<input class="form-control" size="16" type="text" value="" name="dob" readonly placeholder="Date of birth">
 							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -49,17 +52,15 @@
                     <label for="gender" class="col-sm-12 control-label">Gender </label>
                     <div class="col-sm-12">
                        <select class="form-control" name="gender">
-							<option selected=""> Select gender</option>
+							<option selected="" value="0"> Select gender</option>
 							<option value="male">Male</option>
 							<option value="female">Female</option>
 						</select>
                        
                     </div>
                 </div>
-         
-		  
-                <div class="form-group col-sm-12">
-				  <input type="file" id="myFile" name="filename">
+              <div class="form-group col-sm-12">
+				 <input name="file" class="form-control"  type="file" accept="video/mp4,video/x-m4v,video/*,.mp3,audio/*,.mov" required>
 				</div>
 
                 
@@ -67,10 +68,19 @@
             </form> <!-- /form -->
         </div> <!-- ./container -->
 		
-		
-		
-
-		
 </body>
-</body>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$('.dob').datetimepicker({
+	format: "yyyy-mm-dd",
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	forceParse: 0
+});
+</script>
 </html>

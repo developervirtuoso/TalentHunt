@@ -26,6 +26,7 @@ String gender="";
 String dob="";
 String itemName="";
 String filePath = "";
+String cat="";
 int imei = 0;
     String fieldName = "";
     String docTitle = "";
@@ -72,7 +73,9 @@ int imei = 0;
                 if(fieldName.equalsIgnoreCase("dob")){
                 	dob = item.getString();
                 }
-                
+                if(fieldName.equalsIgnoreCase("cat")){
+                	cat = item.getString();
+                }
                 
                 System.out.println("here fieldname" + fieldName);
                 String value = item.getString();
@@ -107,11 +110,11 @@ int imei = 0;
     try {
     	ApiController apiController=new ApiController();
     	String ticketid=apiController.generateNewToken();
-      	int i=apiController.AddRegisterMember(username,email,phoneno,dob,gender,image,ticketid,itemName);
+    	int i=apiController.AddRegisterMember(username,email,phoneno,dob,gender,image,ticketid,itemName,cat);
 		if(i>0){
 		  System.out.println("Successfully Register");
 		  apiController.sendMailWithFile(username,email,image,ticketid,filePath,itemName);
-		  response.sendRedirect("userManagementList.jsp?message=2");
+		  response.sendRedirect("thankupage.jsp?message=2");
 		}
 		else
 		{

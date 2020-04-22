@@ -30,6 +30,7 @@
         <th>Phone number</th>
         <th>DOB</th>
         <th>Gender</th>
+        <th>Category</th>
         <th>File Name</th> 
       </tr>
     </thead>
@@ -40,6 +41,14 @@
     	userbeanss=apiController.getUserList();
     	for(int i=0;i<userbeanss.size();i++){
     		Userbeans userbeans=userbeanss.get(i);
+    		String catname="";
+    		if(userbeans.getCat().equals("1")){
+    			catname="singer";
+    		}else if(userbeans.getCat().equals("2")){
+    			catname="lyrics";
+    		}else if(userbeans.getCat().equals("3")){
+    			catname="model";
+    		}
     		%>
     			 <tr>
 			        <td><%=userbeans.getUsername() %></td>
@@ -47,6 +56,7 @@
 			        <td><%=userbeans.getPhoneno() %></td>
 			        <td><%=userbeans.getDob() %></td>
 			        <td><%=userbeans.getGender() %></td>
+			        <td><%=catname %></td>
 			        <td><%=userbeans.getFilename() %></td>
 			      </tr>
     		<%

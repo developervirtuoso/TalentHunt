@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMultipart;
 public class SendEmail {
 
 	public static void main(String[] args) {
-		SendEmail sendEmail=new SendEmail("neerajbhagat9872@gmail.com", "Testing 2222", "testing text");
+		SendEmail sendEmail=new SendEmail("neeraj@virtuosonetsoft.in", "1111111111111111", "testing text");
 	}
 	public  SendEmail(String email,String subject,String txt_msg)
 	{
@@ -53,7 +53,25 @@ public class SendEmail {
             message.setSubject(subject);
             message.setText(txt_msg);
             BodyPart messageBodyPart = new MimeBodyPart();
+            char ch='"';
             messageBodyPart.setText("This is message body");
+            messageBodyPart.setContent("<html>\n" + 
+            		"<head>\n" + 
+            		"<title>Astrological.ly</title>\n" + 
+            		"<style type='text/css'> 	body {      } *[role='form'] {      } *[role='form'] h2 {     } </style>\n" + 
+            		"</head>\n" + 
+            		 "<body style='background: url("+ch+"http://142.93.223.67:8080/TalentHunt/img/bg.jpg"+ch+") fixed; background-size: cover;'>\n" + 
+            		 "<div style=' padding: 100px;'>\n" + 
+            		 "          <form class='form-horizontal' role='form' style='max-width: 530px;     padding: 15px;     margin: 10% auto 0;     border-radius: 0.3em;     background-color: #fff;'>\n" + 
+            		 "            <h2 style='font-family: "+ch+"Open Sans"+ch+" , sans-serif;     font-size: 40px;     font-weight: 600;     color: #000000;     margin-top: 5%;     text-align: center;     text-transform: uppercase;     letter-spacing: 4px; '>Thanks For your concern </h2>\n" + 
+            		 "<p class='text-center'>In case of any queries please get in touch with us via info@musicworld.com </p>\n" + 
+            		 "		  </form>\n" + 
+            		 "        </div> <!-- ./container -->\n" + 
+            		 "</body>"+
+            		"</html>\n" + 
+            		""
+            		+ "","text/html" );  
+
             // Create a multipar message
             Multipart multipart = new MimeMultipart();
 
@@ -67,15 +85,16 @@ public class SendEmail {
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName("MyFile.txt");
             multipart.addBodyPart(messageBodyPart);
-
-            // Send the complete message parts
+                       // Send the complete message parts
+            
             message.setContent(multipart);
             //send message  
             Transport.send(message);
             System.out.println("message sent to ----" + to);
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+            e.printStackTrace();
 
         }
 

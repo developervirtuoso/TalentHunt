@@ -10,6 +10,14 @@ public class Userbeans {
 	private String gender="0";
 	private String filename="0";
 	private String file="0";
+	private String cat="0";
+	
+	public String getCat() {
+		return cat;
+	}
+	public void setCat(String cat) {
+		this.cat = cat;
+	}
 	public int getId() {
 		return id;
 	}
