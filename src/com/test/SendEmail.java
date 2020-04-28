@@ -1,6 +1,5 @@
 package com.test;
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -15,21 +14,16 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 public class SendEmail {
-
 	public static void main(String[] args) {
 		SendEmail sendEmail=new SendEmail("neeraj@virtuosonetsoft.in", "1111111111111111", "testing text");
 	}
 	public  SendEmail(String email,String subject,String txt_msg)
 	{
-
-	    
-		
 		String host ="smtp.gmail.com" ; 
 		String user = "info@parrotinfosoft.com";
 		String pass = "info@123"; 
 		String to = email; 
 		String from = "info@parrotinfosoft.com";
-		
 		Properties props = new Properties();
         //props.put("mail.smtp.host", "smtp.mail.yahoo.com");
         props.put("mail.smtp.host", "smtp.gmail.com");  
@@ -37,16 +31,13 @@ public class SendEmail {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
-
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
                 return new javax.mail.PasswordAuthentication(user, pass);//change accordingly  
             }
         });
-
         //compose message  
         try {
-
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));//change accordingly  
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -71,13 +62,10 @@ public class SendEmail {
             		"</html>\n" + 
             		""
             		+ "","text/html" );  
-
             // Create a multipar message
             Multipart multipart = new MimeMultipart();
-
             // Set text message part
             multipart.addBodyPart(messageBodyPart);
-
             // Part two is attachment
             messageBodyPart = new MimeBodyPart();
             String filename = "C:\\Users\\Dell\\eclipse-vns\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\TalentHunt\\UploadedFile\\User\\MyFile.txt";
@@ -86,33 +74,22 @@ public class SendEmail {
             messageBodyPart.setFileName("MyFile.txt");
             multipart.addBodyPart(messageBodyPart);
                        // Send the complete message parts
-            
             message.setContent(multipart);
             //send message  
             Transport.send(message);
             System.out.println("message sent to ----" + to);
-
         } catch (MessagingException e) {
             //throw new RuntimeException(e);
             e.printStackTrace();
-
         }
-
-		
-		
-
 	}
 	public  SendEmail(String email,String subject,String txt_msg,String emailsub)
 	{
-
-	    
-		
 		String host ="smtp.gmail.com" ; 
 		String user = "info@parrotinfosoft.com";
 		String pass = "info@123"; 
 		String to = email; 
 		String from = "info@parrotinfosoft.com";
-		
 		Properties props = new Properties();
         //props.put("mail.smtp.host", "smtp.mail.yahoo.com");
         props.put("mail.smtp.host", "smtp.gmail.com");  
@@ -120,16 +97,13 @@ public class SendEmail {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
-
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
                 return new javax.mail.PasswordAuthentication(user, pass);//change accordingly  
             }
         });
-
         //compose message  
         try {
-
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));//change accordingly  
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -144,7 +118,6 @@ public class SendEmail {
             		"	<table class='em_full_wrap' valign='top' width='100%' cellspacing='0'\n" + 
             		"		cellpadding='0' border='0' bgcolor='#efefef' align='center'>\n" + 
             		"		<tbody>\n" + 
-            		            
             		"			<tr>\n" + 
             		"				<td valign='top' align='center'><table class='em_main_table'\n" + 
             		"						style='width: 700px;' width='700' cellspacing='0' cellpadding='0'\n" + 
@@ -261,14 +234,8 @@ public class SendEmail {
             //send message  
             Transport.send(message);
             System.out.println("message sent to ----" + to);
-
         } catch (MessagingException e) {
             throw new RuntimeException(e);
-
         }
-
-		
-		
-
 	}
 }

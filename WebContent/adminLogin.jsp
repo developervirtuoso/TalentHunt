@@ -19,24 +19,18 @@
  <link rel="stylesheet" type="text/css" href="css/empStyle.css">
 </head>
 <body>
-
 <div class="login-form">   
     <%
      if(request.getAttribute("message")==null){
     	System.out.println("message=>00000000000");
     }else{%>
-    
     <div id="deletesuccess">
                 <h6 style="color: red">${message}</h6>
                 </div> 
-                
                 <%
     	String message = request.getAttribute("message").toString();
     	System.out.println("message=>"+message);
-    	
-    	
     } 
-
     %> 
      <%   String ip = request.getHeader("X-Forwarded-For");  
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
@@ -55,9 +49,7 @@
             ip = request.getRemoteAddr();  
         }
         %>
-        
      <%
-    
      String logintype="";
     %>
      <form role="form" action="adminSignIn" method="post" onsubmit="return siteAdminSignIn()" name="frm">
@@ -72,7 +64,6 @@
         </div>
         <div class="form-group small clearfix">
             <label class="checkbox-inline"><input type="checkbox"> Remember me</label>
-           
         </div> 
         <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">              
     </form>			

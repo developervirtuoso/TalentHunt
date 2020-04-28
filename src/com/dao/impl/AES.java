@@ -4,26 +4,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
- 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
- 
 public class AES {
- 
     private static SecretKeySpec secretKey;
     private static byte[] key;
     public static void main(String[] args) {
     	final String secretKey = "lockdowntalenthunt";
-        
         String originalString = "123456";
         String encryptedString = AES.encrypt(originalString, secretKey) ;
         String decryptedString = AES.decrypt(encryptedString, secretKey) ;
-         
         System.out.println(originalString);
         System.out.println(encryptedString);
         System.out.println(decryptedString);
 	}
- 
     public static void setKey(String myKey) 
     {
         MessageDigest sha = null;
@@ -41,7 +35,6 @@ public class AES {
             e.printStackTrace();
         }
     }
- 
     public static String encrypt(String strToEncrypt, String secret) 
     {
         try
@@ -57,7 +50,6 @@ public class AES {
         }
         return null;
     }
- 
     public static String decrypt(String strToDecrypt, String secret) 
     {
         try

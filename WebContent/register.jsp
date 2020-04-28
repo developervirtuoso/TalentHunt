@@ -23,7 +23,6 @@
                          <input name="username" class="form-control" placeholder="Full name" type="text" required autofocus>
                     </div>
                 </div>
-          
                 <div class="form-group">
                     <label for="email" class="col-sm-12 control-label">Email* </label>
                     <div class="col-sm-12">
@@ -34,7 +33,6 @@
                     <label for="phoneNumber" class="col-sm-12 control-label">Phone number </label>
                     <div class="col-sm-12">
                        <input name="phoneno" class="form-control" placeholder="Phone number" type="text" required>
-                       
                     </div>
                 </div>
              <div class="form-group">
@@ -47,7 +45,6 @@
 						</div>
                     </div>
                 </div>
-                
                 <div class="form-group">
                     <label for="gender" class="col-sm-12 control-label">Gender </label>
                     <div class="col-sm-12">
@@ -56,7 +53,6 @@
 							<option value="male">Male</option>
 							<option value="female">Female</option>
 						</select>
-                       
                     </div>
                 </div>
                 <div class="form-group">
@@ -68,18 +64,14 @@
 							<option value="2">lyrics</option>
 							<option value="3">model</option>
 						</select>
-                       
                     </div>
                 </div>
               <div class="form-group col-sm-12">
 				 <input name="file" class="form-control"  type="file" accept="video/mp4,video/x-m4v,video/*,.mp3,audio/*,.mov" required>
 				</div>
-
-                
                 <button type="submit" class="btn btn-primary btn-block">Upload</button>
             </form> <!-- /form -->
         </div> <!-- ./container -->
-		
 </body>
 <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>

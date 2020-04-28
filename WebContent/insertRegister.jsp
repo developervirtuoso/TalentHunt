@@ -38,7 +38,6 @@ int imei = 0;
     String image="";
     String[] multiIMEI = new String[5000];
     boolean isMultipart = ServletFileUpload.isMultipartContent(request);
- 
     if (!isMultipart) {
         System.out.println("Else is not executed");
     } else {
@@ -46,7 +45,6 @@ int imei = 0;
         ServletFileUpload upload = new ServletFileUpload(factory);
         List items = null;
         try {
-
             items = upload.parseRequest(request);
         } catch (FileUploadException e) {
             e.printStackTrace();
@@ -76,7 +74,6 @@ int imei = 0;
                 if(fieldName.equalsIgnoreCase("cat")){
                 	cat = item.getString();
                 }
-                
                 System.out.println("here fieldname" + fieldName);
                 String value = item.getString();
                 System.out.println("here fieldname" + value);
@@ -101,12 +98,10 @@ int imei = 0;
                    // response.sendRedirect("fileUploadSuccess.jsp");
                 } catch (Exception e) {
                     System.out.println("here while uploadin" + e);
-                    
                 }
             }
         }
     }
-
     try {
     	ApiController apiController=new ApiController();
     	String ticketid=apiController.generateNewToken();
@@ -121,19 +116,8 @@ int imei = 0;
 		System.out.println("Failed");
 		response.sendRedirect("register.jsp?message=3");
 		}
-    		
-    		
-    	
    } catch (Exception e) {
        e.printStackTrace();
    }%>
 <%
-
-
-
-
-
-
-
-
 %>

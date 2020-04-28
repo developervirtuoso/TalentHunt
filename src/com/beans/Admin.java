@@ -1,5 +1,4 @@
 package com.beans;
-
 public class Admin {
 	private int id=0;
 	private String name="0";
@@ -7,8 +6,6 @@ public class Admin {
 	private String password="0";
 	private String authkey="0";
 	private String datetime="0";
-	
-	
 	public String getPassword() {
 		return password;
 	}
@@ -45,6 +42,4 @@ public class Admin {
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
 	}
-	
-	
 }

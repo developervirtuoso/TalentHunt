@@ -1,5 +1,4 @@
 package com.beans;
-
 public class Userbeans {
 	private int id=0;
 	private String username="0";
@@ -11,7 +10,6 @@ public class Userbeans {
 	private String filename="0";
 	private String file="0";
 	private String cat="0";
-	
 	public String getCat() {
 		return cat;
 	}
@@ -72,5 +70,4 @@ public class Userbeans {
 	public void setFile(String file) {
 		this.file = file;
 	}
-	
 }

@@ -110,7 +110,6 @@ searchValue =  searchValue.replaceAll("'", "''");
                 		AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
     try
     {
-    	
     	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
@@ -158,7 +157,6 @@ searchValue =  searchValue.replaceAll("'", "''");
                     	String sql="select * from user";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	
                     }
                     	double count1=count;
                     	total_rows=count;

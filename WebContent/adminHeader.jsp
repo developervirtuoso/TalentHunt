@@ -2,21 +2,16 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
-
 <%!
 String email=null;
 String adminType=null;
 String auth_key="";
 String id="";
 String name="";
-
 %>
-
-
 <%
 				HttpSession empSession=request.getSession();
 				if(empSession.getAttribute("id") != null){
-				
 						 id=(String)empSession.getAttribute("id").toString();
 						 System.out.println("ididididid"+id); 
 						 name=(String)empSession.getAttribute("name").toString();
@@ -25,8 +20,6 @@ String name="";
 						 System.out.println("emailemailemail"+email); 
 			            System.out.println("Enter in if"); 
                 	%>
-
-
 <nav class="navbar  navbar-expand-xl navbar-light">
 	<div class="navbar-header d-flex col">
 		<a class="navbar-brand" href="empDashboard?clr=appdashboard&act=appdashboard"> ADMIN</a>  		
@@ -57,13 +50,11 @@ String name="";
 <div class="modal" id="mychangepass">
   <div class="modal-dialog">
     <div class="modal-content">
-
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Change Password</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-	
 		<!-- Modal body -->
 	      <div class="modal-body">
 	      		<input type="hidden" name="id" value="<%=id%>">
@@ -72,13 +63,11 @@ String name="";
 	       		<input type="password" name="confirmpass" id="confirmpass" placeholder="Enter confirm password" class="form-control">
 	       		<p id="validate-status"></p>
 	      </div>
-	
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
 	      	<input type="button" class="btn btn-primary" value="Submit" onclick="changepassfnc();"> 
  	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 	      </div>
-	
     </div>
   </div>
 </div>
@@ -87,14 +76,9 @@ String name="";
 $(document).ready(function() {
   $("#confirmpass").keyup(validate);
 });
-
-
 function validate() {
   var newpass = $("#newpass").val();
   var confirmpass = $("#confirmpass").val();
-
-    
- 
     if(newpass == confirmpass) {
       // $("#validate-status").text("Matched password");  
        $('#newpass').css('border', 'solid 1px green');
@@ -104,17 +88,13 @@ function validate() {
        // $("#validate-status").text("invalid");  
         $('#newpass').css('border', 'solid 1px red');
         $('#confirmpass').css('border', 'solid 1px red');
-       
         return false;
     }
-    
 }
 function changepassfnc() {
 	var newpass = $("#newpass").val();
 	var oldpass = $("#oldpass").val();
 	var confirmpass = $("#confirmpass").val();
-	    
-	 
 	    if(newpass == confirmpass) {
 	    	$.ajax({
 	    	    type: "GET",
@@ -125,22 +105,17 @@ function changepassfnc() {
 	    	    cache: false,
 	    	    timeout: 600000,
 	    	    success: function (data) {
-	    	    	
 	    	    	if(data==3){
 	    	    		$("#validate-status").text("Not Match password"); 
 	    	    		$('#oldpass').css('border', 'solid 1px red');
 	    	    	}else{
 	    	    		$("#validate-status").text("Changed password"); 
 	    	    		$('#oldpass').css('border', 'solid 1px green');
-	    	    		
 	    	    	}
 	    	    },
 	    	    error: function (e) {
-
 	    	      //  $("#result").text(e.responseText);
 	    	        console.log("ERROR : ", e);
-	    	      
-
 	    	    }
 	    	});
 	    }
@@ -148,12 +123,9 @@ function changepassfnc() {
 	       // $("#validate-status").text("invalid");  
 	        $('#newpass').css('border', 'solid 1px red');
 	        $('#confirmpass').css('border', 'solid 1px red');
-	       
 	    }
 }
-
 </script>
-        
         <%}else { 
                  response.sendRedirect("employeeLogin");
                  }

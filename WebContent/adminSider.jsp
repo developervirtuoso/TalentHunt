@@ -1,21 +1,14 @@
 	<script type="text/javascript">
 	 function showonlyone(clr,act) {
 		 if(clr=="appLanguages"||clr=="appLanguages"||clr=="appLanguages"){
-				
 				document.getElementById(clr).style.backgroundColor = "#65cbf9";
 				document.getElementById(act).style.color = "red !important";
 		}else if(clr=="empleavebyteamid"||clr=="empleavebyteamid"||clr=="empleavebyteamid"){
-			
 			document.getElementById(clr).style.backgroundColor = "#65cbf9";
 			document.getElementById(act).style.color = "#fff !important";
-			
-			
 	}else if(clr=="appdashboard"||clr=="appdashboard"||clr=="appdashboard"){
-		
 		document.getElementById(clr).style.backgroundColor = "#65cbf9";
 		document.getElementById(act).style.color = "red !important";
-			
-		
 }
 	 }
 	</script>
@@ -38,7 +31,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<style>
 		#appdashboard {
     background-color: #fcfcfc !important;
@@ -48,5 +40,4 @@
     background-color: #000 !important;
     color: #fff !important;
 }
-		
 		</style>

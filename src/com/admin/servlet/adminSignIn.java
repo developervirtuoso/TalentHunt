@@ -1,30 +1,24 @@
 package com.admin.servlet;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
-
 import com.beans.Admin;
 import com.dao.impl.AdminDaoImpl;
 import com.dao.impl.ApiController;
-
 /**
  * Servlet implementation class adminSignIn
  */
 @WebServlet("/adminSignIn")
 public class adminSignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,10 +33,8 @@ public class adminSignIn extends HttpServlet {
         String  browserDetails  =   request.getHeader("User-Agent");
         String  userAgent       =   browserDetails;
         String  user            =   userAgent.toLowerCase();
-
         String os = "";
         String browser = "";
-        
         //=================OS=======================
          if (userAgent.toLowerCase().indexOf("windows") >= 0 )
          {
@@ -83,7 +75,6 @@ public class adminSignIn extends HttpServlet {
         {
             //browser=(userAgent.substring(userAgent.indexOf("MSIE")).split(" ")[0]).replace("/", "-");
             browser = "Netscape-?";
-
         } else if (user.contains("firefox"))
         {
             browser=(userAgent.substring(userAgent.indexOf("Firefox")).split(" ")[0]).replace("/", "-");
@@ -94,7 +85,6 @@ public class adminSignIn extends HttpServlet {
         {
             browser = "UnKnown, More-Info: "+userAgent;
         }
-        
        String publicip=request.getParameter("publicip");
        Admin admin = new Admin();
         AdminDaoImpl adminDaoImpl = new AdminDaoImpl();
@@ -118,7 +108,6 @@ public class adminSignIn extends HttpServlet {
         	id = admin.getId();
         	email = admin.getEmail();
         	password = admin.getPassword();
-        	
         	 if (status == true) {
         		 //adminDaoImpl.logTimingDetails(id, logintime);
         		 adminDaoImpl.InsertLoggingLog(os,browser,"0",id,publicip);
@@ -131,19 +120,14 @@ public class adminSignIn extends HttpServlet {
                  response.sendRedirect("adminLoginPage?clr=home&act=home1");
                out.println("</body>");
                out.println("</html>");
-        		 
         	 }else{ 
-        		 
         		 status = false;
-        		 
         		 String message = "Login Failed,Please try again!";
         		 request.setAttribute("message", message);
         		request.getRequestDispatcher("adminLogin?message=invalid email and password&type=HR").include(request, response);
-                 
                    out.println("</body>");
                    out.println("</html>");
         	 }
-        
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,7 +139,6 @@ public class adminSignIn extends HttpServlet {
 		// TODO Auto-generated method stub
 		processRequest(request, response);
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -163,5 +146,4 @@ public class adminSignIn extends HttpServlet {
 		// TODO Auto-generated method stub
 		processRequest(request, response);
 	}
-
 }
