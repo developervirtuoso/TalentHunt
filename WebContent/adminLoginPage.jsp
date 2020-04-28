@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Bootstrap All in One Navbar</title>
+<title>LOCKDOWN TALENT HUNT</title>
 <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -132,44 +132,10 @@ margin-bottom: 15px;
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">	
 </head> 
 <body onload="showonlyone('<%=request.getParameter("clr")%>','<%=request.getParameter("act")%>');">
-<%!static int count=0;
-String fromdate="";
-String todate="";
-int order2=0;
-int page1=0;
-int pre=0;
-int next=0;
-int total_rows=0;
-int page_count=0;
-int pading_count=0;
-
-String searchValue=null;
-
-Logger logger = Logger.getLogger("empAppraisalList1.jsp");
-
-String redirect_url="empLeave?clr=empleavebyteamid&act=empleavebyteamid";
-%>
-	<% 
-
-if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
-	searchValue=request.getParameter("searchValue");
-logger.info("searchValue=>>"+searchValue);
-searchValue =  searchValue.replaceAll("'", "''");
-logger.info("searchValue=>>"+searchValue);
-}else{
-	searchValue="0";
-	logger.info("searchValue=>>"+searchValue);
-}
-	
-
-%>
-
 <%@ include file="adminHeader.jsp" %>
 	<div class="row">
 
 		<%@ include file="adminSider.jsp" %>
-		
-		
 		
 		<div class="col-lg-10 mypadding" >
 		
@@ -490,146 +456,5 @@ logger.info("searchValue=>>"+searchValue);
 	});
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
 
-	 $.ajax({
-           type: "GET",
-           url: "getEmpLeaveCountByAjax.jsp?id="+<%=id%>,
-           dataType: 'JSON',
-           data: null,
-           processData: false,
-           contentType: false,
-           cache: false,
-           timeout: 600000,
-           success: function (data) {
-           	 
-           	 var myObj, pebcount,pnonebcount,sebcount,snonebcount,tebcount,tnonebcount,totalebcount,totalnonebcount;
-           	 myObj=data;
-           
-           	 document.getElementById("totalcount").innerHTML=myObj.totalcount;
-        	document.getElementById("totalcount").classList.remove("spinner-border");
-        	
-        	document.getElementById("approvedcount").innerHTML=myObj.approvedcount;
-        	document.getElementById("approvedcount").classList.remove("spinner-border");
-        	
-        	document.getElementById("declinecount").innerHTML=myObj.declinecount;
-        	document.getElementById("declinecount").classList.remove("spinner-border");
-        	
-        	document.getElementById("pendingcount").innerHTML=myObj.pendingcount;
-        	document.getElementById("pendingcount").classList.remove("spinner-border");
-
-           },
-           error: function (e) {
-
-             //  $("#result").text(e.responseText);
-               console.log("ERROR : ", e);
-             
-
-           }
-       });
-	 
-	 $.ajax({
-         type: "GET",
-         url: "getAttendanceByAjax.jsp?username=<%=username%>",
-         dataType: 'JSON',
-         data: null,
-         processData: false,
-         contentType: false,
-         cache: false,
-         timeout: 600000,
-         success: function (data) {
-         	 
-         	 var myObj;
-         	 myObj=data;
-         	console.log("nnnnnnn : ", myObj);
-         
-        
-      	document.getElementById("empYearcount").innerHTML=myObj.empYearcount;
-      	if(myObj.empYearcount==0){
-      		document.getElementById("empYearcount").href = "#";
-      	}else{
-      		document.getElementById("empYearcount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=year1%>&type=onleave";
-      	}
-      	document.getElementById("empYearcount").classList.remove("spinner-border");
-      	
-      	document.getElementById("empYearLatecount").innerHTML=myObj.empYearLatecount;
-      	if(myObj.empYearLatecount==0){
-      		document.getElementById("empYearLatecount").href = "#";
-      	}else{
-      		document.getElementById("empYearLatecount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=year1%>&type=late";
-      	}
-      	document.getElementById("empYearLatecount").classList.remove("spinner-border");
-      	
-      	document.getElementById("empYearOntimecount").innerHTML=myObj.empYearOntimecount;
-      	if(myObj.empYearOntimecount==0){
-      		document.getElementById("empYearOntimecount").href = "#";
-      	}else{
-      		document.getElementById("empYearOntimecount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=year1%>&type=ontime";
-      	}
-    	document.getElementById("empYearOntimecount").classList.remove("spinner-border");
-    	
-      	document.getElementById("empYearBmcount").innerHTML=myObj.empYearBmcount;
-      	if(myObj.empYearBmcount==0){
-      		document.getElementById("empYearBmcount").href = "#";
-      	}else{
-      		document.getElementById("empYearBmcount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=year1%>&type=bm";
-      	}
-    	document.getElementById("empYearBmcount").classList.remove("spinner-border");
-    	
-      	
-      	document.getElementById("empMonthlycount").innerHTML=myObj.empMonthlycount;
-      	if(myObj.empMonthlycount==0){
-      		document.getElementById("empMonthlycount").href = "#";
-      	}else{
-      		document.getElementById("empMonthlycount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=monthyear%>&type=onleave";
-      	}
-    	document.getElementById("empMonthlycount").classList.remove("spinner-border");
-    	
-      	
-      	document.getElementById("empMonthlyLatecount").innerHTML=myObj.empMonthlyLatecount;
-      	if(myObj.empMonthlyLatecount==0){
-      		document.getElementById("empMonthlyLatecount").href = "#";
-      	}else{
-      		document.getElementById("empMonthlyLatecount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=monthyear%>&type=late";
-      	}
-    	document.getElementById("empMonthlyLatecount").classList.remove("spinner-border");
-    	
-      	document.getElementById("empMonthlyOntimecount").innerHTML=myObj.empMonthlyOntimecount;
-      	if(myObj.empMonthlyOntimecount==0){
-      		document.getElementById("empMonthlyOntimecount").href = "#";
-      	}else{
-      		document.getElementById("empMonthlyOntimecount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=monthyear%>&type=ontime";
-      	}
-    	document.getElementById("empMonthlyOntimecount").classList.remove("spinner-border");
-    	
-      	document.getElementById("empMonthlyBmcount").innerHTML=myObj.empMonthlyBmcount;
-      	if(myObj.empMonthlyBmcount==0){
-      		document.getElementById("empMonthlyBmcount").href = "#";
-      	}else{
-      		document.getElementById("empMonthlyBmcount").href = "showEmpAttendance?clr=appdashboard&act=appdashboard&date=<%=monthyear%>&type=bm";
-      	}
-    	document.getElementById("empMonthlyBmcount").classList.remove("spinner-border");
-      	
-      //	document.getElementById("empYearcount").classList.remove("spinner-border");
-      	/*
-      	document.getElementById("approvedcount").innerHTML=myObj.approvedcount;
-      	document.getElementById("approvedcount").classList.remove("spinner-border");
-      	
-      	document.getElementById("declinecount").innerHTML=myObj.declinecount;
-      	document.getElementById("declinecount").classList.remove("spinner-border");
-      	
-      	document.getElementById("pendingcount").innerHTML=myObj.pendingcount;
-      	document.getElementById("pendingcount").classList.remove("spinner-border");*/
-
-         },
-         error: function (e) {
-
-           //  $("#result").text(e.responseText);
-             console.log("ERROR : ", e);
-           
-
-         }
-     });
-
-</script>
 </html>                                                        

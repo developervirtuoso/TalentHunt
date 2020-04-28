@@ -1,5 +1,4 @@
 package com.dao.impl;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -28,15 +26,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.beans.ConnFile;
 import com.beans.Userbeans;
-
 import common.database.DbConnection;
-
 public class ApiController {
 	private static SecretKeySpec secretKey;
 	private static byte[] key;
@@ -46,7 +40,6 @@ public class ApiController {
 		String originalString = "123456";
         String encryptedString = apiController.encrypt(originalString) ;
         String decryptedString = apiController.decrypt(encryptedString) ;
-         
         System.out.println(originalString);
         System.out.println(encryptedString);
         System.out.println(decryptedString);
@@ -83,7 +76,6 @@ public class ApiController {
         }
         return null;
     }
- 
     public String decrypt(String strToDecrypt) 
     {
         try
@@ -117,7 +109,6 @@ public class ApiController {
 		 Connection Conn=DbConnection.getInstance().getConnection();
 		   int i=0;
 		    PreparedStatement pst=null;
-		   
 		try 
 		{
 			pst=Conn.prepareStatement("insert into user (username,ticketid,email,phoneno,dob,gender,file,filename,cat) values(?,?,?,?,?,?,?,?,?)");
@@ -131,8 +122,6 @@ public class ApiController {
 			  pst.setString(8, itemName);
 			  pst.setString(9, cat);
 			  i=pst.executeUpdate();
-	    	
-			
 		}
 		catch(Exception e)
 		{
@@ -172,7 +161,6 @@ public class ApiController {
 		        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		        props.put("mail.smtp.auth", "true");
 		        props.put("mail.smtp.port", "465");
-
 		        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 		            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
 		                return new javax.mail.PasswordAuthentication(user, pass);//change accordingly  
@@ -204,13 +192,10 @@ public class ApiController {
 		            		"</html>\n" + 
 		            		""
 		            		+ "","text/html" );  
-
 		            // Create a multipar message
 		            Multipart multipart = new MimeMultipart();
-
 		            // Set text message part
 		            multipart.addBodyPart(messageBodyPart);
-
 		            // Part two is attachment
 		            messageBodyPart = new MimeBodyPart();
 		            String filename = filePath;
@@ -219,89 +204,19 @@ public class ApiController {
 		            messageBodyPart.setDataHandler(new DataHandler(source));
 		            messageBodyPart.setFileName(itemName);
 		            multipart.addBodyPart(messageBodyPart);
-
 		            // Send the complete message parts
 		            message.setContent(multipart);
 		            //send message  
 		            Transport.send(message);
 		            System.out.println("message sent to ----" + to);
-
 		        } catch (MessagingException e) {
 		            throw new RuntimeException(e);
-
 		        }
-
-				
-				
-
 			}
 		};
 		thread.start();
 	}
-	public ArrayList<Userbeans> getUserList( ) {
-		
-		ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
-        boolean check = false;
-        Connection conn=DbConnection.getInstance().getConnection();
-         Statement st=null;
-        ResultSet rs=null;
-        try
-        {
-        	
-     	  st=conn.createStatement();
-     	  
-      	 rs = st.executeQuery("select * from user;");
-      	System.out.println("select * from user;");
-      	 while(rs.next())
-      	 {
-      		 Userbeans userbeans=new Userbeans();
-      		 userbeans.setId(rs.getInt("id"));
-      		 userbeans.setUsername(rs.getString("username"));
-      		 userbeans.setTicketid(rs.getString("ticketid"));
-      		 userbeans.setEmail(rs.getString("email"));
-      		 userbeans.setPhoneno(rs.getString("phoneno"));
-      		 userbeans.setDob(rs.getString("dob"));
-      		 userbeans.setGender(rs.getString("gender"));
-      		userbeans.setFilename(rs.getString("filename"));
-      		userbeans.setFile(rs.getString("file"));
-      		userbeans.setCat(rs.getString("cat"));
-      		 userbeanss.add(userbeans);
-      	 }
-        }
-       catch(Exception e)
-        {
-     	  e.printStackTrace();
-        }finally {
-			try {
-				if(conn!=null) {
-					conn.close();
-				}
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-			try {
-				if(st!=null) {
-					st.close();
-				}
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-			try {
-				if(rs!=null) {
-					rs.close();
-				}
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
-		return userbeanss;
-		
-		
-		
-	}
 	public void getEmployeeProfile(JSONObject jsonObject,String authkey) {
-		
-		
 	    boolean check = false;
 	    Connection conn=DbConnection.getInstance().getConnection();
 	     Statement st=null;
@@ -309,16 +224,13 @@ public class ApiController {
 	    try
 	    {
 	 	  st=conn.createStatement();
-	 	  
 	  	rs = st.executeQuery("Select * from admin where admin.authkey="+authkey+";");
 	  	System.out.println("Select * from admin where admin.authkey="+authkey+";");
 	  	 while(rs.next())
 	  	 {
-	  	
 	  		jsonObject.put("id", rs.getString("id")+"");
 	  		jsonObject.put("name", rs.getString("name")+"");
 	  		jsonObject.put("email", rs.getString("email")+"");
-	  		
 	  	 }
 	    }
 	   catch(Exception e)
@@ -337,17 +249,15 @@ public class ApiController {
 					st.close();
 				}
 			} catch (Exception e2) {
-				// TODO: handle exception
+				e2.printStackTrace();
 			}
 			try {
 				if(rs!=null) {
 					rs.close();
 				}
 			} catch (Exception e2) {
-				// TODO: handle exception
+				e2.printStackTrace();
 			}
 		}
-		
-		
 	}
 }

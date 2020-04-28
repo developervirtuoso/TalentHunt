@@ -8,10 +8,7 @@ String email=null;
 String adminType=null;
 String auth_key="";
 String id="";
-String team="";
 String name="";
-String leaderid="";
-String username="";
 
 %>
 
@@ -21,15 +18,18 @@ String username="";
 				if(empSession.getAttribute("id") != null){
 				
 						 id=(String)empSession.getAttribute("id").toString();
+						 System.out.println("ididididid"+id); 
 						 name=(String)empSession.getAttribute("name").toString();
-						 username=(String)empSession.getAttribute("username").toString();
+						 System.out.println("namenamename"+name); 
+						 email=(String)empSession.getAttribute("email").toString();
+						 System.out.println("emailemailemail"+email); 
 			            System.out.println("Enter in if"); 
                 	%>
 
 
 <nav class="navbar  navbar-expand-xl navbar-light">
 	<div class="navbar-header d-flex col">
-		<a class="navbar-brand" href="empDashboard?clr=appdashboard&act=appdashboard"> <img alt="" src="https://www.virtuosonetsoft.com/images/logo.png" width="100px" height="30px;"> EMPLOYEE</a>  		
+		<a class="navbar-brand" href="empDashboard?clr=appdashboard&act=appdashboard"> ADMIN</a>  		
 		<button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
 			<span class="navbar-toggler-icon"></span>
 			<span class="icon-bar"></span>
@@ -45,10 +45,9 @@ String username="";
 			<li class="nav-item dropdown">
 				<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action" style="color:white;"><img src="https://www.tutorialrepublic.com/examples/images/avatar/2.jpg" class="avatar" alt="Avatar"> <%=name %> <b class="caret"></b></a>
 				<ul class="dropdown-menu" >
-					<li style=""><a href="#" class="dropdown-item" data-toggle="modal" data-target="#mychangepass" style="color: black !important;"><i class="fa fa-user-o"></i> Change password</a></li>
-					<li style="display: none;"><a href="empCalender" class="dropdown-item"><i class="fa fa-calendar-o"></i> Calendar</a></li>
+					<li  style="display: none;"><a href="#" class="dropdown-item" data-toggle="modal" data-target="#mychangepass" style="color: black !important;"><i class="fa fa-user-o"></i> Change password</a></li>
 					<li class="divider dropdown-divider" style="display: none;"></li>
-					<li><a href="EmpLogout" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></li>
+					<li><a href="AdminLogout" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></li>
 				</ul>
 			</li>
 		</ul>

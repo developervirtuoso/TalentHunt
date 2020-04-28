@@ -1,0 +1,436 @@
+@font-face {
+    font-family: 'times_new_romanregular';
+    src: url('../font/times-new-roman-webfont.woff2') format('woff2'),
+         url('../font/times-new-roman-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+	body {
+        color: #566787;
+		background: #f5f5f5;
+		font-family: times_new_romanregular !important;
+		font-size: 13px;
+	}
+    .form-inline {
+        display: inline-block;
+    }
+	.navbar-header.col {
+		padding: 0 !important;
+	}	
+	.navbar {		
+		background: #0a0a0a;
+	    padding-left: 16px;
+	    padding-right: 16px;
+	    border-bottom: 1px solid #337ab7;
+	    box-shadow: 0 0 11px 12px rgba(0,0,0,.1);
+	 
+	}
+	.nav-link img {
+		border-radius: 50%;
+		width: 36px;
+		height: 36px;
+		margin: -8px 0;
+		float: left;
+		margin-right: 10px;
+	}
+	.navbar .navbar-brand {
+		color: #eee;
+		padding-left: 0;
+		padding-right: 50px;
+		font-family: 'Merienda One', sans-serif;
+	}
+	.navbar .navbar-brand i {
+		font-size: 20px;
+		margin-right: 5px;
+	}
+	.search-box {
+        position: relative;
+    }	
+    .search-box input {
+		box-shadow: none;
+        padding-right: 35px;
+        border-radius: 3px !important;
+    }
+	.search-box .input-group-addon {
+        min-width: 35px;
+        border: none;
+        background: transparent;
+        position: absolute;
+        right: 0;
+        z-index: 9;
+        padding: 7px;
+		height: 100%;
+    }
+    .search-box i {
+        color: #a0a5b1;
+		font-size: 19px;
+    }
+	.navbar .nav-item i {
+		font-size: 18px;
+	}
+	.navbar .dropdown-item i {
+		font-size: 16px;
+		min-width: 22px;
+	}
+	.navbar .nav-item.open > a {
+		background: none !important;
+	}
+	.navbar .dropdown-menu {
+		border-radius: 1px;
+		border-color: #e5e5e5;
+		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+	}
+	.navbar .dropdown-menu li a {
+		 color: white;
+		padding: 8px 20px;
+		line-height: normal;
+	}
+	 
+	.dropdown-item{
+		color: black !important;
+	}
+	.navbar .dropdown-menu li a:hover, .navbar .dropdown-menu li a:active {
+		color: #333;
+	}	
+	.navbar .dropdown-item .material-icons {
+		font-size: 21px;
+		line-height: 16px;
+		vertical-align: middle;
+		margin-top: -2px;
+	}
+	.navbar .badge {
+		background: #f44336;
+		font-size: 11px;
+		border-radius: 20px;
+		position: absolute;
+		min-width: 10px;
+		padding: 4px 6px 0;
+		min-height: 18px;
+		top: 5px;
+	}
+	.navbar ul.nav li a.notifications, .navbar ul.nav li a.messages {
+		position: relative;
+		margin-right: 10px;
+	}
+	.navbar ul.nav li a.messages {
+		margin-right: 20px;
+	}
+	.navbar a.notifications .badge {
+		margin-left: -8px;
+	}
+	.navbar a.messages .badge {
+		margin-left: -4px;
+	}	
+	.navbar .active a, .navbar .active a:hover, .navbar .active a:focus {
+		background: transparent !important;
+	}
+	.navbar-header a:hover{
+	color: white !important;
+	}
+	@media (min-width: 1200px){
+		.form-inline .input-group {
+			width: 300px;
+			margin-left: 30px;
+		}
+	}
+	@media (max-width: 1199px){
+		.form-inline {
+			display: block;
+			margin-bottom: 10px;
+		}
+		.input-group {
+			width: 100%;
+		}
+	}
+	
+	
+	
+	.row {
+    margin-right: 0px; 
+     margin-left: 0px;
+}
+	.accordion .card {
+		color: #424e5d;
+		border: 1px solid #dddddd;
+	}
+	.accordion .card a {
+		color: #424e5d;
+		text-decoration: none;				
+	}
+	.accordion .card-header {
+		
+		padding: .75rem 1rem;
+		position: relative;
+	}
+	.accordion .card-header:hover {
+		background: #03A9F4;
+		color: white;
+	}
+	.accordion .card-header h2 a:hover{
+		color: white;
+	}
+	.accordion .card-header h2 {
+		font-size: 1rem;
+	}
+	.accordion .fa {
+		width: 20px;
+		margin-right: .25rem;
+	}
+	.accordion .card-header a {
+		float: left;
+		width: 100%;
+		cursor: pointer;
+	}
+	.accordion .toggle {
+		font-size: .8rem;
+		line-height: .8rem;
+		cursor: pointer;
+		opacity: 0.7;
+		position: absolute;
+		right: 16px;
+		top: 16px;
+		width: 14px;
+		margin: 0;
+	}
+	.accordion .toggle:hover {
+		opacity: 1;
+	}
+	.accordion .card-body {
+		padding: 0;
+	}
+	.accordion .list-group-item {				
+		border-radius: 0;
+		border-width: 1px 0 1px 0;
+		padding-left: 30px;
+		background: #d6dbe0;
+		font-weight: 500;
+	}
+	.accordion .list-group-item:hover {
+		background: #007bff;
+	}
+	.accordion .list-group-item:hover a {
+		color: #fff !important;
+	}
+	.accordion .list-group-item:hover .badge{
+		background: #fff;
+		color: #007bff;
+	}
+	.accordion .list-group-item a {
+		color: #61656b;
+		display: block;
+	}
+	.accordion .list-group-item .badge {
+		float: right;
+		min-width: 36px;
+	}
+	.accordion .rotate{
+		transform: rotate(180deg); 
+	}
+	.mypadding{
+	padding-right: 0px; 
+    padding-left: 0px;
+	}
+	
+	
+	<!---User Mangement-->
+	.table-wrapper {
+        background: #fff;
+        padding: 20px 25px;
+        margin: 30px auto;
+		border-radius: 3px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+	.table-wrapper .btn {
+		float: right;
+		color: #333;
+    	background-color: #fff;
+		border-radius: 3px;
+		border: none;
+		outline: none !important;
+		margin-left: 10px;
+	}
+	.table-wrapper .btn:hover {
+        color: #333;
+		background: #f2f2f2;
+	}
+	.table-wrapper .btn.btn-primary {
+		color: #fff;
+		background: #03A9F4;
+	}
+	.table-wrapper .btn.btn-primary:hover {
+		background: #03a3e7;
+	}
+	.table-title .btn {		
+		font-size: 13px;
+		border: none;
+	}
+	.table-title .btn i {
+		float: left;
+		font-size: 21px;
+		margin-right: 5px;
+	}
+	.table-title .btn span {
+		float: left;
+		margin-top: 2px;
+	}
+	.table-title {
+		color: #fff;
+		background: #4b5366;		
+		padding: 16px 25px;
+		border-radius: 3px 3px 0 0;
+    }
+    .table-title h2 {
+		margin: 5px 0 0;
+		font-size: 24px;
+	}
+	.show-entries select.form-control {        
+        width: 80px;
+		margin: 0 5px;
+	}
+	.table-filter .filter-group {
+        float: right;
+		margin-left: 15px;
+    }
+	.table-filter input, .table-filter select {
+		height: 34px;
+		border-radius: 3px;
+		border-color: #ddd;
+        box-shadow: none;
+	}
+	.table-filter {
+		padding: 5px 0 15px;
+		border-bottom: 1px solid #e9e9e9;
+		margin-bottom: 5px;
+	}
+	.table-filter .btn {
+		height: 34px;
+	}
+	.table-filter label {
+		font-weight: normal;
+		margin-left: 10px;
+	}
+	.table-filter select, .table-filter input {
+		display: inline-block;
+		margin-left: 5px;
+	}
+	.table-filter input {
+		width: 200px;
+		display: inline-block;
+	}
+	.filter-group select.form-control {
+		width: 110px;
+	}
+	.filter-icon {
+		float: right;
+		margin-top: 7px;
+	}
+	.filter-icon i {
+		font-size: 18px;
+		opacity: 0.7;
+	}	
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+		padding: 12px 15px;
+		vertical-align: middle;
+    }
+	table.table tr th:first-child {
+		width: 60px;
+	}
+	table.table tr th:last-child {
+		width: 80px;
+	}
+    table.table-striped tbody tr:nth-of-type(odd) {
+    	background-color: #fcfcfc;
+	}
+	table.table-striped.table-hover tbody tr:hover {
+		background: #f5f5f5;
+	}
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }	
+	table.table td a {
+		font-weight: bold;
+		color: #566787;
+		display: inline-block;
+		text-decoration: none;
+	}
+	table.table td a:hover {
+		color: #2196F3;
+	}
+	table.table td a.view {        
+		width: 30px;
+		height: 30px;
+		color: #2196F3;
+		border: 2px solid;
+		border-radius: 30px;
+		text-align: center;
+    }
+    table.table td a.view i {
+        font-size: 22px;
+		margin: 2px 0 0 1px;
+    }   
+	table.table .avatar {
+		border-radius: 50%;
+		vertical-align: middle;
+		margin-right: 10px;
+	}
+	.status {
+		font-size: 30px;
+		margin: 2px 2px 0 0;
+		display: inline-block;
+		vertical-align: middle;
+		line-height: 10px;
+	}
+    .text-success {
+        color: #10c469;
+    }
+    .text-info {
+        color: #62c9e8;
+    }
+    .text-warning {
+        color: #FFC107;
+    }
+    .text-danger {
+        color: #ff5b5b;
+    }
+    .pagination {
+        float: right;
+        margin: 0 0 5px;
+    }
+    .pagination li a {
+        border: none;
+        font-size: 13px;
+        min-width: 30px;
+        min-height: 30px;
+        color: #999;
+        margin: 0 2px;
+        line-height: 30px;
+        border-radius: 2px !important;
+        text-align: center;
+        padding: 0 6px;
+    }
+    .pagination li a:hover {
+        color: #666;
+    }	
+    .pagination li.active a {
+        background: #03A9F4;
+    }
+    .pagination li.active a:hover {        
+        background: #0397d6;
+    }
+	.pagination li.disabled i {
+        color: #ccc;
+    }
+    .pagination li i {
+        font-size: 16px;
+        padding-top: 6px
+    }
+    .hint-text {
+        float: left;
+        margin-top: 10px;
+        font-size: 13px;
+    }
+    

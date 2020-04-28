@@ -120,16 +120,15 @@ public class adminSignIn extends HttpServlet {
         	password = admin.getPassword();
         	
         	 if (status == true) {
-        		 logger.info("444444444444");
         		 //adminDaoImpl.logTimingDetails(id, logintime);
-        		 logger.info("55555555555");
         		 adminDaoImpl.InsertLoggingLog(os,browser,"0",id,publicip);
                  HttpSession session = request.getSession();
                  session.setAttribute("id", id);
                  session.setAttribute("email", email);
                  session.setAttribute("password", password);
                  session.setAttribute("authkey", admin.getAuthkey());
-                 response.sendRedirect("adminLoginPage.jsp?clr=home&act=home1");
+                 session.setAttribute("name", admin.getName());
+                 response.sendRedirect("adminLoginPage?clr=home&act=home1");
                out.println("</body>");
                out.println("</html>");
         		 
@@ -139,7 +138,7 @@ public class adminSignIn extends HttpServlet {
         		 
         		 String message = "Login Failed,Please try again!";
         		 request.setAttribute("message", message);
-        		request.getRequestDispatcher("employeeLogin?message=invalid email and password&type=HR").include(request, response);
+        		request.getRequestDispatcher("adminLogin?message=invalid email and password&type=HR").include(request, response);
                  
                    out.println("</body>");
                    out.println("</html>");

@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>TalentHunt</display-name>
+  <servlet>
+    <servlet-name>adminLogin</servlet-name>
+    <jsp-file>/adminLogin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminLogin</servlet-name>
+    <url-pattern>/adminLogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>adminLoginPage</servlet-name>
+    <jsp-file>/adminLoginPage.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminLoginPage</servlet-name>
+    <url-pattern>/adminLoginPage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>userManagementList</servlet-name>
+    <jsp-file>/userManagementList.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userManagementList</servlet-name>
+    <url-pattern>/userManagementList</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>

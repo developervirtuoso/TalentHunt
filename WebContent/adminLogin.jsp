@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Bootstrap Elegant Account Login Form with Avatar Icon</title>
+<title>LOCKDOWN TALENT HUNT</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,8 +13,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript"> 
       $(document).ready( function() {
-        /* $('#deletesuccess').delay(1000).fadeOut(); */
-       /*  $('#deletesuccess').delay(5000).hide(0); */ 
         $('#deletesuccess').delay(10000).fadeOut(2000); 
       });
     </script>
