@@ -25,6 +25,14 @@
     <servlet-name>userManagementList</servlet-name>
     <url-pattern>/userManagementList</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>addUserByAdmin</servlet-name>
+    <jsp-file>/addUserByAdmin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addUserByAdmin</servlet-name>
+    <url-pattern>/addUserByAdmin</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>

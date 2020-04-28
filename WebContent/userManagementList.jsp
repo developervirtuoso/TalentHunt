@@ -57,7 +57,7 @@ searchValue =  searchValue.replaceAll("'", "''");
 						<h2>User Management</h2>
 					</div>
 					<div class="col-sm-8">
-						<a href="#" class="btn btn-info" style="display: none;"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+						<a href="addUserByAdmin?clr=appLanguages&act=appLanguages1" class="btn btn-info" style=""><i class="material-icons">&#xE24D;</i> <span>Add User</span></a>
 					</div>
                 </div>
             </div>
