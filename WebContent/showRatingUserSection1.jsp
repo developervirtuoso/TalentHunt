@@ -1,5 +1,5 @@
+<%@page import="com.beans.UserRatingBeans"%>
 <%@page import="com.dao.impl.AdminDaoImpl"%>
-<%@page import="com.beans.Userbeans"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.dao.impl.ApiController"%>
 <%@page import="org.apache.log4j.Logger"%>
@@ -126,64 +126,36 @@ searchValue =  searchValue.replaceAll("'", "''");
                 <thead>
                     <tr>
                         <th>User Name</th>
-				        <th>Email</th>
-				        <th>Phone number</th>
-				        <th>DOB</th>
-				        <th>Gender</th>
-				        <th>Category</th>
-				        <th>Status</th>
-				        <th>Action</th>
+				        <th>Rating</th>
+				        <th>Judge Name</th>
+				        <th>Comment</th>
 				      </tr>
                 </thead>
                 <tbody>
                 		<%
                 		AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
+                		String userid=request.getParameter("id");
     try
     {
-    	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
+    	ArrayList<UserRatingBeans> userRatingBeanss=new ArrayList<UserRatingBeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserList(sql);
+                    	String sql="SELECT user.username,user_rating_section1.*  FROM user_rating_section1 INNER JOIN user ON user.id=user_rating_section1.userid WHERE user_rating_section1.userid="+userid+" order by user_rating_section1.id desc limit "+page1+","+order2+"";
+                    	userRatingBeanss=adminDaoImpl.getUserRatingSection1(sql);
                     }else{
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user where (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserList(sql);
+                    	String sql="SELECT user.username,user_rating_section1.*  FROM user_rating_section1 INNER JOIN user ON user.id=user_rating_section1.userid WHERE user_rating_section1.userid="+userid+" and (user_rating_section1.id  LIKE '"+searchValue+"%' or user_rating_section1.judgeid LIKE '"+searchValue+"%' or user_rating_section1.rating LIKE '"+searchValue+"%') order by user_rating_section1.id desc limit "+page1+","+order2+"";
+                    	userRatingBeanss=adminDaoImpl.getUserRatingSection1(sql);
                     }
-                    for(int i=0;i<userbeanss.size();i++){
-                		Userbeans userbeans=userbeanss.get(i);
-                		String catname="";
-                		if(userbeans.getCat().equals("1")){
-                			catname="singer";
-                		}else if(userbeans.getCat().equals("2")){
-                			catname="lyrics";
-                		}else if(userbeans.getCat().equals("3")){
-                			catname="model";
-                		}
+                    for(int i=0;i<userRatingBeanss.size();i++){
+                    	UserRatingBeans userbeans=userRatingBeanss.get(i);
+                		
                 		%>
                 			 <tr>
-            			        <td><%=userbeans.getUsername() %></td>
-            			        <td><%=userbeans.getEmail() %></td>
-            			        <td><%=userbeans.getPhoneno() %></td>
-            			        <td><%=userbeans.getDob() %></td>
-            			        <td><%=userbeans.getGender() %></td>
-            			        <td><%=catname %></td>
-            			        <td><% if(userbeans.getStatus()==0){
-            			        	%><i class="fa fa-circle" style="font-size:15px;color:orange; "></i><%
-            			        }else if(userbeans.getStatus()==1){
-            			        	%><i class="fa fa-circle" style="font-size:15px;color:red; "></i><%
-            			        }else if(userbeans.getStatus()==2){
-            			        	%><i class="fa fa-circle" style="font-size:15px;color:green; "></i><%
-            			        }%></td>
-            			        <td>
-            			        	<a href="viewSection1User?clr=appLanguages&act=appLanguages1&id=<%=userbeans.getId()%>">View</a>
-            			        	<%if(userbeans.getRatingCount()>0){
-            			        		%><a href="showRatingUserSection1?clr=appLanguages&act=appLanguages1&id=<%=userbeans.getId()%>">Rating[<%=userbeans.getRatingCount() %>]</a><%
-            			        	}else{
-            			        		%><a href="#">Rating[<%=userbeans.getRatingCount() %>]</a><%
-            			        	} %>
-            			        	
-            			        </td>
-            			      </tr>
+            			        <td><%=userbeans.getUserName() %></td>
+            			        <td><%=userbeans.getRating() %></td>
+            			        <td><%=userbeans.getJadgename() %></td>
+            			        <td><%=userbeans.getComment()%></td>
+            			     </tr>
                 		<%
                 	}
                }
@@ -199,10 +171,10 @@ searchValue =  searchValue.replaceAll("'", "''");
 			    {
                     int count=0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user";
+                    	String sql="SELECT COUNT(*)  FROM user_rating_section1 WHERE userid="+userid+"";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	String sql="select * from user where (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%')";
+                    	String sql="SELECT COUNT(*)  FROM user_rating_section1 WHERE userid="+userid+" and (user_rating_section1.id  LIKE '"+searchValue+"%' or user_rating_section1.judgeid LIKE '"+searchValue+"%' or user_rating_section1.rating LIKE '"+searchValue+"%')";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }
                     	double count1=count;

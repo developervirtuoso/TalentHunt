@@ -1,3 +1,6 @@
+<%@page import="com.admin.servlet.CountByAdminBeans"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.dao.impl.AdminDaoImpl"%>
 <%@page import="com.dao.impl.ApiController"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="org.json.JSONArray"%>
@@ -132,181 +135,16 @@ margin-bottom: 15px;
 		<%@ include file="adminSider.jsp" %>
 		<div class="col-lg-10 mypadding" >
          <%
-         ApiController apiController=new ApiController();
-     	//out.print(jsonObject);
+         AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
+         CountByAdminBeans countByAdminBeans=new CountByAdminBeans();
+         countByAdminBeans=adminDaoImpl.getAllCountByAdmin();
+         
          %>
-		<div class="row" style="background-color: #ffffff; height: 50px; margin: 15px; border-radius: 5px;">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Attendance</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-         </div>
-		 <%
-		 Date today = new Date(); // Fri Jun 17 14:54:28 PDT 2016
-		 Calendar cal = Calendar.getInstance();
-		 cal.setTime(today); // don't forget this if date is arbitrary e.g. 01-01-2014
-		String mm="00";
-		 String yy="0000";
-		 int month = cal.get(Calendar.MONTH)+1; // 5
-		 if(month<9){
-			 mm="0"+month;
-		 }else{
-			 mm=""+month; 
-		 }
-		 int year = cal.get(Calendar.YEAR); // 2016
-		 String monthyear=mm+"-"+year;
-		 String year1=year+"";
-		 %>
+		
 			<!-- Content Row -->
-          <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Leave (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      				<a href="" id="empYearcount" class="spinner-border"></a>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                     <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Late (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      				<a  id="empYearLatecount" class="spinner-border"></a>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
- 			<!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">On Time (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      			<a class="spinner-border" id="empYearOntimecount"></a>	
-                     </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">BM (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      	<a class="spinner-border" id="empYearBmcount"></a>	
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                     <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-			<div class="row">
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Leave (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      			<a class="spinner-border" id="empMonthlycount"></a>	
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Late (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      		<a class="spinner-border" id="empMonthlyLatecount"></a>	
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Earnings (Monthly) Card Example -->
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">On Time (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      		<a class="spinner-border" id="empMonthlyOntimecount"></a>	
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-			 <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">BM (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      		<a class="spinner-border" id="empMonthlyBmcount"></a>	
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fa fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row" style="background-color: #ffffff; height: 50px; margin: 15px; border-radius: 5px;">
+        	<div class="row" style="background-color: #ffffff; height: 50px; margin: 15px; border-radius: 5px;">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Leave</h1>
+                    <h1 class="page-header">Traffic</h1>
                 </div>
                 <!-- /.col-lg-12 -->
          </div>
@@ -317,9 +155,9 @@ margin-bottom: 15px;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total User</div>
 	                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-	                        <a href="empLeave?clr=empleavebyteamid&act=empleavebyteamid" id="totalcount" class="spinner-border"></a>
+	                        <a href="#" id="usercount" class="spinner-border1"><%=countByAdminBeans.getUsercount() %></a>
 	                      </div>
                     </div>
                     <div class="col-auto">
@@ -334,9 +172,9 @@ margin-bottom: 15px;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Approved</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Male User</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
-                         <a href="empLeave?clr=empleavebyteamid&act=empleavebyteamid" id="approvedcount" class="spinner-border"></a>
+                         <a href="#" id="maleusercount" class="spinner-border1"><%=countByAdminBeans.getMaleusercount() %></a>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -353,9 +191,9 @@ margin-bottom: 15px;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Female Count</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      				<a href="empLeave?clr=empleavebyteamid&act=empleavebyteamid" id="pendingcount" class="spinner-border"></a>
+                      	<a href="#" id="femaleusercount" class="spinner-border1"><%=countByAdminBeans.getFemaleusercount()%></a>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -371,10 +209,10 @@ margin-bottom: 15px;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Decline</div>
+                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Judges </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800 " >
-                      	<a href="empLeave?clr=empleavebyteamid&act=empleavebyteamid" id="declinecount" class="spinner-border"></a>
-                      </div>
+                      	<a href="#" id="declinecount" class="spinner-border1">0</a>
+                      	</div>
                     </div>
                     <div class="col-auto">
                       <i class="fa fa-calendar fa-2x text-gray-300"></i>
@@ -384,7 +222,7 @@ margin-bottom: 15px;
               </div>
             </div>
            </div>
-          <!-- Content Row -->
+          <!-- Content Row spinner-border -->
 			</div>
 		</div>
 </body>

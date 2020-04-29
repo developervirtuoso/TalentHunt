@@ -10,6 +10,22 @@ public class Userbeans {
 	private String filename="0";
 	private String file="0";
 	private String cat="0";
+	private int status=0;
+	private int ratingCount=0;
+	
+	
+	public int getRatingCount() {
+		return ratingCount;
+	}
+	public void setRatingCount(int ratingCount) {
+		this.ratingCount = ratingCount;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public String getCat() {
 		return cat;
 	}

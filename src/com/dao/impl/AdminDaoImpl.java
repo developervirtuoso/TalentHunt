@@ -11,10 +11,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import org.json.JSONObject;
+
+import com.admin.servlet.CountByAdminBeans;
 import com.beans.Admin;
+import com.beans.UserRatingBeans;
 import com.beans.Userbeans;
 import common.database.DbConnection;
 public class AdminDaoImpl {
+	public static void main(String[] args) {
+		AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
+		 Userbeans userbeans=new Userbeans();
+         userbeans=adminDaoImpl.getUserDetails("4");
+         System.out.println(userbeans.getFilename());
+	}
 	public Boolean checkAdmin(Admin admin){ 
 		 String password;
 		 String email;
@@ -177,6 +186,58 @@ public class AdminDaoImpl {
 		      		userbeans.setFilename(rs.getString("filename"));
 		      		userbeans.setFile(rs.getString("file"));
 		      		userbeans.setCat(rs.getString("cat"));
+		      		 userbeans.setStatus(rs.getInt("status"));
+		      		 userbeans.setRatingCount(rs.getInt("rating_count"));
+		      		 userbeanss.add(userbeans);
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userbeanss;
+			}
+			public ArrayList<UserRatingBeans> getUserRatingSection1(String sql) {
+				ArrayList<UserRatingBeans> userbeanss=new ArrayList<UserRatingBeans>();
+		        boolean check = false;
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery(sql);
+		      	 while(rs.next())
+		      	 {
+		      		UserRatingBeans userbeans=new UserRatingBeans();
+		      		 userbeans.setId(rs.getInt("id"));
+		      		 userbeans.setUserName(rs.getString("username"));
+		      		 userbeans.setRating(rs.getString("rating"));
+		      		 userbeans.setUserid(rs.getInt("userid"));
+		      		 userbeans.setJudgeid(rs.getInt("judgeid"));
+		      		userbeans.setStatus(rs.getInt("status"));
 		      		 userbeanss.add(userbeans);
 		      	 }
 		        }
@@ -249,5 +310,140 @@ public class AdminDaoImpl {
 					}
 				}
 				return count;
+			}
+			public Userbeans getUserDetails(String id) {
+				Userbeans userbeans=new Userbeans();
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery("select * from user where id="+id+"");
+		      	 while(rs.next())
+		      	 {
+		      		 System.out.println(rs.getString("filename"));
+		      		 userbeans.setId(rs.getInt("id"));
+		      		 userbeans.setUsername(rs.getString("username"));
+		      		 userbeans.setTicketid(rs.getString("ticketid"));
+		      		 userbeans.setEmail(rs.getString("email"));
+		      		 userbeans.setPhoneno(rs.getString("phoneno"));
+		      		 userbeans.setDob(rs.getString("dob"));
+		      		 userbeans.setGender(rs.getString("gender"));
+		      		userbeans.setFilename(rs.getString("filename"));
+		      		userbeans.setFile(rs.getString("file"));
+		      		userbeans.setCat(rs.getString("cat"));
+		      		 userbeans.setStatus(rs.getInt("status"));
+		      		 
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userbeans;
+			}
+			public int ApprovedSection1(String id, String status) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("UPDATE user SET STATUS="+status+" WHERE id="+id+";");
+					  
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public CountByAdminBeans getAllCountByAdmin() {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				CountByAdminBeans admincount=new CountByAdminBeans();
+				int i=0;
+				 Statement st=null;
+			        ResultSet rs=null;
+				try 
+				{
+			     	 st=Conn.createStatement();
+			      	 rs = st.executeQuery("SELECT id,\r\n" + 
+			      	 		"(SELECT COUNT(*) FROM user)AS usercount,\r\n" + 
+			      	 		"(SELECT COUNT(*) FROM user WHERE gender='male')AS maleusercount,\r\n" + 
+			      	 		"(SELECT COUNT(*) FROM user WHERE gender='female')AS femaleusercount FROM admin;");
+			      	 while(rs.next())
+			      	 {
+			      		 
+			      		 admincount.setId(rs.getInt("id"));
+			      		 admincount.setUsercount(rs.getInt("usercount"));
+			      		 admincount.setMaleusercount(rs.getInt("maleusercount"));
+			      		 admincount.setFemaleusercount(rs.getInt("femaleusercount"));
+			      		 
+			      	 }
+			        }
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return admincount;
 			}
 }
