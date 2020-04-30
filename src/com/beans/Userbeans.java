@@ -8,12 +8,19 @@ public class Userbeans {
 	private String dob="0";
 	private String gender="0";
 	private String filename="0";
+	private String password="0";
 	private String file="0";
 	private String cat="0";
 	private int status=0;
 	private int ratingCount=0;
 	
 	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public int getRatingCount() {
 		return ratingCount;
 	}

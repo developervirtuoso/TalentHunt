@@ -15,6 +15,7 @@
 </head>
 <body>
 <div class="container">
+
             <form class="form-horizontal" role="form" action="insertRegister.jsp" method="post" enctype="multipart/form-data" >
                 <h2>LOCKDOWN TALENT HUNT</h2>
                 <div class="form-group">

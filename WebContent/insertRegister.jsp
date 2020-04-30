@@ -105,10 +105,15 @@ int imei = 0;
     try {
     	ApiController apiController=new ApiController();
     	String ticketid=apiController.generateNewToken();
-    	int i=apiController.AddRegisterMember(username,email,phoneno,dob,gender,image,ticketid,itemName,cat);
+    	String password=(username+dob.replace("-", "")).replace(" ", "");
+    	String pageurl = request.getRequestURL().toString();
+    	String baseURL = pageurl.substring(0, pageurl.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
+    	String userurl=baseURL+"userLogin";
+    	
+    	int i=apiController.AddRegisterMember(username,email,phoneno,dob,gender,image,ticketid,itemName,cat,password);
 		if(i>0){
 		  System.out.println("Successfully Register");
-		  apiController.sendMailWithFile(username,email,image,ticketid,filePath,itemName);
+		  apiController.sendMailWithFile(username,email,image,ticketid,filePath,itemName,password,userurl);
 		  response.sendRedirect("thankupage.jsp?message=2");
 		}
 		else

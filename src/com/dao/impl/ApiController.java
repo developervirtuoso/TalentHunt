@@ -37,6 +37,8 @@ public class ApiController {
 	public static void main(String[] args) {
 		System.out.println("rrrrrrrrrrrrrrrr");
 		ApiController apiController=new ApiController();
+		String authkey=apiController.generateNewToken();
+		System.out.println("authkey = "+authkey);
 		String originalString = "123456";
         String encryptedString = apiController.encrypt(originalString) ;
         String decryptedString = apiController.decrypt(encryptedString) ;
@@ -105,13 +107,13 @@ public class ApiController {
 	    secureRandom.nextBytes(randomBytes);
 	    return base64Encoder.encodeToString(randomBytes);
 	}
-	public int AddRegisterMember(String username,String email,String phoneno,String dob,String gender,String file,String ticketid,String itemName,String cat) {
+	public int AddRegisterMember(String username,String email,String phoneno,String dob,String gender,String file,String ticketid,String itemName,String cat,String password) {
 		 Connection Conn=DbConnection.getInstance().getConnection();
 		   int i=0;
 		    PreparedStatement pst=null;
 		try 
 		{
-			pst=Conn.prepareStatement("insert into user (username,ticketid,email,phoneno,dob,gender,file,filename,cat) values(?,?,?,?,?,?,?,?,?)");
+			pst=Conn.prepareStatement("insert into user (username,ticketid,email,phoneno,dob,gender,file,filename,cat,password) values(?,?,?,?,?,?,?,?,?,?)");
 			 pst.setString(1,username);
 			  pst.setString(2, ticketid);
 			  pst.setString(3, email);
@@ -121,6 +123,7 @@ public class ApiController {
 			  pst.setString(7, file);
 			  pst.setString(8, itemName);
 			  pst.setString(9, cat);
+			  pst.setString(10, password);
 			  i=pst.executeUpdate();
 		}
 		catch(Exception e)
@@ -144,11 +147,11 @@ public class ApiController {
 		}
 		return i;
 	}
-	public void sendMailWithFile(String username,String email, String file,String ticketid,String filePath,String itemName) {
+	public void sendMailWithFile(String username,String email, String file,String ticketid,String filePath,String itemName,String password,String userurl) {
 		Thread thread=new Thread() {
 			public void run() {
 				String subject="Create User";
-				String txt_msg="User name : "+username+"\n"+"ticketid : "+ticketid+"";
+				String txt_msg="User name : "+username+"\n"+"ticketid : "+ticketid+"\n"+"email: "+email+"\n"+"password: "+password;
 				String host ="smtp.gmail.com" ; 
 				String user = "info@parrotinfosoft.com";
 				String pass = "info@123"; 
@@ -186,6 +189,11 @@ public class ApiController {
 		            		 "          <form class='form-horizontal' role='form' style='max-width: 530px;     padding: 15px;     margin: 10% auto 0;     border-radius: 0.3em;     background-color: #fff;'>\n" + 
 		            		 "            <h2 style='font-family: "+ch+"Open Sans"+ch+" , sans-serif;     font-size: 40px;     font-weight: 600;     color: #000000;     margin-top: 5%;     text-align: center;     text-transform: uppercase;     letter-spacing: 4px; '>Thanks For your concern </h2>\n" + 
 		            		 "<p class='text-center'>In case of any queries please get in touch with us via info@musicworld.com </p>\n" + 
+		            		 "<p class='text-center'>Username : "+username+" </p>\n" + 
+		            		 "<p class='text-center'>Email : "+email+" </p>\n" + 
+		            		 "<p class='text-center'>Password : "+password+" </p>\n" + 
+		            		 "<p class='text-center'>Ticket id : "+ticketid+" </p>\n" + 
+		            		 "<p class='text-center'>User Login  : "+userurl+" </p>\n" + 
 		            		 "		  </form>\n" + 
 		            		 "        </div> <!-- ./container -->\n" + 
 		            		 "</body>"+
