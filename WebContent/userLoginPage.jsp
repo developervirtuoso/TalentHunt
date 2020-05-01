@@ -19,14 +19,76 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
     <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
-    
+
   <link rel="stylesheet" type="text/css" href="css/userstyle.css">
+  <style type="text/css">
+  	.progress, .progress * { box-sizing: border-box; }
+.progress {
+    padding: 25px;
+    margin: 20px;
+    border-radius: 3px;
+    display: flex;
+    flex-flow: row nowrap;
+    background: #ddd;
+}
+.progress .cycle {
+    height: 10px;
+    border: 1px solid #111;
+    flex: 1 0 auto;
+    position: relative;
+    background: #555;
+}
+.progress .cycle:first-of-type {
+    width: 0px;
+    flex: 0 0;
+}
+.progress .cycle.current ~ .cycle {
+    background: #fff;
+}
+.progress .cycle:after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 1px solid #111;
+    border-radius: 50%;
+    position: absolute;
+    top: -12px;
+    right: -15px;
+    z-index: 2;
+    background: #555;
+}
+.progress .cycle.current:after {
+    background: deepskyblue;
+}
+.progress .cycle.current ~ .cycle:after {
+    background: #fff;
+}
+/* With Counters */
+.progress.counter {
+    counter-reset: cycle; 
+}
+.progress.counter .cycle:after {
+    counter-increment: cycle;
+    content: counter(cycle);
+    line-height: 30px;
+    text-align: center;
+    font-family: Arial;
+}
+/* Fixed Width */
+.fixed1 {
+    width: 400px;
+}
+.fixed2 {
+    width: 300px;
+}
+  </style>
 </head>
 <%!
 String user_id=null;
 String user_email=null;
 String user_username="";
 String user_ticketid="";
+String section_status="";
 %>
 <%
 				HttpSession usersession=request.getSession();
@@ -35,12 +97,15 @@ String user_ticketid="";
 					user_email=(String)usersession.getAttribute("user_email").toString();
 					user_username=(String)usersession.getAttribute("user_username").toString();
 					user_ticketid=(String)usersession.getAttribute("user_ticketid").toString();
+					section_status=(String)usersession.getAttribute("section_status").toString();
+					
                 	%>
                 	<%}else { 
                  response.sendRedirect("userLogin");
                  }
                  %> 
 <body class="profile-page">
+
     <nav class="navbar navbar-color-on-scroll navbar-transparent    fixed-top  navbar-expand-lg "  color-on-scroll="100"  id="sectionsNav">
         <div class="container">
             <div class="navbar-translate">
@@ -59,9 +124,23 @@ String user_ticketid="";
                           <i class="material-icons">apps</i> Sections
                       </a>
                       <div class="dropdown-menu dropdown-with-icons">
-                        <a href="userLoginPage" class="dropdown-item">
-                            <i class="material-icons">layers</i> Section 1
-                        </a>
+                      <%if(section_status.equalsIgnoreCase("1")){
+                    	  %>
+                    	  	 <a href="userLoginPage" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 1
+	                        </a>
+                    	  <%
+                      }else if(section_status.equalsIgnoreCase("2")){
+                    	  %>
+                 	  	 	<a href="userLoginPage" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 1
+	                        </a>
+	                        <a href="userLoginPage" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 2
+	                        </a>
+                 	  <%
+                      } %>
+                       
                         
                         <a href="http://demos.creative-tim.com/material-kit/docs/2.0/getting-started/introduction.html" class="dropdown-item" style="display: none;">
                             <i class="material-icons">content_paste</i> Documentation
@@ -109,7 +188,11 @@ String user_ticketid="";
 	                    </div>
     	            </div>
                 </div>
+               <div class="progress">
+    <div class="progress-bar progress-bar-striped" style="width:50%;height: 200px;"></div>
+  </div>
               	<div class="row">
+              	
 					<div class="col-md-6 ml-auto mr-auto">
                         <div class="profile-tabs">
                           <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
@@ -269,7 +352,7 @@ String user_ticketid="";
     {
     	ArrayList<UserRatingBeans> userRatingBeanss=new ArrayList<UserRatingBeans>();
                     int count =0;
-                    String sql="SELECT user.username,user_rating_section1.*  FROM user_rating_section1 INNER JOIN user ON user.id=user_rating_section1.userid WHERE user_rating_section1.userid=1 order by user_rating_section1.id desc ";
+                    String sql="SELECT user.username,user_rating_section1.*,judges.NAME AS judges_name FROM user_rating_section1 INNER JOIN USER ON user.id=user_rating_section1.userid INNER JOIN judges ON judges.id=user_rating_section1.judgeid WHERE user_rating_section1.userid="+user_id+" ORDER BY user_rating_section1.id DESC ";
                 	userRatingBeanss=adminDaoImpl.getUserRatingSection1(sql);
                     for(int i=0;i<userRatingBeanss.size();i++){
                     	UserRatingBeans userRatingBeans=userRatingBeanss.get(i);

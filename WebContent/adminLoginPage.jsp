@@ -144,7 +144,7 @@ margin-bottom: 15px;
 			<!-- Content Row -->
         	<div class="row" style="background-color: #ffffff; height: 50px; margin: 15px; border-radius: 5px;">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Traffic</h1>
+                    <h1 class="page-header">Applicants Status</h1>
                 </div>
                 <!-- /.col-lg-12 -->
          </div>
@@ -155,7 +155,7 @@ margin-bottom: 15px;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total User</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Applicants</div>
 	                      <div class="h5 mb-0 font-weight-bold text-gray-800">
 	                        <a href="#" id="usercount" class="spinner-border1"><%=countByAdminBeans.getUsercount() %></a>
 	                      </div>
@@ -172,7 +172,7 @@ margin-bottom: 15px;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Male User</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Male Applicants</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
                          <a href="#" id="maleusercount" class="spinner-border1"><%=countByAdminBeans.getMaleusercount() %></a>
                       </div>
@@ -191,7 +191,7 @@ margin-bottom: 15px;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Female Count</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> Female Applicants</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
                       	<a href="#" id="femaleusercount" class="spinner-border1"><%=countByAdminBeans.getFemaleusercount()%></a>
                       </div>

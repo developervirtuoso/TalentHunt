@@ -73,6 +73,30 @@
     <servlet-name>userLoginPage</servlet-name>
     <url-pattern>/userLoginPage</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>judgesLogin</servlet-name>
+    <jsp-file>/judgesLogin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>judgesLogin</servlet-name>
+    <url-pattern>/judgesLogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>judgesSection1</servlet-name>
+    <jsp-file>/judgesSection1.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>judgesSection1</servlet-name>
+    <url-pattern>/judgesSection1</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>viewSection1UserByjudges</servlet-name>
+    <jsp-file>/viewSection1UserByjudges.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>viewSection1UserByjudges</servlet-name>
+    <url-pattern>/viewSection1UserByjudges</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>

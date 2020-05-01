@@ -45,6 +45,8 @@ public class ApiController {
         System.out.println(originalString);
         System.out.println(encryptedString);
         System.out.println(decryptedString);
+        apiController.sendMailForSecondRound("https:www.neeraj.com", "You are selected for second round", "neeraj@virtuosonetsoft.in");
+       
 	}
     public static void setKey(String myKey) 
     {
@@ -224,6 +226,80 @@ public class ApiController {
 		};
 		thread.start();
 	}
+	public void sendMailForSecondRound(String userurl,String mgs,String email) {
+		Thread thread=new Thread() {
+			public void run() {
+				String subject="Create User";
+				String txt_msg=mgs;
+				String host ="smtp.gmail.com" ; 
+				String user = "info@parrotinfosoft.com";
+				String pass = "info@123"; 
+				String to = email; 
+				String from = "info@parrotinfosoft.com";				
+				Properties props = new Properties();
+		        //props.put("mail.smtp.host", "smtp.mail.yahoo.com");
+		        props.put("mail.smtp.host", "smtp.gmail.com");  
+		        props.put("mail.smtp.socketFactory.port", "465");
+		        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		        props.put("mail.smtp.auth", "true");
+		        props.put("mail.smtp.port", "465");
+		        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+		            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+		                return new javax.mail.PasswordAuthentication(user, pass);//change accordingly  
+		            }
+		        });
+		        //compose message  
+		        try {
+		            MimeMessage message = new MimeMessage(session);
+		            message.setFrom(new InternetAddress(from));//change accordingly  
+		            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		            message.setSubject(subject);
+		            message.setText(txt_msg);
+		            //BodyPart messageBodyPart = new MimeBodyPart();
+		            char ch='"';
+		            message.setText(txt_msg);
+		            message.setContent("<html>\n" + 
+		            		"<head>\n" + 
+		            		"<title>Astrological.ly</title>\n" + 
+		            		"<style type='text/css'> 	body {      } *[role='form'] {      } *[role='form'] h2 {     } </style>\n" + 
+		            		"</head>\n" + 
+		            		 "<body style='background: url("+ch+"http://142.93.223.67:8080/TalentHunt/img/bg.jpg"+ch+") fixed; background-size: cover;'>\n" + 
+		            		 "<div style=' padding: 100px;'>\n" + 
+		            		 "          <form class='form-horizontal' role='form' style='max-width: 530px;     padding: 15px;     margin: 10% auto 0;     border-radius: 0.3em;     background-color: #fff;'>\n" + 
+		            		 "            <h2 style='font-family: "+ch+"Open Sans"+ch+" , sans-serif;     font-size: 40px;     font-weight: 600;     color: #000000;     margin-top: 5%;     text-align: center;     text-transform: uppercase;     letter-spacing: 4px; '>"+txt_msg+" </h2>\n" + 
+		            		 "<p class='text-center'>In case of any queries please get in touch with us via info@musicworld.com </p>\n" + 
+		            		 "<p class='text-center'>User Login  : "+userurl+" </p>\n" + 
+		            		 "		  </form>\n" + 
+		            		 "        </div> <!-- ./container -->\n" + 
+		            		 "</body>"+
+		            		"</html>\n" + 
+		            		""
+		            		+ "","text/html" );  
+		            // Create a multipar message
+		            //Multipart multipart = new MimeMultipart();
+		            // Set text message part
+		            //multipart.addBodyPart(messageBodyPart);
+		            // Part two is attachment
+		            //messageBodyPart = new MimeBodyPart();
+		           // String filename = filePath;
+		           // System.out.println("filenamefilenamefilenamefilename=nn="+filename);
+		            //DataSource source = new FileDataSource(filename);
+		            //messageBodyPart.setDataHandler(new DataHandler(source));
+		            //messageBodyPart.setFileName(itemName); 
+		            //multipart.addBodyPart(messageBodyPart);
+		            // Send the complete message parts
+		           // message.setContent(multipart);
+		            //send message  
+		            Transport.send(message);
+		            System.out.println("message sent to ----" + to);
+		        } catch (MessagingException e) {
+		            throw new RuntimeException(e);
+		        }
+			}
+		};
+		thread.start();
+	}
+	
 	public void getEmployeeProfile(JSONObject jsonObject,String authkey) {
 	    boolean check = false;
 	    Connection conn=DbConnection.getInstance().getConnection();

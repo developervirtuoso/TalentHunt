@@ -3,26 +3,26 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
 <%!
-String email=null;
+String judges_email=null;
 String adminType=null;
-String auth_key="";
-String id="";
-String name="";
+String judges_authkey="";
+String judges_id="";
+String judges_name="";
 %>
 <%
 				HttpSession empSession=request.getSession();
-				if(empSession.getAttribute("id") != null){
-						 id=(String)empSession.getAttribute("id").toString();
-						 System.out.println("ididididid"+id); 
-						 name=(String)empSession.getAttribute("name").toString();
-						 System.out.println("namenamename"+name); 
-						 email=(String)empSession.getAttribute("email").toString();
-						 System.out.println("emailemailemail"+email); 
+				if(empSession.getAttribute("judges_id") != null){
+					judges_id=(String)empSession.getAttribute("judges_id").toString();
+						 System.out.println("ididididid"+judges_id); 
+						 judges_name=(String)empSession.getAttribute("judges_name").toString();
+						 System.out.println("namenamename"+judges_name); 
+						 judges_email=(String)empSession.getAttribute("judges_email").toString();
+						 System.out.println("emailemailemail"+judges_email); 
 			            System.out.println("Enter in if"); 
                 	%>
 <nav class="navbar  navbar-expand-xl navbar-light">
 	<div class="navbar-header d-flex col">
-		<a class="navbar-brand" href="empDashboard?clr=appdashboard&act=appdashboard"> ADMIN</a>  		
+		<a class="navbar-brand" href="judgesSection1?clr=appLanguages&act=appLanguages1"> JUDGES</a>  		
 		<button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
 			<span class="navbar-toggler-icon"></span>
 			<span class="icon-bar"></span>
@@ -36,11 +36,11 @@ String name="";
 			<li class="nav-item" style="display: none;"><a href="#" class="nav-link notifications"><i class="fa fa-bell-o"></i><span class="badge">1</span></a></li>
 			<li class="nav-item" style="display: none;"><a href="#" class="nav-link messages"><i class="fa fa-envelope-o"></i><span class="badge">10</span></a></li>
 			<li class="nav-item dropdown">
-				<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action" style="color:white;"><img src="https://www.tutorialrepublic.com/examples/images/avatar/2.jpg" class="avatar" alt="Avatar"> <%=name %> <b class="caret"></b></a>
+				<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action" style="color:white;"><img src="https://www.tutorialrepublic.com/examples/images/avatar/2.jpg" class="avatar" alt="Avatar"> <%=judges_name %> <b class="caret"></b></a>
 				<ul class="dropdown-menu" >
 					<li  style="display: none;"><a href="#" class="dropdown-item" data-toggle="modal" data-target="#mychangepass" style="color: black !important;"><i class="fa fa-user-o"></i> Change password</a></li>
 					<li class="divider dropdown-divider" style="display: none;"></li>
-					<li><a href="AdminLogout" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></li>
+					<li><a href="JudgesLogout" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -57,7 +57,7 @@ String name="";
       </div>
 		<!-- Modal body -->
 	      <div class="modal-body">
-	      		<input type="hidden" name="id" value="<%=id%>">
+	      		<input type="hidden" name="id" value="<%=judges_id%>">
 	       		<input type="password" name="oldpass" id="oldpass" placeholder="Enter old password" class="form-control"><br>
 	       		<input type="password" name="newpass" id="newpass" placeholder="Enter new password" class="form-control"><br>
 	       		<input type="password" name="confirmpass" id="confirmpass" placeholder="Enter confirm password" class="form-control">
@@ -98,7 +98,7 @@ function changepassfnc() {
 	    if(newpass == confirmpass) {
 	    	$.ajax({
 	    	    type: "GET",
-	    	    url: "changeEmpPassByAjax.jsp?newpass="+newpass+"&oldpass="+oldpass+"&id=<%=id%>",
+	    	    url: "changeEmpPassByAjax.jsp?newpass="+newpass+"&oldpass="+oldpass+"&id=<%=judges_id%>",
 	    	    data: null,
 	    	    processData: false,
 	    	    contentType: false,
@@ -127,6 +127,6 @@ function changepassfnc() {
 }
 </script>
         <%}else { 
-                 response.sendRedirect("adminLogin");
+                 response.sendRedirect("judgesLogin");
                  }
                  %> 

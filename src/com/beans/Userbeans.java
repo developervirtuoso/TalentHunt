@@ -13,8 +13,43 @@ public class Userbeans {
 	private String cat="0";
 	private int status=0;
 	private int ratingCount=0;
+	private int around2=0;
+	private int around3=0;
+	private int around4=0;
+	private int around5=0;
+	private int section_status=0;
 	
 	
+	public int getAround2() {
+		return around2;
+	}
+	public void setAround2(int around2) {
+		this.around2 = around2;
+	}
+	public int getAround3() {
+		return around3;
+	}
+	public void setAround3(int around3) {
+		this.around3 = around3;
+	}
+	public int getAround4() {
+		return around4;
+	}
+	public void setAround4(int around4) {
+		this.around4 = around4;
+	}
+	public int getAround5() {
+		return around5;
+	}
+	public void setAround5(int around5) {
+		this.around5 = around5;
+	}
+	public int getSection_status() {
+		return section_status;
+	}
+	public void setSection_status(int section_status) {
+		this.section_status = section_status;
+	}
 	public String getPassword() {
 		return password;
 	}
