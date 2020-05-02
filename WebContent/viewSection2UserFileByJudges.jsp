@@ -23,19 +23,27 @@
  <link rel="stylesheet" type="text/css" href="css/empdashboard.css">
  
 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<style type="text/css">
+	.rating-header {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+	
+</style>
 </head>
 <body onload="showonlyone('<%=request.getParameter("clr")%>','<%=request.getParameter("act")%>');">
 
-<%@ include file="adminHeader.jsp" %>
+<%@ include file="judgesHeader.jsp" %>
 	<div class="row">
-		<%@ include file="adminSider.jsp" %>
+		<%@ include file="judgesSider.jsp" %>
 		<div class="col-lg-10 mypadding" style="background-color: #fcfcfc;">
 				<div class="container">
         <div class="card" style="margin:10px; border-color: blue;">
             <div class="card-header bg-primary text-white">
                 <div class="row">
                     <div class="col-sm-4">
-						<h3>Section 1</h3>
+						<h4>Section 1</h4>
 					</div>
 					
                 </div>
@@ -44,7 +52,7 @@
             AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
             String id=request.getParameter("id");
             Userbeans userbeans=new Userbeans();
-            userbeans=adminDaoImpl.getUserDetails(id);
+            userbeans=adminDaoImpl.getUserDetailsWithSection2(id);
             %>
             <div class="card-body">
 			    <div class="form-group">
@@ -101,7 +109,7 @@
                <%String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
                	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
                			%>
-               				<video style="width: 100%; height: 100%"  controls>
+               				<video style="width: 100%; height: 400px;"  controls>
 							  <source src="<%=userbeans.getFile() %>" type="video/mp4">
 							</video>
                			<%
@@ -116,8 +124,58 @@
 				</div>
 				<%if(userbeans.getStatus()==0){
 					%>
-						<a href="Section1Approve?id=<%=id%>&status=2" class="btn btn-primary">Approve</a>
-           				<a href="Section1Approve?id=<%=id%>&status=1"  class="btn btn-danger">Disapprove</a>
+					<div class="card" style="margin:10px; border-color: blue;">
+			            <div class="card-header bg-success text-white">
+			                <div class="row">
+			                    <div class="col-sm-4">
+									<h5>User Rating</h5>
+								</div>
+								
+			                </div>
+			            </div>
+			            <div class="card-body">
+						<form action="CommentSection2ByJudges" method="post">
+							<div class="form-group">
+			                    <label for="firstName" class="col-sm-12 control-label">Rating</label>
+			                    <div class="col-sm-12 " >
+			                    	  <input type="hidden" value="<%=judges_id%>" name="judges_id">
+			                    	  <input type="hidden" value="<%=id%>" name="userid">
+			                    	  <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
+			                          <div class="form-control" style="height: auto;">
+			                    	    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
+									        <i class="fa fa-star" aria-hidden="true"></i>
+									    </button>
+									    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="2" id="rating-star-2">
+									        <i class="fa fa-star" aria-hidden="true"></i>
+									    </button>
+									    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="3" id="rating-star-3">
+									        <i class="fa fa-star" aria-hidden="true"></i>
+									    </button>
+									    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="4" id="rating-star-4">
+									        <i class="fa fa-star" aria-hidden="true"></i>
+									    </button>
+									    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
+									        <i class="fa fa-star" aria-hidden="true"></i>
+									    </button>
+									   </div>
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                    <label for="firstName" class="col-sm-12 control-label">Comment (Optional)</label>
+			                    <div class="col-sm-12">
+			                    	<textarea rows="" cols="" name="comment" class="form-control"></textarea>
+			                        
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                	<div class="col-sm-12">
+			                    	<input type="submit" value="Submit" class="btn btn-primary" style="float: right;">
+			                    </div>
+			               		 
+			               	</div>
+						</form>
+						</div>
+					</div>
 					<%
 				} %>
 				
@@ -132,5 +190,33 @@
 </body>
 <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    
+	$(".btnrating").on('click',(function(e) {
+	
+	var previous_value = $("#selected_rating").val();
+	
+	var selected_value = $(this).attr("data-attr");
+	$("#selected_rating").val(selected_value);
+	
+	$(".selected-rating").empty();
+	$(".selected-rating").html(selected_value);
+	
+	for (i = 1; i <= selected_value; ++i) {
+	$("#rating-star-"+i).toggleClass('btn-warning');
+	$("#rating-star-"+i).toggleClass('btn-default');
+	}
+	
+	for (ix = 1; ix <= previous_value; ++ix) {
+	$("#rating-star-"+ix).toggleClass('btn-warning');
+	$("#rating-star-"+ix).toggleClass('btn-default');
+	}
+	
+	}));
+	
+		
+});
 
+</script>
 </html>

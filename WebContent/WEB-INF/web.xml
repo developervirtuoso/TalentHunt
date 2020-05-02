@@ -97,6 +97,30 @@
     <servlet-name>viewSection1UserByjudges</servlet-name>
     <url-pattern>/viewSection1UserByjudges</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>userLoginSection2</servlet-name>
+    <jsp-file>/userLoginSection2.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userLoginSection2</servlet-name>
+    <url-pattern>/userLoginSection2</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>judgesSection2</servlet-name>
+    <jsp-file>/judgesSection2.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>judgesSection2</servlet-name>
+    <url-pattern>/judgesSection2</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>viewSection2UserFileByJudges</servlet-name>
+    <jsp-file>/viewSection2UserFileByJudges.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>viewSection2UserFileByJudges</servlet-name>
+    <url-pattern>/viewSection2UserFileByJudges</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>

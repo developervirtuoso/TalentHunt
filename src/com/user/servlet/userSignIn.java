@@ -116,6 +116,7 @@ public class userSignIn extends HttpServlet {
                  session.setAttribute("user_username", userbeans.getUsername());
                  session.setAttribute("user_ticketid", userbeans.getTicketid());
                  session.setAttribute("section_status", userbeans.getSection_status());
+                 session.setAttribute("user_cat", userbeans.getCat());
                  response.sendRedirect("userLoginPage?clr=home&act=home1");
                out.println("</body>");
                out.println("</html>");

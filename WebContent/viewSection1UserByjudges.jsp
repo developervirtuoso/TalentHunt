@@ -110,7 +110,7 @@
                	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
                			%>
                				<video style="width: 100%; height: 100%"  controls>
-							  <source src="UploadedFile/User/1.mp4" type="video/mp4">
+							  <source src="<%=userbeans.getFile() %>" type="video/mp4">
 							</video>
                			<%
                		}else if(ext.equalsIgnoreCase("mp3")  || ext.equalsIgnoreCase("m4a")){

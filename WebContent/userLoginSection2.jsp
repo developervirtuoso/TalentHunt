@@ -1,3 +1,6 @@
+<%@page import="com.beans.PaymentDetailsBeans"%>
+<%@page import="com.beans.CountUserDetailsBeans"%>
+<%@page import="com.admin.servlet.CountByAdminBeans"%>
 <%@page import="com.beans.UserRatingBeans"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.beans.Userbeans"%>
@@ -21,6 +24,77 @@
     <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
 
   <link rel="stylesheet" type="text/css" href="css/userstyle.css">
+  <style type="text/css">
+ .progress, .progress * { box-sizing: border-box; }
+.progress {
+    
+    padding: 15px;
+    
+    border-radius: 3px;
+        background: #fff;
+    height: auto;
+}
+.progress_label {
+    
+   margin-left: 23%;
+    
+    border-radius: 3px;
+     
+    height: auto;
+}
+.progress .cycle {
+    width: 120px;
+    height: 10px;
+    border: 1px solid #111;
+    float: left;
+    position: relative;
+    background: #00bfff;
+}
+.cycle_label{
+width: 120px;
+    height: 10px;
+    float: left;
+    position: relative;
+}
+.progress .cycle:first-of-type {
+    width: 0px;
+}
+.progress .cycle.current ~ .cycle {
+    background: #fff;
+}
+.progress .cycle:after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 1px solid #111;
+    border-radius: 50%;
+    position: absolute;
+    top: -12px;
+    right: -15px;
+    z-index: 2;
+    background: #00bfff;
+    
+    
+}
+.progress .cycle.current:after {
+    background: deepskyblue;
+}
+.progress .cycle.current ~ .cycle:after {
+    background: #fff;
+}
+/* With Counters */
+.progress.counter {
+    counter-reset: cycle;
+    
+}
+.progress.counter .cycle:after {
+    counter-increment: cycle;
+    content: counter(cycle);
+    line-height: 30px;
+    text-align: center;
+    font-family: Arial;
+}
+  </style>
 </head>
 <%!
 String user_id=null;
@@ -28,6 +102,7 @@ String user_email=null;
 String user_username="";
 String user_ticketid="";
 String section_status="";
+String user_cat="";
 %>
 <%
 				HttpSession usersession=request.getSession();
@@ -37,6 +112,7 @@ String section_status="";
 					user_username=(String)usersession.getAttribute("user_username").toString();
 					user_ticketid=(String)usersession.getAttribute("user_ticketid").toString();
 					section_status=(String)usersession.getAttribute("section_status").toString();
+					user_cat=(String)usersession.getAttribute("user_cat").toString();
 					
                 	%>
                 	<%}else { 
@@ -98,8 +174,9 @@ String section_status="";
     <%
     AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
     String id=user_id;
-    Userbeans userbeans=new Userbeans();
-    userbeans=adminDaoImpl.getUserDetails(id);
+   
+    CountUserDetailsBeans countByAdminBeans=new CountUserDetailsBeans();
+    countByAdminBeans=adminDaoImpl.getAllCountByUserid(id);
     %>
     <div class="page-header header-filter" data-parallax="true" style="background-image:url('img/bg.jpg');"></div>
     <div class="main main-raised">
@@ -112,13 +189,13 @@ String section_status="";
 	                            <img src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
 	                        </div>
 	                        <div class="name">
-	                            <h3 class="title"><%=userbeans.getUsername() %></h3>
+	                            <h3 class="title"><%=user_username %></h3>
 	                           <%
-                       			if(userbeans.getCat().equalsIgnoreCase("1")){
+                       			if(user_cat.equalsIgnoreCase("1")){
                        				%><h6 value="1">singer</h6><%
-                       			}else if(userbeans.getCat().equalsIgnoreCase("2")){
+                       			}else if(user_cat.equalsIgnoreCase("2")){
                        				%><h6 value="2">lyrics</h6><%
-                       			}else if(userbeans.getCat().equalsIgnoreCase("3")){
+                       			}else if(user_cat.equalsIgnoreCase("3")){
                        				%><h6 value="3">model</h6><%
                        			}
                        		%>
@@ -127,7 +204,66 @@ String section_status="";
 	                    </div>
     	            </div>
                 </div>
-               
+                <div class="row">
+              		<div class="col-md-6 ml-auto mr-auto ">
+						<div class="progress counter justify-content-center ">
+						    <div class="cycle <%if(countByAdminBeans.getPaymentcount()<=0){%>current<%} %>"></div>
+						    <div class="cycle <%if(countByAdminBeans.getFilecount()<=0){%>current<%} %>""></div>
+						    <div class="cycle "></div>
+						    <div style="clear: both; height: 0px;">&nbsp;</div>
+						</div>
+						<div class="progress_label counter justify-content-center ">
+						    <div class="cycle_label">Payment</div>
+						    <div class="cycle_label">Upload</div>
+						    <div class="cycle_label ">Details</div>
+						    <div style="clear: both; height: 0px;">&nbsp;</div>
+						</div>
+					</div>
+				</div>
+				<%if(countByAdminBeans.getPaymentcount()<=0){
+					%>
+						<div class="row">
+		              		<div class="col-md-6 ml-auto mr-auto">
+		              			 <form action="UserPayment" method="post">
+		              			 <input type="hidden" value="<%=id%>" name="userid">
+								    <div class="form-group">
+								      <label for="amount">Amount:</label>
+								      <input type="text" class="form-control" id="email" placeholder="Enter Amount" name="amount">
+								    </div>
+								    <div class="form-group">
+								      <label for="payment_by">Payment by:</label>
+								      <input type="text" class="form-control" id="pwd" placeholder="Enter Payment by" name="payment_by">
+								    </div>
+								     <div class="form-group">
+								      <label for="transition_id">Transition Id:</label>
+								      <input type="text" class="form-control" id="pwd" placeholder="Enter Transition Id" name="transition_id">
+								    </div>
+								   
+								    <button type="submit" class="btn btn-success" style="background-color: #4caf50; color: white;">Submit</button>
+								  </form>
+		              			
+		              		</div>
+		              	</div>
+					<%
+				}else if(countByAdminBeans.getFilecount()<=0){
+					%>
+					<br>
+					<div class="row">
+	              		<div class="col-md-6 ml-auto mr-auto">
+	              			 <form action="uploadFileSection2.jsp" method="post" enctype="multipart/form-data">
+	              			 <input type="hidden" value="<%=id%>" name="userid">
+							    <div class="form-group">
+							      <label for="file_name">Upload File :</label>
+							      <input type="file" class="form-control" id="file_name"  name="file_name"  accept="video/mp4,video/x-m4v,video/*,.mp3,audio/*,.mov" required>
+							    </div>
+							 
+							   
+							    <button type="submit" class="btn btn-success" style="background-color: #4caf50; color: white;">Upload</button>
+							  </form>
+	              			
+	              		</div>
+	              	</div>
+				<%}else{ %>
 
               	<div class="row">
               	
@@ -137,7 +273,7 @@ String section_status="";
                             <li class="nav-item">
                                 <a class="nav-link active" href="#userProfile" role="tab" data-toggle="tab">
                                   <i class="material-icons">face</i>
-                                  Profile
+                                  Payment
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -159,104 +295,56 @@ String section_status="";
         
           <div class="tab-content tab-space">
             <div class="tab-pane active text-center gallery" id="userProfile">
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					   <label>User Name : </label>
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  						<p><%=userbeans.getUsername()%></p>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-6 ml-auto mr-auto">
-  					<hr>
-  					</div>
-  				</div>
-  				
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					   <label>Email : </label>
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  						<p><%=userbeans.getEmail()%></p>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-6 ml-auto mr-auto">
-  					<hr>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					   <label>Phone Number</label>
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  						<p><%=userbeans.getPhoneno()%></p>
-  						
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-6 ml-auto mr-auto">
-  					<hr>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					   <label>DOB</label>
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  						<p><%=userbeans.getDob()%></p>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-6 ml-auto mr-auto">
-  					<hr>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					   <label>Gender</label>
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  						<p><%=userbeans.getGender()%></p>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-6 ml-auto mr-auto">
-  					<hr>
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					   <label>Category</label>
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  					<%
-                       			if(userbeans.getCat().equalsIgnoreCase("1")){
-                       				%><p value="1">singer</p><%
-                       			}else if(userbeans.getCat().equalsIgnoreCase("2")){
-                       				%><p value="2">lyrics</p><%
-                       			}else if(userbeans.getCat().equalsIgnoreCase("3")){
-                       				%><p value="3">model</p><%
-                       			}
-                       		%>
-  						
-  					</div>
-  				</div>
-  				<div class="row">
-  					<div class="col-md-6 ml-auto mr-auto">
-  					<hr>
-  					</div>
-  				</div>
+  				  				        <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+				        <th>Date</th>
+				        <th>Payment by</th>
+				        <th>Transition id</th>
+				      </tr>
+                </thead>
+                <tbody>
+                		<%
+                		
+    try
+    {
+    	ArrayList<PaymentDetailsBeans> paymentDetailsBeans=new ArrayList<PaymentDetailsBeans>();
+                    int count =0;
+                    String sql="SELECT * FROM payment_details WHERE payment_details.userid="+user_id+";";
+                    paymentDetailsBeans=adminDaoImpl.getUserPaymentDetails(sql);
+                    for(int i=0;i<paymentDetailsBeans.size();i++){
+                    	PaymentDetailsBeans paymentBeans=paymentDetailsBeans.get(i);
+                		
+                		%>
+                			 <tr>
+            			        <td><%=paymentBeans.getAmount() %></td>
+            			        <td><%=paymentBeans.getDate() %></td>
+            			        <td><%=paymentBeans.getPayment_by() %></td>
+            			        <td><%=paymentBeans.getTransition_id()%></td>
+            			     </tr>
+                		<%
+                	}
+               }
+               catch(Exception e)
+               {
+                    e.printStackTrace();
+               }
+	   %>
+                </tbody>
+            </table>
   			</div>
             <div class="tab-pane text-center gallery" id="files">
       			<div class="row">
       				<div class="col-md-9 ml-auto mr-auto">
-                     	<%String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
+                     	<%
+                     	 Userbeans userbeans=new Userbeans();
+                        userbeans=adminDaoImpl.getUserDetails(id);
+                     	String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
                	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
                			%>
                				<video style="width: 100%; height: 100%"  controls>
-							  <source src="<%=userbeans.getFile()%>" type="video/mp4">
+							  <source src="<%=userbeans.getFile() %>" type="video/mp4">
 							</video>
                			<%
                		}else if(ext.equalsIgnoreCase("mp3")  || ext.equalsIgnoreCase("m4a")){
@@ -317,7 +405,7 @@ String section_status="";
       			</div>
       		</div>
           </div>
-
+		<%} %>
         
             </div>
         </div>

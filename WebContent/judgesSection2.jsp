@@ -36,7 +36,7 @@ int page_count=0;
 int pading_count=0;
 String searchValue=null;
 Logger logger = Logger.getLogger("empAppraisalList1.jsp");
-String redirect_url="judgesSection1?clr=appLanguages&act=appLanguages1";
+String redirect_url="userManagementList?clr=appLanguages&act=appLanguages1";
 %>
 	<%
 if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
@@ -56,7 +56,7 @@ searchValue =  searchValue.replaceAll("'", "''");
 				    	if(message.equals("1")){
 				    		%>
 				    			<div id="deletesuccess">
-									<h6 style="color: green">Updated</h6>
+									<h6 style="color: green">Disapproved</h6>
 								</div>
 				    		<%
 				    	}else if(message.equals("0")){
@@ -83,7 +83,7 @@ searchValue =  searchValue.replaceAll("'", "''");
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2>User Management</h2>
+						<h2>Section 2</h2>
 					</div>
 					<div class="col-sm-8" style="display: none;">
 						<a href="addUserByAdmin?clr=appLanguages&act=appLanguages1" class="btn btn-info" style=""><i class="material-icons">&#xE24D;</i> <span>Add User</span></a>
@@ -143,11 +143,11 @@ searchValue =  searchValue.replaceAll("'", "''");
     	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserList(sql);
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status=2 order by user.id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForSecond(sql);
                     }else{
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user where (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserList(sql);
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status=2 and (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%') order by user.id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForSecond(sql);
                     }
                     for(int i=0;i<userbeanss.size();i++){
                 		Userbeans userbeans=userbeanss.get(i);
@@ -175,7 +175,9 @@ searchValue =  searchValue.replaceAll("'", "''");
             			        	%><i class="fa fa-circle" style="font-size:15px;color:green; "></i><%
             			        }%></td>
             			        <td>
-            			        	<a href="viewSection1UserByjudges?clr=appLanguages&act=appLanguages1&id=<%=userbeans.getId()%>">View</a>
+            			        	<a href="viewSection2UserFileByJudges?clr=app_section2&act=app_section2&id=<%=userbeans.getId()%>">View</a>
+            			        	
+            			        	
             			        </td>
             			      </tr>
                 		<%
@@ -193,10 +195,10 @@ searchValue =  searchValue.replaceAll("'", "''");
 			    {
                     int count=0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user";
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status=2";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	String sql="select * from user where (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%')";
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where  section_status=2 and (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%')";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }
                     	double count1=count;

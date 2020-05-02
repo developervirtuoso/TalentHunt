@@ -29,7 +29,7 @@
 				</div>
 				<div class="card" >
 					<div class="card-header" id="app_section2">
-						<h2 class="mb-0" id="app_section2h2"><a href="#?clr=app_section2&act=app_section2" ><i class="fa fa-leanpub" aria-hidden="true"></i>Section 2</a></h2>
+						<h2 class="mb-0" id="app_section2h2"><a href="judgesSection2?clr=app_section2&act=app_section2" ><i class="fa fa-leanpub" aria-hidden="true"></i>Section 2</a></h2>
 					</div>
 				</div>
 				<div class="card">

@@ -5,6 +5,23 @@ public class CountByAdminBeans {
 	private int usercount=0;
 	private int maleusercount=0;
 	private int femaleusercount=0;
+	private int entrires_judges=0;
+	private int entrires_pending=0;
+	
+	
+	
+	public int getEntrires_judges() {
+		return entrires_judges;
+	}
+	public void setEntrires_judges(int entrires_judges) {
+		this.entrires_judges = entrires_judges;
+	}
+	public int getEntrires_pending() {
+		return entrires_pending;
+	}
+	public void setEntrires_pending(int entrires_pending) {
+		this.entrires_pending = entrires_pending;
+	}
 	public int getId() {
 		return id;
 	}
