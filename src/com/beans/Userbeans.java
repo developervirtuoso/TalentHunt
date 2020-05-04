@@ -13,6 +13,7 @@ public class Userbeans {
 	private String cat="0";
 	private int status=0;
 	private int ratingCount=0;
+	private int paymentCount=0;
 	private int around2=0;
 	private int around3=0;
 	private int around4=0;
@@ -20,6 +21,12 @@ public class Userbeans {
 	private int section_status=0;
 	
 	
+	public int getPaymentCount() {
+		return paymentCount;
+	}
+	public void setPaymentCount(int paymentCount) {
+		this.paymentCount = paymentCount;
+	}
 	public int getAround2() {
 		return around2;
 	}

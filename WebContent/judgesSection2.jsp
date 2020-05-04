@@ -36,15 +36,23 @@ int page_count=0;
 int pading_count=0;
 String searchValue=null;
 Logger logger = Logger.getLogger("empAppraisalList1.jsp");
-String redirect_url="userManagementList?clr=appLanguages&act=appLanguages1";
+String redirect_url="judgesSection2?clr=app_section2&act=app_section2";
 %>
 	<%
-if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
-	searchValue=request.getParameter("searchValue");
-searchValue =  searchValue.replaceAll("'", "''");
-}else{
-	searchValue="0";
-}
+	String status="0";
+	if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
+		searchValue=request.getParameter("searchValue");
+	searchValue =  searchValue.replaceAll("'", "''");
+	}else{
+		searchValue="0";
+	}
+	if(request.getParameter("status") != null && !request.getParameter("status").isEmpty()){
+		status=request.getParameter("status");
+
+	}else{
+		status="0";
+	}
+	redirect_url="judgesSection2?clr=app_section2&act=app_section2&status="+status+"";
 %>
 <%
             
@@ -56,7 +64,7 @@ searchValue =  searchValue.replaceAll("'", "''");
 				    	if(message.equals("1")){
 				    		%>
 				    			<div id="deletesuccess">
-									<h6 style="color: green">Disapproved</h6>
+									<h6 style="color: green">Updated</h6>
 								</div>
 				    		<%
 				    	}else if(message.equals("0")){
@@ -117,6 +125,11 @@ searchValue =  searchValue.replaceAll("'", "''");
 			<input type="text" class="form-control"  id="myInput" name="searchValue" placeholder="Search..." value="<%=searchValue%>">
 			<% } %>
 						</div>
+						<select style="float: right;" name="status">
+							<option value="0" <%if(status.equalsIgnoreCase("0")){%> selected="selected"<%} %>>Pending</option>
+							<option value="2" <%if(status.equalsIgnoreCase("2")){%> selected="selected"<%} %>>approve</option>
+							<option value="1" <%if(status.equalsIgnoreCase("1")){%> selected="selected"<%} %>>disapprove </option>
+						</select>
 						</form>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
@@ -143,11 +156,11 @@ searchValue =  searchValue.replaceAll("'", "''");
     	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status=2 order by user.id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserListForSecond(sql);
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id  where section_status>=2 and user.around2="+status+" order by user.id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForSecondByjudges(sql);
                     }else{
-                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status=2 and (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%') order by user.id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserListForSecond(sql);
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status>=2 and user.around2="+status+" and (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%') order by user.id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForSecondByjudges(sql);
                     }
                     for(int i=0;i<userbeanss.size();i++){
                 		Userbeans userbeans=userbeanss.get(i);
@@ -195,10 +208,10 @@ searchValue =  searchValue.replaceAll("'", "''");
 			    {
                     int count=0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status=2";
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where section_status=2 and user.around2="+status+"";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where  section_status=2 and (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%')";
+                    	String sql="select * from user inner join payment_details on payment_details.userid=user.id where  section_status=2 and user.around2="+status+" and  (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%')";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }
                     	double count1=count;

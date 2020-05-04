@@ -39,9 +39,9 @@ public class CommentSection2ByJudges extends HttpServlet {
 		int i=0;
 		if(id>0){
 			beans.setId(id);
-			i=adminDaoImpl.UpdateRatingSection1(beans);
+			i=adminDaoImpl.UpdateRatingSection2(beans);
 		}else {
-			i=adminDaoImpl.InsertRatingSection1(beans);
+			i=adminDaoImpl.InsertRatingSection2(beans);
 		}
 		if(i>0) {
 			response.sendRedirect("judgesSection2?clr=app_section2&act=app_section2&message=1");

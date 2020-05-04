@@ -101,7 +101,7 @@
                <%String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
                	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
                			%>
-               				<video style="width: 100%; height: 100%"  controls>
+               				<video style="width: 100%; height: 400px;"  controls>
 							  <source src="<%=userbeans.getFile() %>" type="video/mp4">
 							</video>
                			<%

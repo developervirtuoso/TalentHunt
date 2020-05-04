@@ -45,6 +45,14 @@ searchValue =  searchValue.replaceAll("'", "''");
 }else{
 	searchValue="0";
 }
+	String status="0";
+	if(request.getParameter("status") != null && !request.getParameter("status").isEmpty()){
+		status=request.getParameter("status");
+
+	}else{
+		status="0";
+	}
+	redirect_url="judgesSection1?clr=appLanguages&act=appLanguages1&status="+status+"";
 %>
 <%
             
@@ -117,6 +125,11 @@ searchValue =  searchValue.replaceAll("'", "''");
 			<input type="text" class="form-control"  id="myInput" name="searchValue" placeholder="Search..." value="<%=searchValue%>">
 			<% } %>
 						</div>
+						<select style="float: right;" name="status">
+							<option value="0" <%if(status.equalsIgnoreCase("0")){%> selected="selected"<%} %>>Pending</option>
+							<option value="2" <%if(status.equalsIgnoreCase("2")){%> selected="selected"<%} %>>approve</option>
+							<option value="1" <%if(status.equalsIgnoreCase("1")){%> selected="selected"<%} %>>disapprove </option>
+						</select>
 						</form>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
@@ -143,10 +156,10 @@ searchValue =  searchValue.replaceAll("'", "''");
     	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user order by id desc limit "+page1+","+order2+"";
+                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user where status="+status+" order by id desc limit "+page1+","+order2+"";
                     	userbeanss=adminDaoImpl.getUserList(sql);
                     }else{
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user where (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
+                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user where status="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
                     	userbeanss=adminDaoImpl.getUserList(sql);
                     }
                     for(int i=0;i<userbeanss.size();i++){
@@ -193,10 +206,10 @@ searchValue =  searchValue.replaceAll("'", "''");
 			    {
                     int count=0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user";
+                    	String sql="select * from user status="+status+"";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	String sql="select * from user where (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%')";
+                    	String sql="select * from user where status="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%')";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }
                     	double count1=count;

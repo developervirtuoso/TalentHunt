@@ -1,3 +1,4 @@
+<%@page import="com.beans.PaymentDetailsBeans"%>
 <%@page import="com.beans.UserRatingBeans"%>
 <%@page import="com.dao.impl.AdminDaoImpl"%>
 <%@page import="java.util.ArrayList"%>
@@ -36,7 +37,7 @@ int page_count=0;
 int pading_count=0;
 String searchValue=null;
 Logger logger = Logger.getLogger("empAppraisalList1.jsp");
-String redirect_url="showRatingUserSection1?clr=appLanguages&act=appLanguages1";
+String redirect_url="ShowUserPaymenByAdmint?clr=app_section2&act=app_section2";
 %>
 	<%
 if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
@@ -75,7 +76,6 @@ searchValue =  searchValue.replaceAll("'", "''");
 				    } %>
 
 <%@ include file="adminHeader.jsp" %>
-<%String userid=request.getParameter("id"); %>
 	<div class="row">
 		<%@ include file="adminSider.jsp" %>
 		<div class="col-lg-10 mypadding" style="background-color: #fcfcfc;">
@@ -84,9 +84,9 @@ searchValue =  searchValue.replaceAll("'", "''");
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2>Rating</h2>
+						<h2>User Management</h2>
 					</div>
-					<div class="col-sm-8" style="display: none;">
+					<div class="col-sm-8">
 						<a href="addUserByAdmin?clr=appLanguages&act=appLanguages1" class="btn btn-info" style=""><i class="material-icons">&#xE24D;</i> <span>Add User</span></a>
 					</div>
                 </div>
@@ -102,9 +102,8 @@ searchValue =  searchValue.replaceAll("'", "''");
 					</div>
                     <div class="col-sm-9">
                     <form>
-                   		<input type="hidden" name="clr" value="appLanguages">
-                   		<input type="hidden" name="act" value="appLanguages1">
-                   		<input type="hidden" name="id" value="<%=userid%>">
+                   		<input type="hidden" name="clr" value="app_section2">
+                   		<input type="hidden" name="act" value="app_section2">
 						<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
 						<div class="filter-group">
 						 <%
@@ -128,35 +127,37 @@ searchValue =  searchValue.replaceAll("'", "''");
                 <thead>
                     <tr>
                         <th>User Name</th>
-				        <th>Rating</th>
-				        <th>Judge Name</th>
-				        <th>Comment</th>
+				        <th>Amount</th>
+				        <th>Date</th>
+				        <th>Payment by</th>
+				        <th>Transition id</th>
 				      </tr>
                 </thead>
                 <tbody>
                 		<%
                 		AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
-                		
+                		String userid=request.getParameter("id");
     try
     {
-    	ArrayList<UserRatingBeans> userRatingBeanss=new ArrayList<UserRatingBeans>();
+    	ArrayList<PaymentDetailsBeans> paymentDetailsBeans=new ArrayList<PaymentDetailsBeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="SELECT user.username,user_rating_section1.*,judges.NAME AS judges_name  FROM user_rating_section1 INNER JOIN user ON user.id=user_rating_section1.userid INNER JOIN judges ON judges.id=user_rating_section1.judgeid WHERE user_rating_section1.userid="+userid+" order by user_rating_section1.id desc limit "+page1+","+order2+"";
-                    	userRatingBeanss=adminDaoImpl.getUserRatingSection1(sql);
+                    	String sql="SELECT payment_details.*,user.username AS username FROM payment_details INNER JOIN user ON user.id=payment_details.userid WHERE payment_details.userid="+userid+" order by payment_details.id desc limit "+page1+","+order2+"";
+                    	paymentDetailsBeans=adminDaoImpl.getUserPaymentDetailsWithUsername(sql);
                     }else{
-                    	String sql="SELECT user.username,user_rating_section1.*,judges.NAME AS judges_name  FROM user_rating_section1 INNER JOIN user ON user.id=user_rating_section1.userid INNER JOIN judges ON judges.id=user_rating_section1.judgeid WHERE user_rating_section1.userid="+userid+" and (user_rating_section1.id  LIKE '"+searchValue+"%' or user_rating_section1.judgeid LIKE '"+searchValue+"%' or user_rating_section1.rating LIKE '"+searchValue+"%') order by user_rating_section1.id desc limit "+page1+","+order2+"";
-                    	userRatingBeanss=adminDaoImpl.getUserRatingSection1(sql);
+                    	String sql="SELECT payment_details.*,user.username AS username FROM payment_details INNER JOIN user ON user.id=payment_details.userid WHERE payment_details.userid="+userid+" and (payment_details.id  LIKE '"+searchValue+"%' or payment_details.transition_id LIKE '"+searchValue+"%' or payment_details.payment_by LIKE '"+searchValue+"%') order by payment_details.id desc limit "+page1+","+order2+"";
+                    	paymentDetailsBeans=adminDaoImpl.getUserPaymentDetailsWithUsername(sql);
                     }
-                    for(int i=0;i<userRatingBeanss.size();i++){
-                    	UserRatingBeans userbeans=userRatingBeanss.get(i);
+                    for(int i=0;i<paymentDetailsBeans.size();i++){
+                    	PaymentDetailsBeans paymentBeans=paymentDetailsBeans.get(i);
                 		
                 		%>
-                			 <tr>
-            			        <td><%=userbeans.getUserName() %></td>
-            			        <td><%=userbeans.getRating() %></td>
-            			        <td><%=userbeans.getJadgename() %></td>
-            			        <td><%=userbeans.getComment()%></td>
+                			<tr>
+                				<td><%=paymentBeans.getUsername() %></td>
+            			        <td><%=paymentBeans.getAmount() %></td>
+            			        <td><%=paymentBeans.getDate() %></td>
+            			        <td><%=paymentBeans.getPayment_by() %></td>
+            			        <td><%=paymentBeans.getTransition_id()%></td>
             			     </tr>
                 		<%
                 	}
@@ -173,10 +174,10 @@ searchValue =  searchValue.replaceAll("'", "''");
 			    {
                     int count=0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="SELECT COUNT(*)  FROM user_rating_section1 WHERE userid="+userid+"";
+                    	String sql="SELECT COUNT(*)  FROM payment_details WHERE payment_details.userid="+userid+"";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	String sql="SELECT COUNT(*)  FROM user_rating_section1 WHERE userid="+userid+" and (user_rating_section1.id  LIKE '"+searchValue+"%' or user_rating_section1.judgeid LIKE '"+searchValue+"%' or user_rating_section1.rating LIKE '"+searchValue+"%')";
+                    	String sql="SELECT COUNT(*)  FROM payment_details WHERE payment_details.userid="+userid+" and (payment_details.id  LIKE '"+searchValue+"%' or payment_details.transition_id LIKE '"+searchValue+"%' or payment_details.payment_by LIKE '"+searchValue+"%')";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }
                     	double count1=count;

@@ -388,6 +388,63 @@ public class AdminDaoImpl {
 		      		userbeans.setFile(rs.getString("file"));
 		      		userbeans.setCat(rs.getString("cat"));
 		      		 userbeans.setStatus(rs.getInt("around2"));
+		      		 userbeans.setRatingCount(rs.getInt("rating_count"));
+		      		 userbeans.setPaymentCount(rs.getInt("payment_count"));
+		      		 userbeanss.add(userbeans);
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userbeanss;
+			}
+			public ArrayList<Userbeans> getUserListForSecondByjudges(String sql) {
+				ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
+		        boolean check = false;
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery(sql);
+		      	 while(rs.next())
+		      	 {
+		      		 Userbeans userbeans=new Userbeans();
+		      		 userbeans.setId(rs.getInt("id"));
+		      		 userbeans.setUsername(rs.getString("username"));
+		      		 userbeans.setTicketid(rs.getString("ticketid"));
+		      		 userbeans.setEmail(rs.getString("email"));
+		      		 userbeans.setPhoneno(rs.getString("phoneno"));
+		      		 userbeans.setDob(rs.getString("dob"));
+		      		 userbeans.setGender(rs.getString("gender"));
+		      		userbeans.setFilename(rs.getString("filename"));
+		      		userbeans.setFile(rs.getString("file"));
+		      		userbeans.setCat(rs.getString("cat"));
+		      		 userbeans.setStatus(rs.getInt("around2"));
 		      		 userbeanss.add(userbeans);
 		      	 }
 		        }
@@ -523,6 +580,59 @@ public class AdminDaoImpl {
 				}
 				return paymentDetailsBeans;
 			}
+			public ArrayList<PaymentDetailsBeans> getUserPaymentDetailsWithUsername(String sql) {
+				ArrayList<PaymentDetailsBeans> paymentDetailsBeans=new ArrayList<PaymentDetailsBeans>();
+		        boolean check = false;
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery(sql);
+		      	 while(rs.next())
+		      	 {
+		      		PaymentDetailsBeans userbeans=new PaymentDetailsBeans();
+		      		 userbeans.setId(rs.getInt("id"));
+		      		 userbeans.setAmount(rs.getString("amount"));
+		      		 userbeans.setStatus(rs.getInt("status"));
+		      		 userbeans.setUserid(rs.getInt("userid"));
+		      		 userbeans.setDate(rs.getString("date"));
+		      		 userbeans.setPayment_by(rs.getString("payment_by"));
+		      		 userbeans.setTransition_id(rs.getString("transition_id"));
+		      		userbeans.setDatetime(rs.getString("datetime"));
+		      		userbeans.setUsername(rs.getString("username"));
+		      		paymentDetailsBeans.add(userbeans);
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return paymentDetailsBeans;
+			}
 			public int getCountBySql(String sql) {
 				int count =0;
 		        Connection conn=DbConnection.getInstance().getConnection();
@@ -627,7 +737,7 @@ public class AdminDaoImpl {
 		        try
 		        {
 		     	 st=conn.createStatement();
-		      	 rs = st.executeQuery("select user.*,file_section2.file_name AS filename2,file_section2.itemName AS itemname2,file_section2.STATUS AS STATUS2 from user INNER JOIN file_section2 ON file_section2.userid=user.id where user.id="+id+"");
+		      	 rs = st.executeQuery("select user.*,file_section2.file_name AS filename2,file_section2.itemName AS itemname2,file_section2.STATUS AS STATUS2 from user LEFT JOIN file_section2 ON file_section2.userid=user.id where user.id="+id+"");
 		      	 while(rs.next())
 		      	 {
 		      		 System.out.println(rs.getString("filename"));
@@ -638,10 +748,10 @@ public class AdminDaoImpl {
 		      		 userbeans.setPhoneno(rs.getString("phoneno"));
 		      		 userbeans.setDob(rs.getString("dob"));
 		      		 userbeans.setGender(rs.getString("gender"));
-		      		userbeans.setFilename(rs.getString("itemname2"));
-		      		userbeans.setFile(rs.getString("filename2"));
+		      		userbeans.setFilename(rs.getString("itemname2")+"");
+		      		userbeans.setFile(rs.getString("filename2")+"");
 		      		userbeans.setCat(rs.getString("cat"));
-		      		 userbeans.setStatus(rs.getInt("STATUS2"));
+		      		 userbeans.setStatus(rs.getInt("around2"));
 		      		 
 		      	 }
 		        }
@@ -769,6 +879,38 @@ public class AdminDaoImpl {
 				try 
 				{
 					pst=Conn.prepareStatement("UPDATE user SET STATUS="+status+",section_status="+section_status+" WHERE id="+id+";");
+					  
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int ApprovedSection2(String id, String status, int section_status) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+			    
+				try 
+				{
+					pst=Conn.prepareStatement("UPDATE user SET around2="+status+",section_status="+section_status+" WHERE id="+id+";");
 					  
 					  i=pst.executeUpdate();
 				}
@@ -971,6 +1113,73 @@ public class AdminDaoImpl {
 					}try {
 						if(rs!=null) {
 							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int UpdateRatingSection2(UserRatingBeans beans) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("UPDATE user_rating_section2 SET rating=?,comment=? WHERE id=?;");
+					  pst.setString(1, beans.getRating());
+					  pst.setString(2, beans.getComment());
+					  pst.setInt(3, beans.getId());
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int InsertRatingSection2(UserRatingBeans beans) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into user_rating_section2 (rating,comment,userid,judgeid) values(?,?,?,?);");
+					 pst.setString(1, beans.getRating());
+					  pst.setString(2, beans.getComment());
+					  pst.setInt(3, beans.getUserid());
+					  pst.setInt(4, beans.getJudgeid());
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
 						}
 					} catch (Exception e2) {
 						e2.printStackTrace();

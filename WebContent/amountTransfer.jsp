@@ -35,16 +35,24 @@ int total_rows=0;
 int page_count=0;
 int pading_count=0;
 String searchValue=null;
-Logger logger = Logger.getLogger("empAppraisalList1.jsp");
-String redirect_url="userManagementList?clr=appLanguages&act=appLanguages1";
+Logger logger = Logger.getLogger("amountTransfer.jsp");
+String redirect_url="amountTransfer?clr=app_section2&act=app_section2";
 %>
 	<%
+	String status="0";
 if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
 	searchValue=request.getParameter("searchValue");
 searchValue =  searchValue.replaceAll("'", "''");
 }else{
 	searchValue="0";
 }
+if(request.getParameter("status") != null && !request.getParameter("status").isEmpty()){
+	status=request.getParameter("status");
+
+}else{
+	status="0";
+}
+redirect_url="amountTransfer?clr=app_section2&act=app_section2&status="+status+"";
 %>
 <%
             
@@ -83,9 +91,9 @@ searchValue =  searchValue.replaceAll("'", "''");
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2>User Management</h2>
+						<h2>Section 2</h2>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-sm-8" style="display: none;">
 						<a href="addUserByAdmin?clr=appLanguages&act=appLanguages1" class="btn btn-info" style=""><i class="material-icons">&#xE24D;</i> <span>Add User</span></a>
 					</div>
                 </div>
@@ -101,8 +109,8 @@ searchValue =  searchValue.replaceAll("'", "''");
 					</div>
                     <div class="col-sm-9">
                     <form>
-                   		<input type="hidden" name="clr" value="appLanguages">
-                   		<input type="hidden" name="act" value="appLanguages1">
+                   		<input type="hidden" name="clr" value="app_section2">
+                   		<input type="hidden" name="act" value="app_section2">
 						<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
 						<div class="filter-group">
 						 <%
@@ -117,6 +125,11 @@ searchValue =  searchValue.replaceAll("'", "''");
 			<input type="text" class="form-control"  id="myInput" name="searchValue" placeholder="Search..." value="<%=searchValue%>">
 			<% } %>
 						</div>
+						<select style="float: right;" name="status">
+							<option value="0" <%if(status.equalsIgnoreCase("0")){%> selected="selected"<%} %>>Pending</option>
+							<option value="2" <%if(status.equalsIgnoreCase("2")){%> selected="selected"<%} %>>approve</option>
+							<option value="1" <%if(status.equalsIgnoreCase("1")){%> selected="selected"<%} %>>disapprove </option>
+						</select>
 						</form>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
@@ -132,6 +145,7 @@ searchValue =  searchValue.replaceAll("'", "''");
 				        <th>Gender</th>
 				        <th>Category</th>
 				        <th>Status</th>
+				        <th>Payment</th>
 				        <th>Action</th>
 				      </tr>
                 </thead>
@@ -143,10 +157,10 @@ searchValue =  searchValue.replaceAll("'", "''");
     	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user where section_status=2 order by id desc limit "+page1+","+order2+"";
+                    	String sql="select *,(SELECT COUNT(*) FROM payment_details WHERE payment_details.userid=user.id)AS payment_count,(SELECT COUNT(*) FROM user_rating_section2 WHERE user_rating_section2.userid=user.id)AS rating_count from user where section_status>=2 and user.around2="+status+" order by id desc limit "+page1+","+order2+"";
                     	userbeanss=adminDaoImpl.getUserListForSecond(sql);
                     }else{
-                    	String sql="select * from user where section_status=2 and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
+                    	String sql="select *,(SELECT COUNT(*) FROM payment_details WHERE payment_details.userid=user.id)AS payment_count,(SELECT COUNT(*) FROM user_rating_section2 WHERE user_rating_section2.userid=user.id)AS rating_count from user where section_status>=2 and user.around2="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
                     	userbeanss=adminDaoImpl.getUserListForSecond(sql);
                     }
                     for(int i=0;i<userbeanss.size();i++){
@@ -174,10 +188,20 @@ searchValue =  searchValue.replaceAll("'", "''");
             			        }else if(userbeans.getStatus()==2){
             			        	%><i class="fa fa-circle" style="font-size:15px;color:green; "></i><%
             			        }%></td>
+            			       <td>
+            			        	<%if(userbeans.getPaymentCount()>0){
+            			        		%><a href="ShowUserPaymenByAdmint?clr=app_section2&act=app_section2&id=<%=userbeans.getId()%>">View</a><%
+            			        	}else{
+            			        		%><a href="#">Pending</a><%
+            			        	} %>
+            			        </td>
             			        <td>
-            			        	<a href="viewSection1User?clr=appLanguages&act=appLanguages1&id=<%=userbeans.getId()%>">View</a>
-            			        	
-            			        	
+            			        	<a href="viewSection2UserFile?clr=app_section2&act=app_section2&id=<%=userbeans.getId()%>">View</a>
+            			        	<%if(userbeans.getRatingCount()>0){
+            			        		%><a href="showRatingUserSection2?clr=app_section2&act=app_section2&id=<%=userbeans.getId()%>">Rating[<%=userbeans.getRatingCount() %>]</a><%
+            			        	}else{
+            			        		%><a href="#">Rating[<%=userbeans.getRatingCount() %>]</a><%
+            			        	} %>
             			        </td>
             			      </tr>
                 		<%
@@ -195,10 +219,10 @@ searchValue =  searchValue.replaceAll("'", "''");
 			    {
                     int count=0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user where section_status=2";
+                    	String sql="select * from user where section_status>=2 and user.around2="+status+"";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	String sql="select * from user where section_status=2 and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%')";
+                    	String sql="select * from user where section_status>=2 and user.around2="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%')";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }
                     	double count1=count;

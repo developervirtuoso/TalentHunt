@@ -9,6 +9,15 @@ public class PaymentDetailsBeans {
 	private String payment_by="0";
 	private String transition_id="0";
 	private String datetime="0";
+	private String username="0";
+	
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public int getId() {
 		return id;
 	}
