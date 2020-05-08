@@ -145,6 +145,14 @@
     <servlet-name>ShowUserPaymenByAdmint</servlet-name>
     <url-pattern>/ShowUserPaymenByAdmint</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>userLoginSection3</servlet-name>
+    <jsp-file>/userLoginSection3.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userLoginSection3</servlet-name>
+    <url-pattern>/userLoginSection3</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>

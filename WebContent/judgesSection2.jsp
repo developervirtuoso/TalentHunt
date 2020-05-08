@@ -35,7 +35,7 @@ int total_rows=0;
 int page_count=0;
 int pading_count=0;
 String searchValue=null;
-Logger logger = Logger.getLogger("empAppraisalList1.jsp");
+Logger logger = Logger.getLogger("judgesSection2.jsp");
 String redirect_url="judgesSection2?clr=app_section2&act=app_section2";
 %>
 	<%

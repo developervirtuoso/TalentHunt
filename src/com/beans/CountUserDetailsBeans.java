@@ -4,8 +4,22 @@ public class CountUserDetailsBeans {
 	private int id=0;
 	private int paymentcount=0;
 	private int filecount=0;
+	private int filecount3=0;
+	private int userdoccount=0;
 	
 	
+	public int getFilecount3() {
+		return filecount3;
+	}
+	public void setFilecount3(int filecount3) {
+		this.filecount3 = filecount3;
+	}
+	public int getUserdoccount() {
+		return userdoccount;
+	}
+	public void setUserdoccount(int userdoccount) {
+		this.userdoccount = userdoccount;
+	}
 	public int getFilecount() {
 		return filecount;
 	}

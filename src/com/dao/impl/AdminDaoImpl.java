@@ -783,6 +783,51 @@ public class AdminDaoImpl {
 				}
 				return userbeans;
 			}
+			public Userbeans getUploadFileSection3(String id) {
+				Userbeans userbeans=new Userbeans();
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery("select * from file_section3 where userid="+id+"");
+		      	 while(rs.next())
+		      	 {
+		      		userbeans.setFilename(rs.getString("itemName"));
+		      		userbeans.setFile(rs.getString("file_name"));
+		      		 userbeans.setStatus(rs.getInt("status"));
+		      		 
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userbeans;
+			}
 			public Userbeans getUploadFileSection2(String id) {
 				Userbeans userbeans=new Userbeans();
 		        Connection conn=DbConnection.getInstance().getConnection();
@@ -1000,13 +1045,17 @@ public class AdminDaoImpl {
 			     	 st=Conn.createStatement();
 			      	 rs = st.executeQuery("SELECT id,\r\n" + 
 			      	 		"(SELECT COUNT(*) FROM payment_details WHERE payment_details.userid=user.id) AS payment_count, \r\n" + 
-			      	 		"(SELECT COUNT(*) FROM file_section2 WHERE file_section2.userid=user.id) AS file_count "
+			      	 		"(SELECT COUNT(*) FROM file_section2 WHERE file_section2.userid=user.id) AS file_count, "
+			      	 		+"(SELECT COUNT(*) FROM file_section3 WHERE file_section3.userid=user.id) AS filecount3, "
+			      	 		+"(SELECT COUNT(*) FROM user_doc WHERE user_doc.userid=user.id) AS userdoccount "
 			      	 		+ "FROM user WHERE id="+id+";");
 			      	 while(rs.next())
 			      	 {
 			      		 countUserDetailsBeans.setId(rs.getInt("id"));
 			      		 countUserDetailsBeans.setPaymentcount(rs.getInt("payment_count"));
 			      		 countUserDetailsBeans.setFilecount(rs.getInt("file_count"));
+			      		 countUserDetailsBeans.setFilecount3(rs.getInt("filecount3"));
+			      		countUserDetailsBeans.setUserdoccount(rs.getInt("userdoccount"));
 			      	 }
 			        }
 				catch(Exception e)
@@ -1267,6 +1316,72 @@ public class AdminDaoImpl {
 					pst.setString(4, paymentDetailsBeans.getDate());
 					pst.setString(5, paymentDetailsBeans.getPayment_by());
 					pst.setString(6, paymentDetailsBeans.getTransition_id());
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int insertUserDoc(String file_path,String itemName,String userid) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into user_doc (userid,file_name,itemName) values(?,?,?);");
+					pst.setString(1, userid);
+					pst.setString(2, file_path);
+					pst.setString(3, itemName);
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int insertUploadFileSection3(String file_path,String itemName,String userid) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into file_section3 (userid,file_name,itemName) values(?,?,?);");
+					pst.setString(1, userid);
+					pst.setString(2, file_path);
+					pst.setString(3, itemName);
 					  i=pst.executeUpdate();
 				}
 				catch(Exception e)

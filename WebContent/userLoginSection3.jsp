@@ -1,6 +1,4 @@
-<%@page import="com.beans.PaymentDetailsBeans"%>
 <%@page import="com.beans.CountUserDetailsBeans"%>
-<%@page import="com.admin.servlet.CountByAdminBeans"%>
 <%@page import="com.beans.UserRatingBeans"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.beans.Userbeans"%>
@@ -24,77 +22,6 @@
     <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
 
   <link rel="stylesheet" type="text/css" href="css/userstyle.css">
-  <style type="text/css">
- .progress, .progress * { box-sizing: border-box; }
-.progress {
-    
-    padding: 15px;
-    
-    border-radius: 3px;
-        background: #fff;
-    height: auto;
-}
-.progress_label {
-    
-   margin-left: 23%;
-    
-    border-radius: 3px;
-     
-    height: auto;
-}
-.progress .cycle {
-    width: 120px;
-    height: 10px;
-    border: 1px solid #111;
-    float: left;
-    position: relative;
-    background: #00bfff;
-}
-.cycle_label{
-width: 120px;
-    height: 10px;
-    float: left;
-    position: relative;
-}
-.progress .cycle:first-of-type {
-    width: 0px;
-}
-.progress .cycle.current ~ .cycle {
-    background: #fff;
-}
-.progress .cycle:after {
-    content: '';
-    width: 30px;
-    height: 30px;
-    border: 1px solid #111;
-    border-radius: 50%;
-    position: absolute;
-    top: -12px;
-    right: -15px;
-    z-index: 2;
-    background: #00bfff;
-    
-    
-}
-.progress .cycle.current:after {
-    background: deepskyblue;
-}
-.progress .cycle.current ~ .cycle:after {
-    background: #fff;
-}
-/* With Counters */
-.progress.counter {
-    counter-reset: cycle;
-    
-}
-.progress.counter .cycle:after {
-    counter-increment: cycle;
-    content: counter(cycle);
-    line-height: 30px;
-    text-align: center;
-    font-family: Arial;
-}
-  </style>
 </head>
 <%!
 String user_id=null;
@@ -154,7 +81,7 @@ String user_cat="";
 	                            <i class="material-icons">layers</i> Section 2
 	                        </a>
                  	  <%
-                      } else if(section_status.equalsIgnoreCase("3")){
+                      }else if(section_status.equalsIgnoreCase("3")){
                     	  %>
                  	  	 	<a href="userLoginPage" class="dropdown-item">
 	                            <i class="material-icons">layers</i> Section 1
@@ -187,8 +114,6 @@ String user_cat="";
     AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
     String id=user_id;
    
-    CountUserDetailsBeans countByAdminBeans=new CountUserDetailsBeans();
-    countByAdminBeans=adminDaoImpl.getAllCountByUserid(id);
     %>
     <div class="page-header header-filter" data-parallax="true" style="background-image:url('img/bg.jpg');"></div>
     <div class="main main-raised">
@@ -216,66 +141,11 @@ String user_cat="";
 	                    </div>
     	            </div>
                 </div>
-                <div class="row">
-              		<div class="col-md-6 ml-auto mr-auto ">
-						<div class="progress counter justify-content-center ">
-						    <div class="cycle <%if(countByAdminBeans.getPaymentcount()<=0){%>current<%} %>"></div>
-						    <div class="cycle <%if(countByAdminBeans.getFilecount()<=0){%>current<%} %>""></div>
-						    <div class="cycle "></div>
-						    <div style="clear: both; height: 0px;">&nbsp;</div>
-						</div>
-						<div class="progress_label counter justify-content-center ">
-						    <div class="cycle_label">Payment</div>
-						    <div class="cycle_label">Upload</div>
-						    <div class="cycle_label ">Details</div>
-						    <div style="clear: both; height: 0px;">&nbsp;</div>
-						</div>
-					</div>
-				</div>
-				<%if(countByAdminBeans.getPaymentcount()<=0){
-					%>
-						<div class="row">
-		              		<div class="col-md-6 ml-auto mr-auto">
-		              			 <form action="UserPayment" method="post">
-		              			 <input type="hidden" value="<%=id%>" name="userid">
-								    <div class="form-group">
-								      <label for="amount">Amount:</label>
-								      <input type="text" class="form-control" id="email" placeholder="Enter Amount" name="amount">
-								    </div>
-								    <div class="form-group">
-								      <label for="payment_by">Payment by:</label>
-								      <input type="text" class="form-control" id="pwd" placeholder="Enter Payment by" name="payment_by">
-								    </div>
-								     <div class="form-group">
-								      <label for="transition_id">Transition Id:</label>
-								      <input type="text" class="form-control" id="pwd" placeholder="Enter Transition Id" name="transition_id">
-								    </div>
-								   
-								    <button type="submit" class="btn btn-success" style="background-color: #4caf50; color: white;">Submit</button>
-								  </form>
-		              			
-		              		</div>
-		              	</div>
-					<%
-				}else if(countByAdminBeans.getFilecount()<=0){
-					%>
-					<br>
-					<div class="row">
-	              		<div class="col-md-6 ml-auto mr-auto">
-	              			 <form action="uploadFileSection2.jsp" method="post" enctype="multipart/form-data">
-	              			 <input type="hidden" value="<%=id%>" name="userid">
-							    <div class="form-group">
-							      <label for="file_name">Upload File :</label>
-							      <input type="file" class="form-control" id="file_name"  name="file_name"  accept="video/mp4,video/x-m4v,video/*,.mp3,audio/*,.mov" required>
-							    </div>
-							 
-							   
-							    <button type="submit" class="btn btn-success" style="background-color: #4caf50; color: white;">Upload</button>
-							  </form>
-	              			
-	              		</div>
-	              	</div>
-				<%}else{ %>
+               <%
+               CountUserDetailsBeans countByUserBeans=new CountUserDetailsBeans();
+               countByUserBeans=adminDaoImpl.getAllCountByUserid(id);
+               
+               %>
 
               	<div class="row">
               	
@@ -284,11 +154,11 @@ String user_cat="";
                           <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" href="#userProfile" role="tab" data-toggle="tab">
-                                  <i class="material-icons">face</i>
-                                  Payment
+                                  <i class="material-icons">camera</i>
+                                  Upload
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item"  <%if(countByUserBeans.getFilecount3()<=0){%>style="display: none;"<%} %>>
                                 <a class="nav-link" href="#files" role="tab" data-toggle="tab">
                                   <i class="material-icons">camera</i>
                                     Files
@@ -307,56 +177,38 @@ String user_cat="";
         
           <div class="tab-content tab-space">
             <div class="tab-pane active text-center gallery" id="userProfile">
-  				  				        <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Amount</th>
-				        <th>Date</th>
-				        <th>Payment by</th>
-				        <th>Transition id</th>
-				      </tr>
-                </thead>
-                <tbody>
-                		<%
-                		
-    try
-    {
-    	ArrayList<PaymentDetailsBeans> paymentDetailsBeans=new ArrayList<PaymentDetailsBeans>();
-                    int count =0;
-                    String sql="SELECT * FROM payment_details WHERE payment_details.userid="+user_id+";";
-                    paymentDetailsBeans=adminDaoImpl.getUserPaymentDetails(sql);
-                    for(int i=0;i<paymentDetailsBeans.size();i++){
-                    	PaymentDetailsBeans paymentBeans=paymentDetailsBeans.get(i);
-                		
-                		%>
-                			 <tr>
-            			        <td><%=paymentBeans.getAmount() %></td>
-            			        <td><%=paymentBeans.getDate() %></td>
-            			        <td><%=paymentBeans.getPayment_by() %></td>
-            			        <td><%=paymentBeans.getTransition_id()%></td>
-            			     </tr>
-                		<%
-                	}
-               }
-               catch(Exception e)
-               {
-                    e.printStackTrace();
-               }
-	   %>
-                </tbody>
-            </table>
+            <div class="col-md-6 ml-auto mr-auto">
+  				 <form action="uploadFileAndDocSection3.jsp" method="post" enctype="multipart/form-data">
+	           <input type="hidden" value="6" name="userid">
+	           		<div class="form-group">
+						<label for="file_name">Upload Document :</label>
+						<input type="file" class="form-control" id="doc_name"  name="doc_name"  multiple="multiple" required>
+					</div>
+					<div class="form-group">
+						<label for="file_name">Upload File :</label>
+						<input type="file" class="form-control" id="file_name"  name="file_name"  accept="video/mp4,video/x-m4v,video/*,.mp3,audio/*,.mov" required>
+					</div>
+				   <button type="submit" class="btn btn-success" style="background-color: #4caf50; color: white;">Upload</button>
+		  </form>
+		  </div>
+  				<div class="row">
+  					<div class="col-md-6 ml-auto mr-auto">
+  					<hr>
+  					</div>
+  				</div>
   			</div>
             <div class="tab-pane text-center gallery" id="files">
       			<div class="row">
+      				<%if(countByUserBeans.getFilecount3()>0){ %>
       				<div class="col-md-9 ml-auto mr-auto">
-                     	<%
+                    <%
                      	 Userbeans userbeans=new Userbeans();
-                        userbeans=adminDaoImpl.getUploadFileSection2(id);
-                     	String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
+                        userbeans=adminDaoImpl.getUploadFileSection3(id);
+                        String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
                	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
                			%>
-               				<video style="width: 100%; height: 100%"  controls>
-							  <source src="<%=userbeans.getFile() %>" type="video/mp4">
+               				<video style="width: 100%; height: 450px;"  controls>
+							  <source src="UploadedFile/User/VID-20170929-WA0003.mp4" type="video/mp4">
 							</video>
                			<%
                		}else if(ext.equalsIgnoreCase("mp3")  || ext.equalsIgnoreCase("m4a")){
@@ -368,7 +220,11 @@ String user_cat="";
                		}
                %>
                      </div>
-      				
+      				<%} %>
+      			</div>
+      			<div class="row">
+      				<div class="col-md-9 ml-auto mr-auto">
+      				</div>
       			</div>
   			</div>
             <div class="tab-pane text-center gallery" id="favorite">
@@ -390,7 +246,7 @@ String user_cat="";
     {
     	ArrayList<UserRatingBeans> userRatingBeanss=new ArrayList<UserRatingBeans>();
                     int count =0;
-                    String sql="SELECT user.username,user_rating_section2.*,judges.NAME AS judges_name FROM user_rating_section2 INNER JOIN USER ON user.id=user_rating_section2.userid INNER JOIN judges ON judges.id=user_rating_section2.judgeid WHERE user_rating_section2.userid="+user_id+" ORDER BY user_rating_section2.id DESC ";
+                    String sql="SELECT user.username,user_rating_section1.*,judges.NAME AS judges_name FROM user_rating_section1 INNER JOIN USER ON user.id=user_rating_section1.userid INNER JOIN judges ON judges.id=user_rating_section1.judgeid WHERE user_rating_section1.userid="+user_id+" ORDER BY user_rating_section1.id DESC ";
                 	userRatingBeanss=adminDaoImpl.getUserRatingSection1(sql);
                     for(int i=0;i<userRatingBeanss.size();i++){
                     	UserRatingBeans userRatingBeans=userRatingBeanss.get(i);
@@ -417,7 +273,7 @@ String user_cat="";
       			</div>
       		</div>
           </div>
-		<%} %>
+
         
             </div>
         </div>

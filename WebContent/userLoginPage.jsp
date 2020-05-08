@@ -86,7 +86,7 @@ String section_status="";
 	                        <a href="userLoginSection2" class="dropdown-item">
 	                            <i class="material-icons">layers</i> Section 2
 	                        </a>
-	                        <a href="#" class="dropdown-item">
+	                        <a href="userLoginSection3" class="dropdown-item">
 	                            <i class="material-icons">layers</i> Section 3
 	                        </a>
                  	  <%
