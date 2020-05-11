@@ -35,24 +35,24 @@ int total_rows=0;
 int page_count=0;
 int pading_count=0;
 String searchValue=null;
-Logger logger = Logger.getLogger("judgesSection1.jsp");
-String redirect_url="judgesSection1?clr=appLanguages&act=appLanguages1";
+Logger logger = Logger.getLogger("judgesSection3.jsp");
+String redirect_url="judgesSection3?clr=app_section3&act=app_section3";
 %>
 	<%
-if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
-	searchValue=request.getParameter("searchValue");
-searchValue =  searchValue.replaceAll("'", "''");
-}else{
-	searchValue="0";
-}
 	String status="0";
+	if(request.getParameter("searchValue") != null && !request.getParameter("searchValue").isEmpty()){
+		searchValue=request.getParameter("searchValue");
+	searchValue =  searchValue.replaceAll("'", "''");
+	}else{
+		searchValue="0";
+	}
 	if(request.getParameter("status") != null && !request.getParameter("status").isEmpty()){
 		status=request.getParameter("status");
 
 	}else{
 		status="0";
 	}
-	redirect_url="judgesSection1?clr=appLanguages&act=appLanguages1&status="+status+"";
+	redirect_url="judgesSection2?clr=app_section2&act=app_section2&status="+status+"";
 %>
 <%
             
@@ -91,7 +91,7 @@ searchValue =  searchValue.replaceAll("'", "''");
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2>User Management</h2>
+						<h2>Section 2</h2>
 					</div>
 					<div class="col-sm-8" style="display: none;">
 						<a href="addUserByAdmin?clr=appLanguages&act=appLanguages1" class="btn btn-info" style=""><i class="material-icons">&#xE24D;</i> <span>Add User</span></a>
@@ -109,8 +109,8 @@ searchValue =  searchValue.replaceAll("'", "''");
 					</div>
                     <div class="col-sm-9">
                     <form>
-                   		<input type="hidden" name="clr" value="appLanguages">
-                   		<input type="hidden" name="act" value="appLanguages1">
+                   		<input type="hidden" name="clr" value="app_section3">
+                   		<input type="hidden" name="act" value="app_section3">
 						<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
 						<div class="filter-group">
 						 <%
@@ -156,11 +156,11 @@ searchValue =  searchValue.replaceAll("'", "''");
     	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user where status="+status+" order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserList(sql);
+                    	String sql="select * from user where section_status>=3 and user.around3="+status+" order by user.id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForThreeByjudges(sql);
                     }else{
-                    	String sql="select *,(SELECT COUNT(*)  FROM user_rating_section1 WHERE userid=user.id) AS rating_count from user where status="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserList(sql);
+                    	String sql="select * from user where section_status>=3 and user.around3="+status+" and (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%') order by user.id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForThreeByjudges(sql);
                     }
                     for(int i=0;i<userbeanss.size();i++){
                 		Userbeans userbeans=userbeanss.get(i);
@@ -188,7 +188,9 @@ searchValue =  searchValue.replaceAll("'", "''");
             			        	%><i class="fa fa-circle" style="font-size:15px;color:green; "></i><%
             			        }%></td>
             			        <td>
-            			        	<a href="viewSection1UserByjudges?clr=appLanguages&act=appLanguages1&id=<%=userbeans.getId()%>">View</a>
+            			        	<a href="viewSection3UserFileByJudges?clr=app_section3&act=app_section3&id=<%=userbeans.getId()%>">View</a>
+            			        	
+            			        	
             			        </td>
             			      </tr>
                 		<%
@@ -206,10 +208,10 @@ searchValue =  searchValue.replaceAll("'", "''");
 			    {
                     int count=0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select * from user status="+status+"";
+                    	String sql="select * from user where section_status>=3 and user.around3="+status+"";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }else{
-                    	String sql="select * from user where status="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%')";
+                    	String sql="select * from user where section_status>=3 and user.around3="+status+" and  (user.id  LIKE '"+searchValue+"%' or user.name LIKE '"+searchValue+"%')";
                     	count=adminDaoImpl.getCountBySql(sql);
                     }
                     	double count1=count;
