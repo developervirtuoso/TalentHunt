@@ -169,6 +169,30 @@
     <servlet-name>viewSection3UserFileByJudges</servlet-name>
     <url-pattern>/viewSection3UserFileByJudges</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Section3ByAdmin</servlet-name>
+    <jsp-file>/Section3ByAdmin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Section3ByAdmin</servlet-name>
+    <url-pattern>/Section3ByAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>showRatingUserSection3</servlet-name>
+    <jsp-file>/showRatingUserSection3.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>showRatingUserSection3</servlet-name>
+    <url-pattern>/showRatingUserSection3</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>viewSection3UserFile</servlet-name>
+    <jsp-file>/viewSection3UserFile.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>viewSection3UserFile</servlet-name>
+    <url-pattern>/viewSection3UserFile</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>
