@@ -22,6 +22,13 @@
     <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
 
   <link rel="stylesheet" type="text/css" href="css/userstyle.css">
+  <style type="text/css">
+  	.videopad{
+	padding: 15px;
+    border: 2px #9c27b0 solid;
+    margin: 5px;
+}
+  </style>
 </head>
 <%!
 String user_id=null;
@@ -167,19 +174,19 @@ String user_cat="";
 					<div class="col-md-6 ml-auto mr-auto">
                         <div class="profile-tabs">
                           <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-                            <li class="nav-item" <%if(countByUserBeans.getFilecount3()>0){%>style="display: none;"<%} %>>
+                            <li class="nav-item" <%if(countByUserBeans.getFilecount4()>0){%>style="display: none;"<%} %>>
                                 <a class="nav-link active" href="#userProfile" role="tab" data-toggle="tab">
                                   <i class="material-icons">camera</i>
                                   Upload
                                 </a>
                             </li>
-                            <li class="nav-item"  <%if(countByUserBeans.getFilecount3()<=0){%>style="display: none;"<%} %>>
+                            <li class="nav-item"  <%if(countByUserBeans.getFilecount4()<=0){%>style="display: none;"<%} %>>
                                 <a class="nav-link" href="#files" role="tab" data-toggle="tab">
                                   <i class="material-icons">camera</i>
                                     Files
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" style="display: none;">
                                 <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
                                   <i class="material-icons">favorite</i>
                                     Rating
@@ -191,14 +198,19 @@ String user_cat="";
             </div>
         
           <div class="tab-content tab-space">
-          <%if(countByUserBeans.getFilecount3()<=0){ %>
+         
             <div class="tab-pane active text-center gallery" id="userProfile">
+             <%if(countByUserBeans.getFilecount4()<=0){ %>
             <div class="col-md-6 ml-auto mr-auto">
-  				 <form action="uploadFileAndDocSection3.jsp" method="post" enctype="multipart/form-data">
+  				 <form action="uploadFileAndVideoSection4.jsp" method="post" enctype="multipart/form-data">
 	           <input type="hidden" value="<%=user_id %>" name="userid">
 	           		<div class="form-group">
-						<label for="file_name">Upload Document :</label>
-						<input type="file" class="form-control" id="doc_name"  name="doc_name"  multiple="multiple" required>
+						<label for="file_name">Own Video :</label>
+						<input type="file" class="form-control" id="own_video"  name="own_video"  accept="video/mp4,video/x-m4v,video/*,.mp3,audio/*,.mov">
+					</div>
+					<div class="form-group">
+						<label for="file_name">Family Video :</label>
+						<input type="file" class="form-control" id="family_video"  name="family_video"  accept="video/mp4,video/x-m4v,video/*,.mp3,audio/*,.mov">
 					</div>
 					<div class="form-group">
 						<label for="file_name">Upload File :</label>
@@ -212,15 +224,19 @@ String user_cat="";
   					<hr>
   					</div>
   				</div>
+  				<%} %>
   			</div>
-  			<%} %>
-            <div class="tab-pane text-center gallery" id="files">
+  			
+            <div class="tab-pane  text-center gallery" id="files">
       			<div class="row">
-      				<%if(countByUserBeans.getFilecount3()>0){ %>
-      				<div class="col-md-9 ml-auto mr-auto">
+      				<%if(countByUserBeans.getFilecount4()>0){
+      					Userbeans userbeans=new Userbeans();
+                        userbeans=adminDaoImpl.getUploadFileSection4(id);
+      					%>
+      				<div class="col-md-9 ml-auto mr-auto videopad">
+      				<p>Selection File</p>
                     <%
-                     	 Userbeans userbeans=new Userbeans();
-                        userbeans=adminDaoImpl.getUploadFileSection3(id);
+                     	 
                         String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
                	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
                			%>
@@ -232,6 +248,46 @@ String user_cat="";
                			%>
                				<audio controls class="form-control">
 							  <source src="<%=userbeans.getFile() %>" type="audio/mpeg">
+							</audio>
+               			<%
+               		}
+               %>
+                     </div>
+                     <div class="col-md-9 ml-auto mr-auto videopad">
+                     <p>My video</p>
+                    <%
+                     	 
+                        String ownext = userbeans.getOwnitem().substring(userbeans.getOwnitem().lastIndexOf(".") + 1); 
+               	if(ownext.equalsIgnoreCase("mp4")  || ownext.equalsIgnoreCase("m4v") || ownext.equalsIgnoreCase("f4v") || ownext.equalsIgnoreCase("f4a") || ownext.equalsIgnoreCase("m4b") || ownext.equalsIgnoreCase("m4r") || ownext.equalsIgnoreCase("f4b") || ownext.equalsIgnoreCase("mov")){
+               			%>
+               				<video style="width: 100%; height: 450px;"  controls>
+							  <source src="<%=userbeans.getOwnfilename() %>" type="video/mp4">
+							</video>
+               			<%
+               		}else if(ownext.equalsIgnoreCase("mp3")  || ownext.equalsIgnoreCase("m4a")){
+               			%>
+               				<audio controls class="form-control">
+							  <source src="<%=userbeans.getOwnfilename()%>" type="audio/mpeg">
+							</audio>
+               			<%
+               		}
+               %>
+                     </div>
+                      <div class="col-md-9 ml-auto mr-auto videopad">
+                      <p>My Family video</p>
+                    <%
+                     	 
+                        String familtext = userbeans.getFamilyitem().substring(userbeans.getFamilyitem().lastIndexOf(".") + 1); 
+               	if(familtext.equalsIgnoreCase("mp4")  || familtext.equalsIgnoreCase("m4v") || familtext.equalsIgnoreCase("f4v") || familtext.equalsIgnoreCase("f4a") || familtext.equalsIgnoreCase("m4b") || familtext.equalsIgnoreCase("m4r") || familtext.equalsIgnoreCase("f4b") || familtext.equalsIgnoreCase("mov")){
+               			%>
+               				<video style="width: 100%; height: 450px;"  controls>
+							  <source src="<%=userbeans.getFamilyfilename() %>" type="video/mp4">
+							</video>
+               			<%
+               		}else if(familtext.equalsIgnoreCase("mp3")  || familtext.equalsIgnoreCase("m4a")){
+               			%>
+               				<audio controls class="form-control">
+							  <source src="<%=userbeans.getFamilyfilename()%>" type="audio/mpeg">
 							</audio>
                			<%
                		}

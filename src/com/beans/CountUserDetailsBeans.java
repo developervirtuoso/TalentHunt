@@ -5,9 +5,16 @@ public class CountUserDetailsBeans {
 	private int paymentcount=0;
 	private int filecount=0;
 	private int filecount3=0;
+	private int filecount4=0;
 	private int userdoccount=0;
 	
 	
+	public int getFilecount4() {
+		return filecount4;
+	}
+	public void setFilecount4(int filecount4) {
+		this.filecount4 = filecount4;
+	}
 	public int getFilecount3() {
 		return filecount3;
 	}

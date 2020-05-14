@@ -399,3 +399,7 @@ footer p a:hover {
     color: #9f26aa;
     text-decoration: none;
 }
+.videopad{
+	padding: 15px;
+    border: 2px #9c27b0 solid;
+}

@@ -19,8 +19,37 @@ public class Userbeans {
 	private int around4=0;
 	private int around5=0;
 	private int section_status=0;
+	private String ownfilename="0";
+	private String ownitem="0";
+	private String familyfilename="0";
+	private String familyitem="0";
 	
 	
+	
+	public String getOwnfilename() {
+		return ownfilename;
+	}
+	public void setOwnfilename(String ownfilename) {
+		this.ownfilename = ownfilename;
+	}
+	public String getOwnitem() {
+		return ownitem;
+	}
+	public void setOwnitem(String ownitem) {
+		this.ownitem = ownitem;
+	}
+	public String getFamilyfilename() {
+		return familyfilename;
+	}
+	public void setFamilyfilename(String familyfilename) {
+		this.familyfilename = familyfilename;
+	}
+	public String getFamilyitem() {
+		return familyitem;
+	}
+	public void setFamilyitem(String familyitem) {
+		this.familyitem = familyitem;
+	}
 	public int getPaymentCount() {
 		return paymentCount;
 	}

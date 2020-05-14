@@ -998,6 +998,56 @@ public class AdminDaoImpl {
 				}
 				return userRatingBean;
 			}
+			public Userbeans getUploadFileSection4(String id) {
+				Userbeans userbeans=new Userbeans();
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery("SELECT file_section4.*,user_video.file_name AS ownfilename,user_video.itemName AS ownitem,user_family_video.file_name AS familyfilename,user_family_video.itemName AS familyitem from file_section4 \r\n" + 
+		      	 		"LEFT JOIN user_video on user_video.userid=file_section4.userid \r\n" + 
+		      	 		"LEFT join user_family_video on user_family_video.userid=file_section4.userid where file_section4.userid="+id+"");
+		      	 while(rs.next())
+		      	 {
+		      		userbeans.setFilename(rs.getString("itemName"));
+		      		userbeans.setFile(rs.getString("file_name"));
+		      		 userbeans.setStatus(rs.getInt("status"));
+		      		 userbeans.setOwnfilename(rs.getString("ownfilename"));
+		      		 userbeans.setOwnitem(rs.getString("ownitem"));
+		      		 userbeans.setFamilyfilename(rs.getString("familyfilename"));
+		      		 userbeans.setFamilyitem(rs.getString("familyitem"));
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userbeans;
+			}
 			public Userbeans getUploadFileSection3(String id) {
 				Userbeans userbeans=new Userbeans();
 		        Connection conn=DbConnection.getInstance().getConnection();
@@ -1294,6 +1344,7 @@ public class AdminDaoImpl {
 			      	 		"(SELECT COUNT(*) FROM payment_details WHERE payment_details.userid=user.id) AS payment_count, \r\n" + 
 			      	 		"(SELECT COUNT(*) FROM file_section2 WHERE file_section2.userid=user.id) AS file_count, "
 			      	 		+"(SELECT COUNT(*) FROM file_section3 WHERE file_section3.userid=user.id) AS filecount3, "
+			      	 		+"(SELECT COUNT(*) FROM file_section4 WHERE file_section4.userid=user.id) AS filecount4, "
 			      	 		+"(SELECT COUNT(*) FROM user_doc WHERE user_doc.userid=user.id) AS userdoccount "
 			      	 		+ "FROM user WHERE id="+id+";");
 			      	 while(rs.next())
@@ -1302,6 +1353,7 @@ public class AdminDaoImpl {
 			      		 countUserDetailsBeans.setPaymentcount(rs.getInt("payment_count"));
 			      		 countUserDetailsBeans.setFilecount(rs.getInt("file_count"));
 			      		 countUserDetailsBeans.setFilecount3(rs.getInt("filecount3"));
+			      		 countUserDetailsBeans.setFilecount4(rs.getInt("filecount4"));
 			      		countUserDetailsBeans.setUserdoccount(rs.getInt("userdoccount"));
 			      	 }
 			        }
@@ -1702,6 +1754,105 @@ public class AdminDaoImpl {
 				try 
 				{
 					pst=Conn.prepareStatement("insert into user_doc (userid,file_name,itemName) values(?,?,?);");
+					pst.setString(1, userid);
+					pst.setString(2, file_path);
+					pst.setString(3, itemName);
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int insertUploadFamilyVideo(String file_path,String itemName,String userid) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into user_family_video (userid,file_name,itemName) values(?,?,?);");
+					pst.setString(1, userid);
+					pst.setString(2, file_path);
+					pst.setString(3, itemName);
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int insertUploadOwnVideo(String file_path,String itemName,String userid) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into user_video (userid,file_name,itemName) values(?,?,?);");
+					pst.setString(1, userid);
+					pst.setString(2, file_path);
+					pst.setString(3, itemName);
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int insertUploadFileSection4(String file_path,String itemName,String userid) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into file_section4 (userid,file_name,itemName) values(?,?,?);");
 					pst.setString(1, userid);
 					pst.setString(2, file_path);
 					pst.setString(3, itemName);

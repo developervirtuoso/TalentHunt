@@ -166,7 +166,22 @@ String user_cat="";
 	                            <i class="material-icons">layers</i> Section 3
 	                        </a>
                  	  <%
-                      } %>
+                      }else if(section_status.equalsIgnoreCase("4")){
+                    	  %>
+                 	  	 	<a href="userLoginPage" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 1
+	                        </a>
+	                        <a href="userLoginSection2" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 2
+	                        </a>
+	                        <a href="userLoginSection3" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 3
+	                        </a>
+	                        <a href="userLoginSection4" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 4
+	                        </a>
+                 	  <%
+                      }  %>
                        
                         
                         <a href="http://demos.creative-tim.com/material-kit/docs/2.0/getting-started/introduction.html" class="dropdown-item" style="display: none;">
