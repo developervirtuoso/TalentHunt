@@ -1,3 +1,4 @@
+<%@page import="com.beans.ConnFile"%>
 <%@page import="com.beans.PaymentDetailsBeans"%>
 <%@page import="com.beans.CountUserDetailsBeans"%>
 <%@page import="com.admin.servlet.CountByAdminBeans"%>
@@ -22,7 +23,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
     <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
-
+<script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" type="text/css" href="css/userstyle.css">
   <style type="text/css">
  .progress, .progress * { box-sizing: border-box; }
@@ -248,27 +249,25 @@ String user_cat="";
 					</div>
 				</div>
 				<%if(countByAdminBeans.getPaymentcount()<=0){
+					int amount =10*100;
 					%>
 						<div class="row">
 		              		<div class="col-md-6 ml-auto mr-auto">
-		              			 <form action="UserPayment" method="post">
+		              			<form action='UserPayment' method='POST' id='checkout-form' xmlns:th="http://www.w3.org/1999/xhtml">
 		              			 <input type="hidden" value="<%=id%>" name="userid">
-								    <div class="form-group">
+							    <div class="form-group">
 								      <label for="amount">Amount:</label>
-								      <input type="text" class="form-control" id="email" placeholder="Enter Amount" name="amount">
+								      <input type="text" class="form-control" id="amount" value="10" name="amount" readonly="readonly">
 								    </div>
-								    <div class="form-group">
-								      <label for="payment_by">Payment by:</label>
-								      <input type="text" class="form-control" id="pwd" placeholder="Enter Payment by" name="payment_by">
-								    </div>
-								     <div class="form-group">
-								      <label for="transition_id">Transition Id:</label>
-								      <input type="text" class="form-control" id="pwd" placeholder="Enter Transition Id" name="transition_id">
-								    </div>
-								   
-								    <button type="submit" class="btn btn-success" style="background-color: #4caf50; color: white;">Submit</button>
-								  </form>
-		              			
+							  	 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+							      Stripe.setPublishableKey('<%=ConnFile.stripePublickey %>');
+							      data-key="<%=ConnFile.stripePublickey %>"
+							      data-description="A month's subscription"
+							      data-currency="INR"
+							      data-amount="<%=amount %>"
+							      data-locale="auto">
+							</script>
+							</form>
 		              		</div>
 		              	</div>
 					<%

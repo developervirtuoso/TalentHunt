@@ -1,6 +1,7 @@
 package com.user.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.beans.PaymentDetailsBeans;
 import com.dao.impl.AdminDaoImpl;
+import com.dao.impl.StripeService;
+import com.stripe.model.Charge;
 
 /**
  * Servlet implementation class UserPayment
@@ -39,15 +42,42 @@ public class UserPayment extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
 		PaymentDetailsBeans paymentDetailsBeans=new PaymentDetailsBeans();
-		paymentDetailsBeans.setAmount(request.getParameter("amount"));
-		paymentDetailsBeans.setPayment_by(request.getParameter("payment_by"));
-		paymentDetailsBeans.setTransition_id(request.getParameter("transition_id"));
-		paymentDetailsBeans.setStatus(2);		
-		paymentDetailsBeans.setUserid(Integer.parseInt(request.getParameter("userid")));
-		String date=LocalDate.now().toString();
-		paymentDetailsBeans.setDate(date);
+	
 		AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
+		StripeService stripeService=new StripeService();
+		String token = request.getParameter("stripeToken");
+	        Double amount = Double.parseDouble(request.getParameter("amount"));
+	        Charge charge= stripeService.chargeNewCard(token, amount);
+	    	paymentDetailsBeans.setAmount(amount+"");
+			paymentDetailsBeans.setPayment_by("card");
+			//paymentDetailsBeans.setStatus(2);		
+			paymentDetailsBeans.setUserid(Integer.parseInt(request.getParameter("userid")));
+			String date=LocalDate.now().toString();
+			paymentDetailsBeans.setDate(date);
+			paymentDetailsBeans.setToken(token);
+			paymentDetailsBeans.setPaymentid(charge.getId());
+			paymentDetailsBeans.setTransition_id(charge.getBalanceTransaction());
+			paymentDetailsBeans.setCurrency(charge.getCurrency());
+			paymentDetailsBeans.setStripeStatus(charge.getStatus());
+			paymentDetailsBeans.setPaymentMethod(charge.getPaymentMethod());
+			
+	       /* System.out.println("token = "+token);
+	        System.out.println("amount = "+amount);
+	        System.out.println("getApplication = "+charge.getApplication());
+	        System.out.println("getId = "+charge.getId());
+	        System.out.println("getAuthorizationCode = "+charge.getAuthorizationCode());
+	        System.out.println("getBalanceTransaction = "+charge.getBalanceTransaction());
+	        System.out.println("getCurrency = "+charge.getCurrency());
+	        System.out.println("getStatus = "+charge.getStatus());
+	        System.out.println("getCustomer = "+charge.getCustomer());
+	        System.out.println("getPaymentMethod = "+charge.getPaymentMethod());
+	        System.out.println("getReceiptEmail = "+charge.getReceiptEmail());
+	        System.out.println("getReview = "+charge.getReview());
+	        System.out.println("getStatementDescriptor = "+charge.getStatementDescriptor());
+	        System.out.println("getReceiptEmail = "+charge.getReceiptEmail());*/
 		int i=adminDaoImpl.insertPaymentDetalis(paymentDetailsBeans);
 		response.sendRedirect("userLoginSection2?clr=section2&actsection2");
 	}

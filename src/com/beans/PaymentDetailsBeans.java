@@ -10,8 +10,44 @@ public class PaymentDetailsBeans {
 	private String transition_id="0";
 	private String datetime="0";
 	private String username="0";
+	private String token="0";
+	private String paymentid="0";
+	private String currency="0";
+	private String stripeStatus="0";
+	private String paymentMethod="0";
 	
 	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public String getPaymentid() {
+		return paymentid;
+	}
+	public void setPaymentid(String paymentid) {
+		this.paymentid = paymentid;
+	}
+	
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+	public String getStripeStatus() {
+		return stripeStatus;
+	}
+	public void setStripeStatus(String stripeStatus) {
+		this.stripeStatus = stripeStatus;
+	}
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 	public String getUsername() {
 		return username;
 	}

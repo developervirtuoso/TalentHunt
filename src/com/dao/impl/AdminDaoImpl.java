@@ -1717,13 +1717,17 @@ public class AdminDaoImpl {
 			    PreparedStatement pst=null;
 				try 
 				{
-					pst=Conn.prepareStatement("insert into payment_details (userid,amount,status,date,payment_by,transition_id) values(?,?,?,?,?,?);");
+					pst=Conn.prepareStatement("insert into payment_details (userid,amount,stripeStatus,date,payment_by,transition_id,token,paymentid,currency,paymentMethod) values(?,?,?,?,?,?,?,?,?,?);");
 					pst.setInt(1, paymentDetailsBeans.getUserid());
 					pst.setString(2, paymentDetailsBeans.getAmount());
-					pst.setInt(3, paymentDetailsBeans.getStatus());
+					pst.setString(3, paymentDetailsBeans.getStripeStatus());
 					pst.setString(4, paymentDetailsBeans.getDate());
 					pst.setString(5, paymentDetailsBeans.getPayment_by());
 					pst.setString(6, paymentDetailsBeans.getTransition_id());
+					pst.setString(7, paymentDetailsBeans.getToken());
+					pst.setString(8, paymentDetailsBeans.getPaymentid());
+					pst.setString(9, paymentDetailsBeans.getCurrency());
+					pst.setString(10, paymentDetailsBeans.getPaymentMethod());
 					  i=pst.executeUpdate();
 				}
 				catch(Exception e)
