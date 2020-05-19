@@ -201,6 +201,14 @@
     <servlet-name>userLoginSection4</servlet-name>
     <url-pattern>/userLoginSection4</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Section4ByAdmin</servlet-name>
+    <jsp-file>/Section4ByAdmin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Section4ByAdmin</servlet-name>
+    <url-pattern>/Section4ByAdmin</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>

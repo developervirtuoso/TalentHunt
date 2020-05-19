@@ -15,6 +15,9 @@
 	}else if(clr=="app_section3"||clr=="app_section3"||clr=="app_section3"){
 		document.getElementById(clr).style.backgroundColor = "#65cbf9";
 		document.getElementById(act).style.color = "red !important";
+	}else if(clr=="app_section4"||clr=="app_section4"||clr=="app_section3"){
+		document.getElementById(clr).style.backgroundColor = "#65cbf9";
+		document.getElementById(act).style.color = "red !important";
 	}
 	 }
 	</script>
@@ -38,6 +41,11 @@
 				<div class="card" >
 					<div class="card-header" id="app_section3">
 						<h2 class="mb-0" id="app_section3h2"><a href="Section3ByAdmin?clr=app_section3&act=app_section3" ><i class="fa fa-leanpub" aria-hidden="true"></i>Section 3</a></h2>
+					</div>
+				</div>
+				<div class="card" >
+					<div class="card-header" id="app_section4">
+						<h2 class="mb-0" id="app_section4h2"><a href="Section4ByAdmin?clr=app_section4&act=app_section4" ><i class="fa fa-leanpub" aria-hidden="true"></i>Section 4</a></h2>
 					</div>
 				</div>
 				<div class="card">

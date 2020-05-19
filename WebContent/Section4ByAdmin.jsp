@@ -35,8 +35,8 @@ int total_rows=0;
 int page_count=0;
 int pading_count=0;
 String searchValue=null;
-Logger logger = Logger.getLogger("Section3ByAdmin.jsp");
-String redirect_url="Section3ByAdmin?clr=app_section3&act=app_section3";
+Logger logger = Logger.getLogger("Section4ByAdmin.jsp");
+String redirect_url="Section4ByAdmin?clr=app_section4&act=app_section4";
 %>
 	<%
 	String status="0";
@@ -52,7 +52,7 @@ if(request.getParameter("status") != null && !request.getParameter("status").isE
 }else{
 	status="0";
 }
-redirect_url="Section3ByAdmin?clr=app_section3&act=app_section3&status="+status+"";
+redirect_url="Section4ByAdmin?clr=app_section4&act=app_section4&status="+status+"";
 %>
 <%
             
@@ -91,7 +91,7 @@ redirect_url="Section3ByAdmin?clr=app_section3&act=app_section3&status="+status+
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2>Section 3</h2>
+						<h2>Section 4</h2>
 					</div>
 					<div class="col-sm-8" style="display: none;">
 						<a href="addUserByAdmin?clr=appLanguages&act=appLanguages1" class="btn btn-info" style=""><i class="material-icons">&#xE24D;</i> <span>Add User</span></a>
@@ -109,8 +109,8 @@ redirect_url="Section3ByAdmin?clr=app_section3&act=app_section3&status="+status+
 					</div>
                     <div class="col-sm-9">
                     <form>
-                   		<input type="hidden" name="clr" value="app_section3">
-                   		<input type="hidden" name="act" value="app_section3">
+                   		<input type="hidden" name="clr" value="app_section4">
+                   		<input type="hidden" name="act" value="app_section4">
 						<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
 						<div class="filter-group">
 						 <%
@@ -156,11 +156,11 @@ redirect_url="Section3ByAdmin?clr=app_section3&act=app_section3&status="+status+
     	ArrayList<Userbeans> userbeanss=new ArrayList<Userbeans>();
                     int count =0;
                     if(searchValue.equalsIgnoreCase("0")){
-                    	String sql="select *,(SELECT COUNT(*) FROM user_rating_section3 WHERE user_rating_section3.userid=user.id)AS rating_count from user where section_status>=3 and user.around3="+status+" order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserListForThree(sql);
+                    	String sql="select * from user where section_status>=4 and user.around4="+status+" order by id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForFour(sql);
                     }else{
-                    	String sql="select *,(SELECT COUNT(*) FROM user_rating_section3 WHERE user_rating_section3.userid=user.id)AS rating_count from user where section_status>=3 and user.around3="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
-                    	userbeanss=adminDaoImpl.getUserListForThree(sql);
+                    	String sql="select * from user where section_status>=4 and user.around4="+status+" and (id  LIKE '"+searchValue+"%' or name LIKE '"+searchValue+"%') order by id desc limit "+page1+","+order2+"";
+                    	userbeanss=adminDaoImpl.getUserListForFour(sql);
                     }
                     for(int i=0;i<userbeanss.size();i++){
                 		Userbeans userbeans=userbeanss.get(i);
@@ -188,12 +188,8 @@ redirect_url="Section3ByAdmin?clr=app_section3&act=app_section3&status="+status+
             			        	%><i class="fa fa-circle" style="font-size:15px;color:green; "></i><%
             			        }%></td>
             			        <td>
-            			        	<a href="viewSection3UserFile?clr=app_section3&act=app_section3&id=<%=userbeans.getId()%>">View</a>
-            			        	<%if(userbeans.getRatingCount()>0){
-            			        		%><a href="showRatingUserSection3?clr=app_section3&act=app_section3&id=<%=userbeans.getId()%>">Rating[<%=userbeans.getRatingCount() %>]</a><%
-            			        	}else{
-            			        		%><a href="#">Rating[<%=userbeans.getRatingCount() %>]</a><%
-            			        	} %>
+            			        	<a href="viewSection4UserFile?clr=app_section4&act=app_section4&id=<%=userbeans.getId()%>">View</a>
+            			        	
             			        </td>
             			      </tr>
                 		<%
