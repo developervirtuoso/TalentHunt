@@ -189,7 +189,7 @@ redirect_url="Section4ByAdmin?clr=app_section4&act=app_section4&status="+status+
             			        }%></td>
             			        <td>
             			        	<a href="viewSection4UserFile?clr=app_section4&act=app_section4&id=<%=userbeans.getId()%>">View</a>
-            			        	
+            			        	<a href="viewUserUserVideo?clr=app_section4&act=app_section4&id=<%=userbeans.getId()%>">video</a>
             			        </td>
             			      </tr>
                 		<%

@@ -209,6 +209,22 @@
     <servlet-name>Section4ByAdmin</servlet-name>
     <url-pattern>/Section4ByAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>viewSection4UserFile</servlet-name>
+    <jsp-file>/viewSection4UserFile.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>viewSection4UserFile</servlet-name>
+    <url-pattern>/viewSection4UserFile</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>viewUserUserVideo</servlet-name>
+    <jsp-file>/viewUserUserVideo.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>viewUserUserVideo</servlet-name>
+    <url-pattern>/viewUserUserVideo</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>register.jsp</welcome-file>
   </welcome-file-list>

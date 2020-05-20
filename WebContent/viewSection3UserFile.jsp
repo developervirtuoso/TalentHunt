@@ -43,7 +43,7 @@
             <div class="card-header bg-primary text-white">
                 <div class="row">
                     <div class="col-sm-4">
-						<h4>Section 1</h4>
+						<h4>Section 3</h4>
 					</div>
 					
                 </div>

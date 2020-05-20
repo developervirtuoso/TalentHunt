@@ -42,25 +42,26 @@
 </head>
 <body onload="showonlyone('<%=request.getParameter("clr")%>','<%=request.getParameter("act")%>');">
 
-<%@ include file="judgesHeader.jsp" %>
+<%@ include file="adminHeader.jsp" %>
 	<div class="row">
-		<%@ include file="judgesSider.jsp" %>
+		<%@ include file="adminSider.jsp" %>
 		<div class="col-lg-10 mypadding" style="background-color: #fcfcfc;">
 				<div class="container">
         <div class="card" style="margin:10px; border-color: blue;">
             <div class="card-header bg-primary text-white">
                 <div class="row">
                     <div class="col-sm-4">
-						<h4>Section 3</h4>
+						<h4>Section 4</h4>
 					</div>
 					
                 </div>
             </div>
             <%
+            String adminid=id;
             AdminDaoImpl adminDaoImpl=new AdminDaoImpl();
-            String id=request.getParameter("id");
+            String userid=request.getParameter("id");
             Userbeans userbeans=new Userbeans();
-            userbeans=adminDaoImpl.getUserDetailsWithSection3(id);
+            userbeans=adminDaoImpl.getUserDetailsWithSection4(userid);
             %>
             <div class="card-body">
 			    <div class="form-group">
@@ -114,7 +115,9 @@
                     </div>
                 </div>
               <div class="form-group col-sm-12">
-               <%String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
+               <%
+               System.out.print("fileeeeeeeeeeeeeeee"+userbeans.getFilename());
+               String ext = userbeans.getFilename().substring(userbeans.getFilename().lastIndexOf(".") + 1); 
                	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
                			%>
                				<video style="width: 100%; height: 400px;"  controls>
@@ -131,10 +134,10 @@
                %>
 				</div>
 				<%
-					UserRatingBeans userRatingBean=new UserRatingBeans();
-					userRatingBean=adminDaoImpl.getUserRating3ByjudgesID(id,judges_id);
+				UserRatingBeans userRatingBean=new UserRatingBeans();
+				userRatingBean=adminDaoImpl.getUserRating4ByAdminID(id,adminid);
 					%>
-					<div class="card" style="margin:10px; border-color: blue;">
+						<div class="card" style="margin:10px; border-color: blue;">
 			            <div class="card-header bg-success text-white">
 			                <div class="row">
 			                    <div class="col-sm-4">
@@ -148,8 +151,8 @@
 							<div class="form-group">
 			                    <label for="firstName" class="col-sm-12 control-label">Rating</label>
 			                    <div class="col-sm-12 " >
-			                    	  <input type="hidden" value="<%=judges_id%>" name="judges_id">
-			                    	  <input type="hidden" value="<%=id%>" name="userid">
+			                    	  <input type="hidden" value="<%=adminid %>" name="adminid">
+			                    	  <input type="hidden" value="<%=userid %>" name="userid">
 			                    	  <input type="hidden" id="selected_rating" name="selected_rating" value="<%=userRatingBean.getRating() %>" required="required">
 			                          <div class="form-control" style="height: auto;">
 			                    	    <button type="button" class="btnrating btn btn-default btn-lg <%if(userbeans.getStatus()>0){%>Disabled<% } %>" data-attr="1" id="rating-star-1">
@@ -178,6 +181,30 @@
 			                    </div>
 			                </div>
 			                <div class="form-group">
+			                    <label for="firstName" class="col-sm-12 control-label">Approved / Disapproved</label>
+			                    <div class="col-sm-12">
+			                       <select class="form-control" name="status">
+			                       	<%if(userbeans.getStatus()>0){
+			                       		String statusname="";
+			                       		if(userbeans.getStatus()==1){
+			                       			statusname="Disapproved";
+			                       		}else if(userbeans.getStatus()==2){
+			                       			statusname="Approved";
+			                       		}
+			                       		%>
+			                       		<option><%=statusname %></option>
+			                       		<%
+			                       	}else{
+			                       		%>
+			                       		<option>Select type</option>
+			                       		<option value="2">Approved</option>
+			                       		<option value="1">Disapproved</option>
+			                       		<%
+			                       	} %>	
+			                       </select> 
+			                    </div>
+			                </div>
+			                <div class="form-group">
 			                	<div class="col-sm-12">
 			                    	<input type="submit" value="Submit" class="btn btn-primary" style="float: right;">
 			                    </div>
@@ -186,8 +213,7 @@
 						</form>
 						</div>
 					</div>
-					<%
-				 %>
+					
 				
            </div>
            <div class="clearfix">

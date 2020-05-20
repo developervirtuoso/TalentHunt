@@ -895,6 +895,60 @@ public class AdminDaoImpl {
 				}
 				return userbeans;
 			}
+			public Userbeans getUserDetailsWithSection4(String id) {
+				Userbeans userbeans=new Userbeans();
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery("select user.*,file_section4.file_name AS filename4,file_section4.itemName AS itemname4,file_section4.STATUS AS STATUS4 from user LEFT JOIN file_section4 ON file_section4.userid=user.id where user.id="+id+"");
+		      	 while(rs.next())
+		      	 {
+		      		 System.out.println(rs.getString("filename"));
+		      		 userbeans.setId(rs.getInt("id"));
+		      		 userbeans.setUsername(rs.getString("username"));
+		      		 userbeans.setTicketid(rs.getString("ticketid"));
+		      		 userbeans.setEmail(rs.getString("email"));
+		      		 userbeans.setPhoneno(rs.getString("phoneno"));
+		      		 userbeans.setDob(rs.getString("dob"));
+		      		 userbeans.setGender(rs.getString("gender"));
+		      		userbeans.setFilename(rs.getString("itemname4")+"");
+		      		userbeans.setFile(rs.getString("filename4")+"");
+		      		userbeans.setCat(rs.getString("cat"));
+		      		 userbeans.setStatus(rs.getInt("around4"));
+		      		 
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userbeans;
+			}
 			public Userbeans getUserDetailsWithSection3(String id) {
 				Userbeans userbeans=new Userbeans();
 		        Connection conn=DbConnection.getInstance().getConnection();
@@ -1003,6 +1057,55 @@ public class AdminDaoImpl {
 					}
 				}
 				return userbeans;
+			}
+			public UserRatingBeans getUserRating4ByAdminID(String id,String adminid) {
+				UserRatingBeans userRatingBean=new UserRatingBeans();
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        String rating ="0";
+		        String comment="";
+		        
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery("SELECT *  FROM user_rating_section4 WHERE userid="+id+" AND adminid="+adminid+";");
+		      	 while(rs.next())
+		      	 {
+		      		rating=rs.getString("rating");
+		      		comment=rs.getString("comment");
+		      		
+		      	 }
+		      	 userRatingBean.setRating(rating);
+		      	 userRatingBean.setComment(comment);
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userRatingBean;
 			}
 			public UserRatingBeans getUserRating3ByjudgesID(String id,String judgeid) {
 				UserRatingBeans userRatingBean=new UserRatingBeans();
@@ -1300,6 +1403,38 @@ public class AdminDaoImpl {
 				}
 			return i;
 			}
+			public int ApprovedSection4(String id, String status, int section_status) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+			    
+				try 
+				{
+					pst=Conn.prepareStatement("UPDATE user SET around4="+status+",section_status="+section_status+" WHERE id="+id+";");
+					  
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
 			public int ApprovedSection2(String id, String status, int section_status) {
 				Connection Conn=DbConnection.getInstance().getConnection();
 				int i=0;
@@ -1481,6 +1616,48 @@ public class AdminDaoImpl {
 				}
 			return i;
 			}
+			public int checkUserRatingSection4(UserRatingBeans beans) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+				 Statement st=null;
+			        ResultSet rs=null;
+				try 
+				{
+			     	 st=Conn.createStatement();
+			      	 rs = st.executeQuery("SELECT * FROM user_rating_section4 WHERE userid="+beans.getUserid()+" AND adminid="+beans.getAdminid()+";");
+			      	 while(rs.next())
+			      	 {
+			      		 i=rs.getInt("id");
+			      		 
+			      	 }
+			        }
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
 			public int checkUserRatingSection3(UserRatingBeans beans) {
 				Connection Conn=DbConnection.getInstance().getConnection();
 				int i=0;
@@ -1598,6 +1775,39 @@ public class AdminDaoImpl {
 				}
 			return i;
 			}
+			public int UpdateRatingSection4(UserRatingBeans beans) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("UPDATE user_rating_section4 SET rating=?,comment=? WHERE id=?;");
+					  pst.setString(1, beans.getRating());
+					  pst.setString(2, beans.getComment());
+					  pst.setInt(3, beans.getId());
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
 			public int UpdateRatingSection3(UserRatingBeans beans) {
 				Connection Conn=DbConnection.getInstance().getConnection();
 				int i=0;
@@ -1608,6 +1818,40 @@ public class AdminDaoImpl {
 					  pst.setString(1, beans.getRating());
 					  pst.setString(2, beans.getComment());
 					  pst.setInt(3, beans.getId());
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int InsertRatingSection4(UserRatingBeans beans) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into user_rating_section4 (rating,comment,userid,adminid) values(?,?,?,?);");
+					 pst.setString(1, beans.getRating());
+					  pst.setString(2, beans.getComment());
+					  pst.setInt(3, beans.getUserid());
+					  pst.setInt(4, beans.getAdminid());
 					  i=pst.executeUpdate();
 				}
 				catch(Exception e)

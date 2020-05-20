@@ -4,6 +4,7 @@ public class UserRatingBeans {
 	private int id=0;
 	private int userid=0;
 	private int judgeid=0;
+	private int adminid=0;
 	private int status=0;
 	private String rating="0";
 	private String jadgename="0";
@@ -11,6 +12,12 @@ public class UserRatingBeans {
 	private String userName="0";
 	
 	
+	public int getAdminid() {
+		return adminid;
+	}
+	public void setAdminid(int adminid) {
+		this.adminid = adminid;
+	}
 	public String getUserName() {
 		return userName;
 	}
