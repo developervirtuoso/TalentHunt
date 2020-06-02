@@ -642,6 +642,56 @@ public class AdminDaoImpl {
 				}
 				return userbeanss;
 			}
+			public ArrayList<UserRatingBeans> getUserRatingSection4(String sql) {
+				ArrayList<UserRatingBeans> userbeanss=new ArrayList<UserRatingBeans>();
+		        boolean check = false;
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery(sql);
+		      	 while(rs.next())
+		      	 {
+		      		UserRatingBeans userbeans=new UserRatingBeans();
+		      		 userbeans.setId(rs.getInt("id"));
+		      		 userbeans.setUserName(rs.getString("username"));
+		      		 userbeans.setRating(rs.getString("rating"));
+		      		 userbeans.setUserid(rs.getInt("userid"));
+		      		userbeans.setComment(rs.getString("comment"));
+		      		userbeans.setStatus(rs.getInt("status"));
+		      		 userbeanss.add(userbeans);
+		      	 }
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				return userbeanss;
+			}
 			public ArrayList<UserRatingBeans> getUserRatingSection1(String sql) {
 				ArrayList<UserRatingBeans> userbeanss=new ArrayList<UserRatingBeans>();
 		        boolean check = false;
@@ -1155,6 +1205,57 @@ public class AdminDaoImpl {
 					}
 				}
 				return userRatingBean;
+			}
+			public void getAdminVideo(JSONObject jsonObject, String userid) {
+				Userbeans userbeans=new Userbeans();
+		        Connection conn=DbConnection.getInstance().getConnection();
+		         Statement st=null;
+		        ResultSet rs=null;
+		        boolean status=false;
+		        String itemName="";
+		        String filename="";
+		        try
+		        {
+		     	 st=conn.createStatement();
+		      	 rs = st.executeQuery("SELECT * FROM adminvideo WHERE userid="+userid+";");
+		      	 while(rs.next())
+		      	 {
+		      		itemName= rs.getString("itemName");
+		      		filename= rs.getString("file_name");
+		      		status=true;
+		      	 }
+		      	 
+		      	jsonObject.put("itemName", itemName);
+		      	jsonObject.put("filename", filename);
+		      	jsonObject.put("status", status);
+		        }
+		       catch(Exception e)
+		        {
+		     	  e.printStackTrace();
+		        }finally {
+					try {
+						if(conn!=null) {
+							conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(st!=null) {
+							st.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(rs!=null) {
+							rs.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				
 			}
 			public Userbeans getUploadFileSection4(String id) {
 				Userbeans userbeans=new Userbeans();
@@ -2192,6 +2293,40 @@ public class AdminDaoImpl {
 					pst.setString(1, userid);
 					pst.setString(2, file_path);
 					pst.setString(3, itemName);
+					  i=pst.executeUpdate();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally {
+					try {
+						if(Conn!=null) {
+							Conn.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					try {
+						if(pst!=null) {
+							pst.close();
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			return i;
+			}
+			public int insertAdminVideo(String file_path,String itemName,String userid,String adminid) {
+				Connection Conn=DbConnection.getInstance().getConnection();
+				int i=0;
+			    PreparedStatement pst=null;
+				try 
+				{
+					pst=Conn.prepareStatement("insert into adminvideo (userid,file_name,itemName,adminid) values(?,?,?,?);");
+					pst.setString(1, userid);
+					pst.setString(2, file_path);
+					pst.setString(3, itemName);
+					pst.setString(4, adminid);
 					  i=pst.executeUpdate();
 				}
 				catch(Exception e)

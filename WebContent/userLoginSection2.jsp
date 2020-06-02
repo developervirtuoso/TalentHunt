@@ -25,6 +25,7 @@
     <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
 <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" type="text/css" href="css/userstyle.css">
+  <script src="https://checkout.stripe.com/checkout.js"></script>
   <style type="text/css">
  .progress, .progress * { box-sizing: border-box; }
 .progress {
@@ -182,6 +183,24 @@ String user_cat="";
 	                            <i class="material-icons">layers</i> Section 4
 	                        </a>
                  	  <%
+                      }else if(section_status.equalsIgnoreCase("5")){
+                    	  %>
+                 	  	 	<a href="userLoginPage" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 1
+	                        </a>
+	                        <a href="userLoginSection2" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 2
+	                        </a>
+	                        <a href="userLoginSection3" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 3
+	                        </a>
+	                        <a href="userLoginSection4" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 4
+	                        </a>
+	                         <a href="userLoginFinal" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Final
+	                        </a>
+                 	  <%
                       }  %>
                        
                         
@@ -253,21 +272,40 @@ String user_cat="";
 					%>
 						<div class="row">
 		              		<div class="col-md-6 ml-auto mr-auto">
+		              		 
 		              			<form action='UserPayment' method='POST' id='checkout-form' xmlns:th="http://www.w3.org/1999/xhtml">
 		              			 <input type="hidden" value="<%=id%>" name="userid">
 							    <div class="form-group">
 								      <label for="amount">Amount:</label>
-								      <input type="text" class="form-control" id="amount" value="10" name="amount" readonly="readonly">
+								      <input type="text" class="form-control" id="amount" value="10" name="amount" >
+								      <button id="stripe-button" class="btn btn-success" style="color: white; background-color: green; " type="button"> Payment</button>
 								    </div>
-							  	 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-							      Stripe.setPublishableKey('<%=ConnFile.stripePublickey %>');
-							      data-key="<%=ConnFile.stripePublickey %>"
-							      data-description="A month's subscription"
-							      data-currency="INR"
-							      data-amount="<%=amount %>"
-							      data-locale="auto">
-							</script>
+									<script>
+									       $('#stripe-button').click(function(){
+									         var token = function(res){
+									        	 var $id = $('<input type=hidden name=stripeToken />').val(res.id);
+									             var $email = $('<input type=hidden name=stripeEmail />').val(res.email);
+									             $('form').append($id).append($email).submit();
+									         };
+									
+									         var amount = $("#amount").val();
+									         var amountnew=amount*100;
+									         StripeCheckout.open({
+									           key:         'pk_test_hg6egUHgulhUSON9P4WUfA9S000bJmOi0o',
+									           amount:      amountnew,
+									           currency:	'INR',
+									           name:        'Serendipity Artisan Blends',
+									           image:       'http://www.stackabuse.com/assets/images/sa-java-dark.svg?v=b5a08453df',
+									           description: 'Purchase Products',
+									           panelLabel:  'Checkout',
+									           token:       token
+									         });
+									
+									         return false;
+									       });
+									     </script>		
 							</form>
+				
 		              		</div>
 		              	</div>
 					<%

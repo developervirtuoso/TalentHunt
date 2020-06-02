@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.beans.CountUserDetailsBeans"%>
 <%@page import="com.beans.UserRatingBeans"%>
 <%@page import="java.util.ArrayList"%>
@@ -115,6 +116,24 @@ String user_cat="";
 	                            <i class="material-icons">layers</i> Section 4
 	                        </a>
                  	  <%
+                      }else if(section_status.equalsIgnoreCase("5")){
+                    	  %>
+                 	  	 	<a href="userLoginPage" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 1
+	                        </a>
+	                        <a href="userLoginSection2" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 2
+	                        </a>
+	                        <a href="userLoginSection3" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 3
+	                        </a>
+	                        <a href="userLoginSection4" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 4
+	                        </a>
+	                         <a href="userLoginFinal" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Final
+	                        </a>
+                 	  <%
                       }  %>
                        
                         
@@ -166,6 +185,9 @@ String user_cat="";
                <%
                CountUserDetailsBeans countByUserBeans=new CountUserDetailsBeans();
                countByUserBeans=adminDaoImpl.getAllCountByUserid(id);
+               JSONObject jsonObject =new JSONObject();
+          	  	adminDaoImpl.getAdminVideo(jsonObject,user_id);
+          	 
                
                %>
 
@@ -186,12 +208,20 @@ String user_cat="";
                                     Files
                                 </a>
                             </li>
-                            <li class="nav-item" style="display: none;">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
                                   <i class="material-icons">favorite</i>
                                     Rating
                                 </a>
                             </li>
+                            <% if(jsonObject.getBoolean("status")==true){ %>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#adminVideo" role="tab" data-toggle="tab">
+                                  <i class="material-icons">videocam</i>
+                                    Admin Video
+                                </a>
+                            </li>
+                            <%} %>
                           </ul>
                         </div>
     	    	</div>
@@ -308,7 +338,6 @@ String user_cat="";
                     <tr>
                         <th>User Name</th>
 				        <th>Rating</th>
-				        <th>Judge Name</th>
 				        <th>Comment</th>
 				      </tr>
                 </thead>
@@ -319,8 +348,8 @@ String user_cat="";
     {
     	ArrayList<UserRatingBeans> userRatingBeanss=new ArrayList<UserRatingBeans>();
                     int count =0;
-                    String sql="SELECT user.username,user_rating_section1.*,judges.NAME AS judges_name FROM user_rating_section1 INNER JOIN USER ON user.id=user_rating_section1.userid INNER JOIN judges ON judges.id=user_rating_section1.judgeid WHERE user_rating_section1.userid="+user_id+" ORDER BY user_rating_section1.id DESC ";
-                	userRatingBeanss=adminDaoImpl.getUserRatingSection1(sql);
+                    String sql="SELECT user.username,user_rating_section4.* FROM user_rating_section4 INNER JOIN USER ON user.id=user_rating_section4.userid WHERE user_rating_section4.userid="+user_id+" ORDER BY user_rating_section4.id DESC ";
+                	userRatingBeanss=adminDaoImpl.getUserRatingSection4(sql);
                     for(int i=0;i<userRatingBeanss.size();i++){
                     	UserRatingBeans userRatingBeans=userRatingBeanss.get(i);
                 		
@@ -328,7 +357,6 @@ String user_cat="";
                 			 <tr>
             			        <td><%=userRatingBeans.getUserName() %></td>
             			        <td><%=userRatingBeans.getRating() %></td>
-            			        <td><%=userRatingBeans.getJadgename() %></td>
             			        <td><%=userRatingBeans.getComment()%></td>
             			     </tr>
                 		<%
@@ -345,6 +373,31 @@ String user_cat="";
       				
       			</div>
       		</div>
+      		  <% if(jsonObject.getBoolean("status")==true){ %>
+      		 <div class="tab-pane text-center gallery" id="adminVideo">
+      			<div class="row">
+      				<div class="col-md-9 ml-auto mr-auto">
+      					<%
+						 String ext = jsonObject.getString("itemName").substring(jsonObject.getString("itemName").lastIndexOf(".") + 1); 
+		               	if(ext.equalsIgnoreCase("mp4")  || ext.equalsIgnoreCase("m4v") || ext.equalsIgnoreCase("f4v") || ext.equalsIgnoreCase("f4a") || ext.equalsIgnoreCase("m4b") || ext.equalsIgnoreCase("m4r") || ext.equalsIgnoreCase("f4b") || ext.equalsIgnoreCase("mov")){
+		            
+		               		%>
+               				<video style="width: 100%; height: 400px;"  controls>
+							  <source src="<%=jsonObject.getString("filename") %>" type="video/mp4">
+							</video>
+               			<%
+               		}else if(ext.equalsIgnoreCase("mp3")  || ext.equalsIgnoreCase("m4a")){
+               			%>
+               				<audio controls class="form-control">
+							  <source src="<%=jsonObject.getString("filename") %>" type="audio/mpeg">
+							</audio>
+               			<%
+               		}
+               			%>
+      				</div>
+      			</div>
+      		</div>
+      		<%} %>
           </div>
 
         

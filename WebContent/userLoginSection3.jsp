@@ -108,6 +108,24 @@ String user_cat="";
 	                            <i class="material-icons">layers</i> Section 4
 	                        </a>
                  	  <%
+                      }else if(section_status.equalsIgnoreCase("5")){
+                    	  %>
+                 	  	 	<a href="userLoginPage" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 1
+	                        </a>
+	                        <a href="userLoginSection2" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 2
+	                        </a>
+	                        <a href="userLoginSection3" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 3
+	                        </a>
+	                        <a href="userLoginSection4" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Section 4
+	                        </a>
+	                         <a href="userLoginFinal" class="dropdown-item">
+	                            <i class="material-icons">layers</i> Final
+	                        </a>
+                 	  <%
                       }  %>
                        
                         
